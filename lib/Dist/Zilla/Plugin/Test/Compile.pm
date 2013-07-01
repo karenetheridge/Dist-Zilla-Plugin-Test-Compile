@@ -94,7 +94,7 @@ In your dist.ini:
     skip      = Test$
     fake_home = 1
     needs_display = 1
-    fail_on_warning = 1
+    fail_on_warning = author
     bail_out_on_fail = 1
 
 
