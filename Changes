@@ -1,6 +1,7 @@
 Revision history for Dist::Zilla::Plugin::CompileTests
 
 {{$NEXT}}
+ - fixed typo in fail_on_warning=author
 
 2.003-TRIAL  2013-07-01 05:39:31 Europe/Paris
  - new fail_on_warning option (Karen Etheridge)

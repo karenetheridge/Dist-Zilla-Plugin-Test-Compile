@@ -53,7 +53,7 @@ CODE
     my $fail_on_warning = $self->fail_on_warning ne 'none'
         ? q{is(scalar(@warnings), 0, 'no warnings found');}
         : '';
-    $fail_on_warning = 'if ($ENV{AUTHOR_TESTING} { ' . $fail_on_warning . ' }'
+    $fail_on_warning = 'if ($ENV{AUTHOR_TESTING}) { ' . $fail_on_warning . ' }'
         if $self->fail_on_warning eq 'author';
 
     my $test_more_version = $self->bail_out_on_fail ? ' 0.94' : ' 0.88';
