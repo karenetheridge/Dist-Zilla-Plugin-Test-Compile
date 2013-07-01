@@ -4,7 +4,7 @@ Dist::Zilla::Plugin::Test::Compile - common tests to check syntax of your module
 
 # VERSION
 
-version 2.002
+version 2.003
 
 # SYNOPSIS
 
@@ -14,6 +14,7 @@ In your dist.ini:
     skip      = Test$
     fake_home = 1
     needs_display = 1
+    fail_on_warning = author
     bail_out_on_fail = 1
 
 # DESCRIPTION
@@ -39,7 +40,15 @@ This may be needed if your module unilateraly creates stuff in homedir:
 indeed, some cpantesters will smoke test your dist with a read-only home
 directory. Default to false.
 - needs\_display: a boolean to indicate whether to skip the compile test
-on non-Win32 systems when `$ENV{DISPLAY}` is not set. Default to false.
+on non-Win32 systems when `$ENV{DISPLAY}` is not set. Defaults to false.
+- fail\_on\_warning: a string to indicate when to add a test for
+warnings during compilation checks. Possible values are:
+    - none: do not check for warnings
+    - author: check for warnings only when AUTHOR\_TESTING is set
+    (default, and recommended)
+    - all: always test for warnings (not recommended, as this can prevent
+    installation of modules when upstream dependencies exhibit warnings in a new
+    Perl release)
 - bail\_out\_on\_fail: a boolean to indicate whether the test will BAIL\_OUT
 of all subsequent tests when compilation failures are encountered. Defaults to false.
 

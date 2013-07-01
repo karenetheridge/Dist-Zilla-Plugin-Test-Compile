@@ -1,6 +1,8 @@
 Revision history for Dist::Zilla::Plugin::CompileTests
 
 {{$NEXT}}
+
+2.003-TRIAL  2013-07-01 05:39:31 Europe/Paris
  - new fail_on_warning option (Karen Etheridge)
 
 2.002     2013-04-28 17:19:00 Europe/Paris
