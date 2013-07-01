@@ -199,16 +199,13 @@ use File::Find;
 use File::Temp qw{ tempdir };
 use Capture::Tiny qw{ capture };
 
-my @modules;
+my @module_files;
 find(
   sub {
     return if $File::Find::name !~ /\.pm\z/;
     my $found = $File::Find::name;
-    $found =~ s{^lib/}{};
-    $found =~ s{[/\\]}{::}g;
-    $found =~ s/\.pm$//;
     COMPILETESTS_SKIP
-    push @modules, $found;
+    push @module_files, $found;
   },
   'lib',
 );
@@ -245,12 +242,12 @@ do { push @scripts, _find_scripts($_) if -d $_ }
     COMPILETESTS_FAKE_HOME local $ENV{HOME} = tempdir( CLEANUP => 1 );
 
     my @warnings;
-    for my $module (sort @modules)
+    for my $module (sort @module_files)
     {
         my ($stdout, $stderr, $exit) = capture {
-            system($^X, '-Ilib', '-e', qq{require $module; print "$module ok"});
+            system($^X, '-Ilib', $module);
         };
-        like($stdout, qr/^\s*$module ok/s, "$module loaded ok" );
+        is($?, 0, "$lib loaded ok")
         warn $stderr if $stderr;
         push @warnings, $stderr if $stderr;
     }
