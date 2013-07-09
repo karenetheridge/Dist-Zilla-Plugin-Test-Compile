@@ -57,12 +57,14 @@ CODE
         if $self->fail_on_warning eq 'author';
 
     my $test_more_version = $self->bail_out_on_fail ? ' 0.94' : ' 0.88';
+    my $plugin_version = $self->VERSION;
 
     require Dist::Zilla::File::InMemory;
 
     for my $file (qw( t/00-compile.t )){
         my $content = ${$self->section_data($file)};
         $content =~ s/COMPILETESTS_TESTMORE_VERSION/$test_more_version/g;
+        $content =~ s/PLUGIN_VERSION/$plugin_version/g;
         $content =~ s/COMPILETESTS_SKIP/$skip/g;
         $content =~ s/COMPILETESTS_FAKE_HOME/$home/;
         $content =~ s/COMPILETESTS_NEEDS_DISPLAY/$needs_display/;
@@ -188,6 +190,8 @@ __DATA__
 ___[ t/00-compile.t ]___
 use strict;
 use warnings;
+
+# This test was generated via Dist::Zilla::Plugin::Test::Compile PLUGIN_VERSION
 
 use Test::MoreCOMPILETESTS_TESTMORE_VERSION;
 
