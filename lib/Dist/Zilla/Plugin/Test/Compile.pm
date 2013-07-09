@@ -186,8 +186,6 @@ L<http://github.com/jquelin/dist-zilla-plugin-test-compile.git>.
 
 __DATA__
 ___[ t/00-compile.t ]___
-#!perl
-
 use strict;
 use warnings;
 
