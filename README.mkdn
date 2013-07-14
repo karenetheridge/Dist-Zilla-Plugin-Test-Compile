@@ -4,7 +4,7 @@ Dist::Zilla::Plugin::Test::Compile - common tests to check syntax of your module
 
 # VERSION
 
-version 2.004
+version 2.005
 
 # SYNOPSIS
 
@@ -84,3 +84,18 @@ This software is copyright (c) 2009 by Jerome Quelin.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
+
+# CONTRIBUTORS
+
+- Ahmad M. Zawawi <azawawi@ubuntu.(none)>
+- Chris Weyl <cweyl@alumni.drew.edu>
+- Harley Pig <harleypig@gmail.com>
+- Jerome Quelin <jquelin@gmail.com>
+- Jesse Luehrs <doy@tozt.net>
+- Karen Etheridge <ether@cpan.org>
+- Kent Fredric <kentfredric@gmail.com>
+- Marcel Gruenauer <hanekomu@gmail.com>
+- Olivier Mengué <dolmen@cpan.org>
+- Randy Stauner <randy@magnificent-tears.com>
+- Ricardo SIGNES <rjbs@cpan.org>
+- fayland <fayland@gmail.com>
