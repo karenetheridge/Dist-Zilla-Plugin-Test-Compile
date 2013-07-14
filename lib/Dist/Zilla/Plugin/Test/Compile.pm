@@ -250,7 +250,7 @@ do { push @scripts, _find_scripts($_) if -d $_ }
     for my $module (sort @modules)
     {
         my ($stdout, $stderr, $exit) = capture {
-            system($^X, '-Ilib', '-e', qq{require $module; print "$module ok"});
+            system($^X, '-Ilib', '-e', qq{require $module; print qq[$module ok]});
         };
         like($stdout, qr/^\s*$module ok/s, "$module loaded ok" );
         warn $stderr if $stderr;
