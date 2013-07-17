@@ -19,6 +19,7 @@ with (
         finder_arg_names => [ 'script_finder' ],
         default_finders => [ ':ExecFiles' ],
     },
+    'Dist::Zilla::Role::PrereqSource',
 );
 
 use Moose::Util::TypeConstraints;
@@ -31,7 +32,27 @@ has needs_display => ( is=>'ro', isa=>'Bool', default=>0 );
 has fail_on_warning => ( is=>'ro', isa=>enum([qw(none author all)]), default=>'author' );
 has bail_out_on_fail => ( is=>'ro', isa=>'Bool', default=>0 );
 
+has _test_more_version => (
+    is => 'ro', isa => 'Str',
+    init_arg => undef,
+    lazy => 1,
+    default => sub { shift->bail_out_on_fail ? '0.94' : '0.88' },
+);
+
 # -- public methods
+
+sub register_prereqs
+{
+    my $self = shift;
+    $self->zilla->register_prereqs(
+        {
+            type  => 'requires',
+            phase => 'test',
+        },
+        'Test::More' => $self->_test_more_version,
+        $self->fake_home ? ( 'File::Temp' => '0' ) : (),
+    );
+}
 
 sub gather_files {
 
@@ -46,8 +67,11 @@ sub gather_files {
         : '# nothing to skip';
 
     my $home = ( $self->fake_home )
-        ? ''
-        : '# no fake requested ##';
+        ? join("\n", '# fake home for cpan-testers',
+                     'require File::Temp;',
+                     'local $ENV{HOME} = File::Temp::tempdir( CLEANUP => 1 );',
+              )
+        : '# no fake home requested';
 
     # Skip all tests if you need a display for this test and $ENV{DISPLAY} is not set
     my $needs_display = '';
@@ -72,7 +96,7 @@ CODE
     $fail_on_warning = 'if ($ENV{AUTHOR_TESTING}) { ' . $fail_on_warning . ' }'
         if $self->fail_on_warning eq 'author';
 
-    my $test_more_version = $self->bail_out_on_fail ? ' 0.94' : ' 0.88';
+    my $test_more_version = $self->_test_more_version;
     my $plugin_version = $self->VERSION;
 
     my $module_files = join("\n", map { $_->name } @{$self->found_module_files} );
@@ -101,12 +125,12 @@ CODE
     }
 }
 
-
 no Moose;
 __PACKAGE__->meta->make_immutable;
 1;
 
 =for Pod::Coverage::TrustPod
+    register_prereqs
     gather_files
 
 
@@ -230,7 +254,7 @@ use warnings;
 
 # This test was generated via Dist::Zilla::Plugin::Test::Compile PLUGIN_VERSION
 
-use Test::MoreCOMPILETESTS_TESTMORE_VERSION;
+use Test::More COMPILETESTS_TESTMORE_VERSION;
 
 COMPILETESTS_NEEDS_DISPLAY
 
@@ -246,8 +270,7 @@ COMPILETESTS_SCRIPT_FILES
 );
 
 {
-    # fake home for cpan-testers
-    COMPILETESTS_FAKE_HOME local $ENV{HOME} = tempdir( CLEANUP => 1 );
+    COMPILETESTS_FAKE_HOME
 
     my @warnings;
     for my $lib (sort @module_files)

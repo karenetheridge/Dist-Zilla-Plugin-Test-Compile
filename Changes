@@ -6,6 +6,7 @@ Revision history for Dist::Zilla::Plugin::CompileTests
  - avoid trying to load Test::Script if there are no scripts to check
  - calculate the list of files to check at build time, rather than using
    File::Find at runtime; the filefinders used are configurable.
+ - modules used by the test are injected as test requires dependencies.
 
 2.005-TRIAL  2013-07-14 20:54:24 Europe/Paris
  - fixed use of quoting in shell command to resolve mswin32 issues (introduced
