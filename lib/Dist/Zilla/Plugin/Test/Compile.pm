@@ -7,7 +7,19 @@ package Dist::Zilla::Plugin::Test::Compile;
 
 use Moose;
 use Data::Section -setup;
-with 'Dist::Zilla::Role::FileGatherer';
+with (
+    'Dist::Zilla::Role::FileGatherer',
+    'Dist::Zilla::Role::FileFinderUser' => {
+        method          => 'found_module_files',
+        finder_arg_names => [ 'module_finder' ],
+        default_finders => [ ':InstallModules' ],
+    },
+    'Dist::Zilla::Role::FileFinderUser' => {
+        method          => 'found_script_files',
+        finder_arg_names => [ 'script_finder' ],
+        default_finders => [ ':ExecFiles' ],
+    },
+);
 
 use Moose::Util::TypeConstraints;
 
@@ -63,12 +75,18 @@ CODE
     my $test_more_version = $self->bail_out_on_fail ? ' 0.94' : ' 0.88';
     my $plugin_version = $self->VERSION;
 
+    my $module_files = join("\n", map { $_->name } @{$self->found_module_files} );
+    my $script_files = join("\n", map { $_->name } @{$self->found_script_files} );
+
     require Dist::Zilla::File::InMemory;
 
+    # TODO: we could instead use the TextTemplate role to munge this.
     for my $file (qw( t/00-compile.t )){
         my $content = ${$self->section_data($file)};
         $content =~ s/COMPILETESTS_TESTMORE_VERSION/$test_more_version/g;
         $content =~ s/PLUGIN_VERSION/$plugin_version/g;
+        $content =~ s/COMPILETESTS_MODULE_FILES/$module_files/g;
+        $content =~ s/COMPILETESTS_SCRIPT_FILES/$script_files/g;
         $content =~ s/COMPILETESTS_SKIP/$skip/g;
         $content =~ s/COMPILETESTS_FAKE_HOME/$home/;
         $content =~ s/COMPILETESTS_NEEDS_DISPLAY/$needs_display/;
@@ -152,14 +170,29 @@ warnings during compilation checks. Possible values are:
 installation of modules when upstream dependencies exhibit warnings in a new
 Perl release)
 
+=item * module_finder
+
+This is the name of a L<FileFinder|Dist::Zilla::Role::FileFinder> for finding
+modules to check.  The default value is C<:InstallModules>; this option can be
+used more than once.
+
+Other pre-defined finders are listed in
+L<FileFinder|Dist::Zilla::Role::FileFinderUser/default_finders>.
+You can define your own with the
+L<Dist::Zilla::Plugin::FileFinder::ByName|[FileFinder::ByName]> plugin.
+
+=item * script_finder
+
+Just like C<module_finder>, but for finding scripts.  The default value is
+C<:ExecFiles> (you can use the L<Dist::Zilla::Plugin::ExecDir> plugin to mark
+those files as executables).
+
 =back
 
 =item * bail_out_on_fail: a boolean to indicate whether the test will BAIL_OUT
 of all subsequent tests when compilation failures are encountered. Defaults to false.
 
 =back
-
-
 
 =head1 SEE ALSO
 
@@ -201,47 +234,16 @@ use Test::MoreCOMPILETESTS_TESTMORE_VERSION;
 
 COMPILETESTS_NEEDS_DISPLAY
 
-use File::Find;
 use File::Temp qw{ tempdir };
 use Capture::Tiny qw{ capture };
 
-my @module_files;
-find(
-  sub {
-    return if $File::Find::name !~ /\.pm\z/;
-    my $found = $File::Find::name;
-    COMPILETESTS_SKIP
-    push @module_files, $found;
-  },
-  'lib',
+my @module_files = qw(
+COMPILETESTS_MODULE_FILES
 );
 
-sub _find_scripts {
-    my $dir = shift @_;
-
-    my @found_scripts = ();
-    find(
-      sub {
-        return unless -f;
-        my $found = $File::Find::name;
-        COMPILETESTS_SKIP
-        open my $FH, '<', $_ or do {
-          note( "Unable to open $found in ( $! ), skipping" );
-          return;
-        };
-        my $shebang = <$FH>;
-        return unless $shebang =~ /^#!.*?\bperl\b\s*$/;
-        push @found_scripts, $found;
-      },
-      $dir,
-    );
-
-    return @found_scripts;
-}
-
-my @scripts;
-do { push @scripts, _find_scripts($_) if -d $_ }
-    for qw{ bin script scripts };
+my @scripts = qw(
+COMPILETESTS_SCRIPT_FILES
+);
 
 {
     # fake home for cpan-testers
