@@ -26,7 +26,11 @@ sub gather_files {
     my ( $self , ) = @_;
 
     my $skip = ( $self->has_skip && $self->skip )
-        ? sprintf( 'return if $found =~ /%s/;', $self->skip )
+        ? sprintf( join("\n",
+                    '(my $module = $found) =~ s{^lib/}{};',
+                    '$module=~ s{[/\\]}{::}g;',
+                    '$module=~ s/\.pm$//;',
+                    'return if $module=~ /%s/;', $self->skip) )
         : '# nothing to skip';
 
     my $home = ( $self->fake_home )
@@ -201,16 +205,13 @@ use File::Find;
 use File::Temp qw{ tempdir };
 use Capture::Tiny qw{ capture };
 
-my @modules;
+my @module_files;
 find(
   sub {
     return if $File::Find::name !~ /\.pm\z/;
     my $found = $File::Find::name;
-    $found =~ s{^lib/}{};
-    $found =~ s{[/\\]}{::}g;
-    $found =~ s/\.pm$//;
     COMPILETESTS_SKIP
-    push @modules, $found;
+    push @module_files, $found;
   },
   'lib',
 );
@@ -247,12 +248,12 @@ do { push @scripts, _find_scripts($_) if -d $_ }
     COMPILETESTS_FAKE_HOME local $ENV{HOME} = tempdir( CLEANUP => 1 );
 
     my @warnings;
-    for my $module (sort @modules)
+    for my $lib (sort @module_files)
     {
         my ($stdout, $stderr, $exit) = capture {
-            system($^X, '-Ilib', '-e', qq{require $module; print qq[$module ok]});
+            system($^X, '-Ilib', '-e', qq{require qq[$lib]});
         };
-        like($stdout, qr/^\s*$module ok/s, "$module loaded ok" );
+        is($?, 0, "$lib loaded ok");
         warn $stderr if $stderr;
         push @warnings, $stderr if $stderr;
     }
