@@ -260,6 +260,7 @@ do { push @scripts, _find_scripts($_) if -d $_ }
 
     COMPILETESTS_FAIL_ON_WARNING
 
+if (@scripts) {
     SKIP: {
         eval "use Test::Script 1.05; 1;";
         skip "Test::Script needed to test script compilation", scalar(@scripts) if $@;
@@ -269,6 +270,8 @@ do { push @scripts, _find_scripts($_) if -d $_ }
             script_compiles( $file, "$script script compiles" );
         }
     }
+}
+
     COMPILETESTS_BAIL_OUT_ON_FAIL
 }
 
