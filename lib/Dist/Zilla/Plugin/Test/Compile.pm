@@ -39,7 +39,22 @@ has _test_more_version => (
     default => sub { shift->bail_out_on_fail ? '0.94' : '0.88' },
 );
 
-# -- public methods
+# note that these two attributes could conceivably be settable via dist.ini,
+# to avoid us using filefinders at all.
+has _module_filenames  => (
+    isa => 'ArrayRef[Str]',
+    traits => ['Array'],
+    handles => { _module_filenames => 'elements' },
+    lazy => 1,
+    default => sub { [ map { $_->name } @{shift->found_module_files} ] },
+);
+has _script_filenames => (
+    isa => 'ArrayRef[Str]',
+    traits => ['Array'],
+    handles => { _script_filenames => 'elements' },
+    lazy => 1,
+    default => sub { [ map { $_->name } @{shift->found_script_files} ] },
+);
 
 sub register_prereqs
 {
@@ -51,6 +66,7 @@ sub register_prereqs
         },
         'Test::More' => $self->_test_more_version,
         $self->fake_home ? ( 'File::Temp' => '0' ) : (),
+        $self->_script_filenames ? ( 'Test::Script' => '1.05' ) : (),
     );
 }
 
@@ -99,8 +115,8 @@ CODE
     my $test_more_version = $self->_test_more_version;
     my $plugin_version = $self->VERSION;
 
-    my $module_files = join("\n", map { $_->name } @{$self->found_module_files} );
-    my $script_files = join("\n", map { $_->name } @{$self->found_script_files} );
+    my $module_files = join("\n", $self->_module_filenames);
+    my $script_files = join("\n", $self->_script_filenames);
 
     require Dist::Zilla::File::InMemory;
 
@@ -286,14 +302,12 @@ COMPILETESTS_SCRIPT_FILES
     COMPILETESTS_FAIL_ON_WARNING
 
 if (@scripts) {
-    SKIP: {
-        eval "use Test::Script 1.05; 1;";
-        skip "Test::Script needed to test script compilation", scalar(@scripts) if $@;
-        foreach my $file ( @scripts ) {
-            my $script = $file;
-            $script =~ s!.*/!!;
-            script_compiles( $file, "$script script compiles" );
-        }
+    require Test::Script;
+    Test::Script->VERSION('1.05');
+    foreach my $file ( @scripts ) {
+        my $script = $file;
+        $script =~ s!.*/!!;
+        Test::Script::script_compiles( $file, "$script script compiles" );
     }
 }
 

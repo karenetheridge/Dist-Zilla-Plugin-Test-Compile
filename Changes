@@ -1,6 +1,8 @@
 Revision history for Dist::Zilla::Plugin::CompileTests
 
 {{$NEXT}}
+ - if there are scripts to be tested, Test::Script is now mandatory; accurate
+   prerequisites are injected into the dist in all cases
 
 2.006-TRIAL  2013-07-17 20:38:55 Europe/Paris
  - we now load the .pm file, rather than attempting to calculate the module
