@@ -95,28 +95,24 @@ sub gather_files {
         not grep { $module =~ $_ } @skips
     } @module_filenames if @skips;
 
-    my @script_filenames = $self->_script_filenames;
-
     require Dist::Zilla::File::InMemory;
 
     for my $file (qw( t/00-compile.t )){
-        my $content = $self->fill_in_string(
-            ${$self->section_data($file)},
-            {
-                plugin_version => \($self->VERSION),
-                test_more_version => \($self->_test_more_version),
-                module_filenames => \@module_filenames,
-                script_filenames => \@script_filenames,
-                fake_home => \($self->fake_home),
-                needs_display => \($self->needs_display),
-                bail_out_on_fail => \($self->bail_out_on_fail),
-                fail_on_warning => \($self->fail_on_warning),
-            }
-        );
-
         $self->add_file( Dist::Zilla::File::InMemory->new(
             name => $file,
-            content => $content,
+            content => $self->fill_in_string(
+                ${$self->section_data($file)},
+                {
+                    plugin_version => \($self->VERSION),
+                    test_more_version => \($self->_test_more_version),
+                    module_filenames => \@module_filenames,
+                    script_filenames => [ $self->_script_filenames ],
+                    fake_home => \($self->fake_home),
+                    needs_display => \($self->needs_display),
+                    bail_out_on_fail => \($self->bail_out_on_fail),
+                    fail_on_warning => \($self->fail_on_warning),
+                }
+            ),
         ));
     }
 }
@@ -299,12 +295,13 @@ for my $lib (sort @module_files)
 }
 
 {{
-my $str = $fail_on_warning ne 'none'
-    ? q{is(scalar(@warnings), 0, 'no warnings found');}
-    : '';
-$str = 'if ($ENV{AUTHOR_TESTING}) { ' . $str . ' }'
-    if $fail_on_warning eq 'author';
-$str
+($fail_on_warning ne 'none'
+    ? q{is(scalar(@warnings), 0, 'no warnings found')}
+    : '# no warning checks')
+.
+($fail_on_warning eq 'author'
+    ? ' if $ENV{AUTHOR_TESTING};'
+    : ';')
 }}
 
 {{
