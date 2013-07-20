@@ -266,11 +266,11 @@ CODE
 use Capture::Tiny qw{ capture };
 
 my @module_files = qw(
-{{ join("\n", @module_filenames) }}
+{{ join("\n", sort @module_filenames) }}
 );
 
 my @scripts = qw(
-{{ join("\n", @script_filenames) }}
+{{ join("\n", sort @script_filenames) }}
 );
 
 {{
@@ -284,7 +284,7 @@ CODE
 }}
 
 my @warnings;
-for my $lib (sort @module_files)
+for my $lib (@module_files)
 {
     my ($stdout, $stderr, $exit) = capture {
         system($^X, '-Mblib', '-e', qq{require qq[$lib]});
