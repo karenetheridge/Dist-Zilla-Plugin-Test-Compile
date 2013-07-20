@@ -1,6 +1,8 @@
 Revision history for Dist::Zilla::Plugin::CompileTests
 
 {{$NEXT}}
+
+2.007-TRIAL  2013-07-20 02:14:30 Europe/Paris
  - if there are scripts to be tested, Test::Script is now mandatory; accurate
    prerequisites are injected into the dist in all cases
 
