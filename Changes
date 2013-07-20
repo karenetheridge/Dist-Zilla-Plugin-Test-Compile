@@ -1,6 +1,8 @@
 Revision history for Dist::Zilla::Plugin::CompileTests
 
 {{$NEXT}}
+ - screen out skipped files at test generation time, rather than at runtime
+   (and make skips work again - broken in 2.007-TRIAL)
 
 2.007-TRIAL  2013-07-20 02:14:30 Europe/Paris
  - if there are scripts to be tested, Test::Script is now mandatory; accurate

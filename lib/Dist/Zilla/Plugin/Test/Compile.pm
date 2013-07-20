@@ -74,13 +74,17 @@ sub gather_files {
 
     my ( $self , ) = @_;
 
-    my $skip = ( $self->has_skip && $self->skip )
-        ? sprintf( join("\n",
-                    '(my $module = $found) =~ s{^lib/}{};',
-                    '$module=~ s{[/\\]}{::}g;',
-                    '$module=~ s/\.pm$//;',
-                    'return if $module=~ /%s/;', $self->skip) )
-        : '# nothing to skip';
+    my @module_filenames = $self->_module_filenames;
+    @module_filenames = grep {
+        (my $module = $_) =~ s{^lib/}{};
+        $module=~ s{[/\\]}{::}g;
+        $module=~ s/\.pm$//;
+        my $skip = $self->skip;
+        $module !~ m/$skip/
+    } @module_filenames if $self->skip;
+
+    my $module_files = join("\n", @module_filenames);
+    my $script_files = join("\n", $self->_script_filenames);
 
     my $home = ( $self->fake_home )
         ? join("\n", '# fake home for cpan-testers',
@@ -115,8 +119,6 @@ CODE
     my $test_more_version = $self->_test_more_version;
     my $plugin_version = $self->VERSION;
 
-    my $module_files = join("\n", $self->_module_filenames);
-    my $script_files = join("\n", $self->_script_filenames);
 
     require Dist::Zilla::File::InMemory;
 
@@ -127,7 +129,6 @@ CODE
         $content =~ s/PLUGIN_VERSION/$plugin_version/g;
         $content =~ s/COMPILETESTS_MODULE_FILES/$module_files/g;
         $content =~ s/COMPILETESTS_SCRIPT_FILES/$script_files/g;
-        $content =~ s/COMPILETESTS_SKIP/$skip/g;
         $content =~ s/COMPILETESTS_FAKE_HOME/$home/;
         $content =~ s/COMPILETESTS_NEEDS_DISPLAY/$needs_display/;
         $content =~ s/COMPILETESTS_BAIL_OUT_ON_FAIL/$bail_out/;
