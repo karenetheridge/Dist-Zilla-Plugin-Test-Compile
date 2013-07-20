@@ -312,9 +312,7 @@ $str
     ? <<'CODE'
 use Test::Script 1.05;
 foreach my $file ( @scripts ) {
-    my $script = $file;
-    $script =~ s!.*/!!;
-    script_compiles( $file, "$script script compiles" );
+    script_compiles( $file, "$file compiles" );
 }
 CODE
     : '';
