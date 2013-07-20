@@ -1,6 +1,8 @@
 Revision history for Dist::Zilla::Plugin::CompileTests
 
 {{$NEXT}}
+
+2.009-TRIAL  2013-07-20 18:40:25 Europe/Paris
  - the 'skip' option can now be provided multiple times
  - now using Text::Template to generate the test, for simpler munging code
  - properly inject all used modules as test prerequisites
