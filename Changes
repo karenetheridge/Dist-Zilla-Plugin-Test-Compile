@@ -2,6 +2,7 @@ Revision history for Dist::Zilla::Plugin::CompileTests
 
 {{$NEXT}}
  - the 'skip' option can now be provided multiple times
+ - now using Text::Template to generate the test, for simpler munging code
 
 2.008-TRIAL  2013-07-20 02:40:11 Europe/Paris
  - screen out skipped files at test generation time, rather than at runtime
