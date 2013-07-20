@@ -27,10 +27,19 @@ use Moose::Util::TypeConstraints;
 # -- attributes
 
 has fake_home     => ( is=>'ro', isa=>'Bool', default=>0 );
-has skip          => ( is=>'ro', predicate=>'has_skip' ); # skiplist - a regex
 has needs_display => ( is=>'ro', isa=>'Bool', default=>0 );
 has fail_on_warning => ( is=>'ro', isa=>enum([qw(none author all)]), default=>'author' );
 has bail_out_on_fail => ( is=>'ro', isa=>'Bool', default=>0 );
+
+sub mvp_multivalue_args { qw(skips) }
+sub mvp_aliases { return { skip => 'skips' } }
+
+has skips => (
+    isa => 'ArrayRef[Str]',
+    traits => ['Array'],
+    handles => { skips => 'elements' },
+    default => sub { [] },
+);
 
 has _test_more_version => (
     is => 'ro', isa => 'Str',
@@ -74,14 +83,15 @@ sub gather_files {
 
     my ( $self , ) = @_;
 
+    my @skips = map {; qr/$_/ } $self->skips;
+
     my @module_filenames = $self->_module_filenames;
     @module_filenames = grep {
         (my $module = $_) =~ s{^lib/}{};
         $module=~ s{[/\\]}{::}g;
         $module=~ s/\.pm$//;
-        my $skip = $self->skip;
-        $module !~ m/$skip/
-    } @module_filenames if $self->skip;
+        not grep { $module =~ $_ } @skips
+    } @module_filenames if $self->skips;
 
     my $module_files = join("\n", @module_filenames);
     my $script_files = join("\n", $self->_script_filenames);
@@ -147,6 +157,8 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 =for Pod::Coverage::TrustPod
+    mvp_multivalue_args
+    mvp_aliases
     register_prereqs
     gather_files
 
@@ -187,7 +199,7 @@ This plugin accepts the following options:
 
 =item * skip: a regex to skip compile test for modules matching it. The
 match is done against the module name (C<Foo::Bar>), not the file path
-(F<lib/Foo/Bar.pm>).
+(F<lib/Foo/Bar.pm>).  This option can be repeated to specify multiple regexes.
 
 =item * fake_home: a boolean to indicate whether to fake C<< $ENV{HOME} >>.
 This may be needed if your module unilateraly creates stuff in homedir:
