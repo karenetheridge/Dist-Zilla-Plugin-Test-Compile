@@ -267,7 +267,6 @@ CODE
     : ''
 }}
 
-use File::Temp qw{ tempdir };
 use Capture::Tiny qw{ capture };
 
 my @module_files = qw(
@@ -282,7 +281,7 @@ my @scripts = qw(
 $fake_home
     ? <<'CODE'
 # fake home for cpan-testers
-require File::Temp;
+use File::Temp;
 local $ENV{HOME} = File::Temp::tempdir( CLEANUP => 1 );
 CODE
     : '# no fake home requested';
