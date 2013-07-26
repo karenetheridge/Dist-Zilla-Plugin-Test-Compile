@@ -1,6 +1,8 @@
 Revision history for Dist::Zilla::Plugin::CompileTests
 
 {{$NEXT}}
+ - add conflicts metadata for Test::Kwalitee::Extra, which does not like the
+   require() syntax we use
 
 2.009-TRIAL  2013-07-20 18:40:25 Europe/Paris
  - the 'skip' option can now be provided multiple times
