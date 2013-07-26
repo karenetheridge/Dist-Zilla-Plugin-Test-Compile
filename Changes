@@ -3,6 +3,24 @@ Revision history for Dist::Zilla::Plugin::CompileTests
 {{$NEXT}}
  - add conflicts metadata for Test::Kwalitee::Extra, which does not like the
    require() syntax we use
+ - all changes since 2.002 now as a stable release:
+
+   [FEATURES]
+   - new fail_on_warning option
+   - the 'skip' option can now be provided multiple times
+   - calculate the list of files to check at build time, rather than using
+     File::Find at runtime; the filefinders used are configurable.
+
+   [IMPLEMENTATION DETAILS]
+   - include a comment in the generated test indicating how it was generated
+   - modules used by the test are injected as test requires dependencies.
+   - avoid trying to load Test::Script if there are no scripts to check
+   - we now load the .pm file, rather than attempting to calculate the module
+     name and then loading that
+   - if there are scripts to be tested, Test::Script is now mandatory;
+     accurate prerequisites are injected into the dist in all cases
+   - properly inject all used modules as test prerequisites
+   - now using Text::Template to generate the test, for simpler munging code
 
 2.009-TRIAL  2013-07-20 18:40:25 Europe/Paris
  - the 'skip' option can now be provided multiple times
