@@ -1,6 +1,8 @@
 Revision history for Dist::Zilla::Plugin::CompileTests
 
 {{$NEXT}}
+
+2.010     2013-07-27 01:45:51 Europe/Paris
  - add conflicts metadata for Test::Kwalitee::Extra, which does not like the
    require() syntax we use
  - all changes since 2.002 now as a stable release:
