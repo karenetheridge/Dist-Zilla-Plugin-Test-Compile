@@ -28,6 +28,7 @@ Revision history for Dist::Zilla::Plugin::CompileTests
 2.005-TRIAL  2013-07-14 20:54:24 Europe/Paris
  - fixed use of quoting in shell command to resolve mswin32 issues (introduced
    in 2.003)
+ - include a comment in the generated test indicating how it was generated
 
 2.004-TRIAL  2013-07-01 06:17:25 Europe/Paris
  - fixed typo in fail_on_warning=author
