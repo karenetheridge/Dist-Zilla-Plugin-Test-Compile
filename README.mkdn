@@ -4,7 +4,7 @@ Dist::Zilla::Plugin::Test::Compile - common tests to check syntax of your module
 
 # VERSION
 
-version 2.010
+version 2.011
 
 # SYNOPSIS
 
@@ -53,7 +53,7 @@ warnings during compilation checks. Possible values are:
 
         This is the name of a [FileFinder](http://search.cpan.org/perldoc?Dist::Zilla::Role::FileFinder) for finding
         modules to check.  The default value is `:InstallModules`; this option can be
-        used more than once.
+        used more than once.  .pod files are always omitted.
 
         Other pre-defined finders are listed in
         [FileFinder](http://search.cpan.org/perldoc?Dist::Zilla::Role::FileFinderUser#default\_finders).

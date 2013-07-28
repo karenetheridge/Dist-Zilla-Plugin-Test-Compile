@@ -1,6 +1,8 @@
 Revision history for Dist::Zilla::Plugin::CompileTests
 
 {{$NEXT}}
+
+2.011     2013-07-28 23:45:53 Europe/Paris
  - .pod files are now always omitted from the list of found modules in the
    dist (thanks for the report, Alberto Simões!)
 
