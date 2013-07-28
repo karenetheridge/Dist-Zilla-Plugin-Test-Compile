@@ -145,8 +145,8 @@ In your dist.ini:
 
 =head1 DESCRIPTION
 
-This is an extension of L<Dist::Zilla::Plugin::InlineFiles>, providing
-the following files:
+This is a plugin that runs at the L<gather files|Dist::Zilla::Role::FileGatherer> stage,
+providing the following files:
 
 =over 4
 
