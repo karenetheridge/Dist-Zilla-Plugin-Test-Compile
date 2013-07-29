@@ -66,6 +66,18 @@ has _script_filenames => (
     default => sub { [ map { $_->name } @{shift->found_script_files} ] },
 );
 
+around dump_config => sub
+{
+    my ($orig, $self) = @_;
+    my $config = $self->$orig;
+
+    $config->{'' . __PACKAGE__} = {
+         module_finder => $self->module_finder,
+         script_finder => $self->script_finder,
+    };
+    return $config;
+};
+
 sub register_prereqs
 {
     my $self = shift;
