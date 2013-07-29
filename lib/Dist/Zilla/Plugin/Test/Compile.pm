@@ -76,6 +76,7 @@ sub register_prereqs
         },
         'Test::More' => $self->_test_more_version,
         'Capture::Tiny' => '0',
+        'blib' => '0',
         $self->fake_home ? ( 'File::Temp' => '0' ) : (),
         $self->_script_filenames ? ( 'Test::Script' => '1.05' ) : (),
     );
