@@ -100,11 +100,13 @@ sub gather_files {
 
     my @skips = map {; qr/$_/ } $self->skips;
 
-    my @module_filenames = $self->_module_filenames;
+    # we strip the leading lib/ so the %INC entry is correct - to avoid
+    # potentially loading the file again later
+    my @module_filenames = map { s{^lib/}{}; $_ } $self->_module_filenames;
+
     @module_filenames = grep {
-        (my $module = $_) =~ s{^lib/}{};
-        $module=~ s{[/\\]}{::}g;
-        $module=~ s/\.pm$//;
+        (my $module = $_) =~ s{[/\\]}{::}g;
+        $module =~ s/\.pm$//;
         not grep { $module =~ $_ } @skips
     } @module_filenames if @skips;
 
