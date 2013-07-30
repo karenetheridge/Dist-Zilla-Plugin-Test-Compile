@@ -1,6 +1,8 @@
 Revision history for Dist::Zilla::Plugin::CompileTests
 
 {{$NEXT}}
+ - .pm files are once again tested with -Ilib, instead of -Mblib, to avoid
+   potentially loading files twice (this was changed in 2.009).
 
 2.011     2013-07-28 23:45:53 Europe/Paris
  - .pod files are now always omitted from the list of found modules in the

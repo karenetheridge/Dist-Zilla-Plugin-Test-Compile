@@ -302,7 +302,7 @@ my @warnings;
 for my $lib (@module_files)
 {
     my ($stdout, $stderr, $exit) = capture {
-        system($^X, '-Mblib', '-e', qq{require qq[$lib]});
+        system($^X, '-Ilib', '-e', qq{require qq[$lib]});
     };
     is($?, 0, "$lib loaded ok");
     warn $stderr if $stderr;
