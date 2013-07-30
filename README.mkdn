@@ -4,7 +4,7 @@ Dist::Zilla::Plugin::Test::Compile - common tests to check syntax of your module
 
 # VERSION
 
-version 2.011
+version 2.012
 
 # SYNOPSIS
 
@@ -19,8 +19,8 @@ In your dist.ini:
 
 # DESCRIPTION
 
-This is an extension of [Dist::Zilla::Plugin::InlineFiles](http://search.cpan.org/perldoc?Dist::Zilla::Plugin::InlineFiles), providing
-the following files:
+This is a plugin that runs at the [gather files](http://search.cpan.org/perldoc?Dist::Zilla::Role::FileGatherer) stage,
+providing the following files:
 
 - `t/00-compile.t` - a standard test to check syntax of bundled modules
 

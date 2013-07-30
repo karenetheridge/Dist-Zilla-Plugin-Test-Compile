@@ -1,6 +1,8 @@
 Revision history for Dist::Zilla::Plugin::CompileTests
 
 {{$NEXT}}
+
+2.012     2013-07-30 20:12:53 Europe/Paris
  - .pm files are once again tested with -Ilib, instead of -Mblib, to avoid
    potentially loading files twice (this was changed in 2.009).
 
