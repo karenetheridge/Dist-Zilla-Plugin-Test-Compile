@@ -88,6 +88,7 @@ sub register_prereqs
         },
         'Test::More' => $self->_test_more_version,
         'Capture::Tiny' => '0',
+        'blib' => '0',
         $self->fake_home ? ( 'File::Temp' => '0' ) : (),
         $self->_script_filenames ? ( 'Test::Script' => '1.05' ) : (),
     );
@@ -302,7 +303,7 @@ my @warnings;
 for my $lib (@module_files)
 {
     my ($stdout, $stderr, $exit) = capture {
-        system($^X, '-Ilib', '-e', qq{require qq[$lib]});
+        system($^X, '-Mblib', '-e', qq{require qq[$lib]});
     };
     is($?, 0, "$lib loaded ok");
     warn $stderr if $stderr;
