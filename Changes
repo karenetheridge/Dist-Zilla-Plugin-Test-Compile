@@ -1,6 +1,8 @@
 Revision history for Dist::Zilla::Plugin::CompileTests
 
 {{$NEXT}}
+
+2.013     2013-07-30 20:54:52 Europe/Paris
  - .pm files are tested with -Mblib again; 2.012 was a mistake.
  - now require()ing files without the leading lib/, to avoid potentially
    loading files twice (a problem since 2.009) - thanks dolmen and haarg!
