@@ -1,4 +1,4 @@
-Revision history for Dist::Zilla::Plugin::CompileTests
+Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
