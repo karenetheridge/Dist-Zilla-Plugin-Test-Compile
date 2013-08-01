@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.014     2013-08-01 03:37:00 Europe/Paris
  - fix install tests on win32, broken since 2.011 (RT#84781)
  - properly munge filenames on win32 (broken since 2.013)
 
