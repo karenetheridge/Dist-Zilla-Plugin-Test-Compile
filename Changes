@@ -2,6 +2,7 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
  - fix install tests on win32, broken since 2.011 (RT#84781)
+ - properly munge filenames on win32 (broken since 2.013)
 
 2.013     2013-07-30 20:54:52 Europe/Paris
  - .pm files are tested with -Mblib again; 2.012 was a mistake.
