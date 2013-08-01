@@ -20,14 +20,20 @@ ok( -e $file, 'test created');
 unlike($file->slurp(chomp => 1), qr/\s$/m, 'no trailing whitespace in generated test');
 
 my $cwd = getcwd;
+my $files_tested;
 subtest 'run the generated test' => sub
 {
     chdir $build_dir;
     system($^X, 'Makefile.PL');
     system($Config{make});
 
+    local $ENV{AUTHOR_TESTING} = 1;
     do $file;
+
+    $files_tested = Test::Builder->new->current_test;
 };
+
+is($files_tested, 3, 'two files were tested, plus warnings checked');
 
 chdir $cwd;
 
