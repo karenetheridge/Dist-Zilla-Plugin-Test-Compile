@@ -4,6 +4,7 @@ use warnings;
 use Dist::Zilla::Tester;
 use Path::Class;
 use Cwd;
+use Config;
 use Test::More;
 
 # build fake dist
@@ -23,7 +24,7 @@ subtest 'run the generated test' => sub
 {
     chdir $build_dir;
     system($^X, 'Makefile.PL');
-    system('make');
+    system($Config{make});
 
     do $file;
 };
