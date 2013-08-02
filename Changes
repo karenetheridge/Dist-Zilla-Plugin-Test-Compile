@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - convert Foo\Bar.pm to Foo/Bar.pm for proper %INC retrieval on win32
+   (thanks, haarg!)
 
 2.015     2013-08-02 19:22:28 Europe/Paris
  - fix double-quoting of file paths in require statement, introduced in v2.006

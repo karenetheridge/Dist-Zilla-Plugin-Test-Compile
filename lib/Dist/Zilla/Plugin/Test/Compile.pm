@@ -6,7 +6,7 @@ package Dist::Zilla::Plugin::Test::Compile;
 # ABSTRACT: common tests to check syntax of your modules
 
 use Moose;
-use File::Spec;
+use Path::Tiny;
 use Data::Section -setup;
 with (
     'Dist::Zilla::Role::FileGatherer',
@@ -101,9 +101,9 @@ sub gather_files {
 
     my @skips = map {; qr/$_/ } $self->skips;
 
-    # we strip the leading lib/ so the %INC entry is correct - to avoid
-    # potentially loading the file again later
-    my @module_filenames = map { File::Spec->abs2rel($_, 'lib') } $self->_module_filenames;
+    # we strip the leading lib/, and convert win32 \ to /, so the %INC entry
+    # is correct - to avoid potentially loading the file again later
+    my @module_filenames = map { path($_)->relative('lib')->stringify } $self->_module_filenames;
 
     @module_filenames = grep {
         (my $module = $_) =~ s{[/\\]}{::}g;
