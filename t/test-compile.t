@@ -33,7 +33,7 @@ subtest 'run the generated test' => sub
     $files_tested = Test::Builder->new->current_test;
 };
 
-is($files_tested, 3, 'two files were tested, plus warnings checked');
+is($files_tested, 4, 'correct number of files were tested, plus warnings checked');
 
 chdir $cwd;
 
