@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - fix conflicts metadata entry for Test::Kwalitee::Extra (I misinterpreted
+   the metaspec as to what conflicts actually means!)
 
 2.016     2013-08-02 19:48:44 Europe/Paris
  - convert Foo\Bar.pm to Foo/Bar.pm for proper %INC retrieval on win32
