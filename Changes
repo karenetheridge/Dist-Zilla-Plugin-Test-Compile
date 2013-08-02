@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.016     2013-08-02 19:48:44 Europe/Paris
  - convert Foo\Bar.pm to Foo/Bar.pm for proper %INC retrieval on win32
    (thanks, haarg!)
 
