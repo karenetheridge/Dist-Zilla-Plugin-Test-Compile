@@ -7,7 +7,8 @@ package Dist::Zilla::Plugin::Test::Compile;
 
 use Moose;
 use Path::Tiny;
-use Data::Section -setup;
+use Sub::Exporter::ForMethods 'method_installer'; # method_installer returns a sub.
+use Data::Section { installer => method_installer }, -setup;
 with (
     'Dist::Zilla::Role::FileGatherer',
     'Dist::Zilla::Role::TextTemplate',
@@ -25,6 +26,7 @@ with (
 );
 
 use Moose::Util::TypeConstraints;
+use namespace::autoclean;
 
 # -- attributes
 
@@ -136,7 +138,6 @@ sub gather_files
     }
 }
 
-no Moose;
 __PACKAGE__->meta->make_immutable;
 1;
 
