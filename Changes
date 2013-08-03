@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - delay inserting the list of modules to check until after all plugins have
+   had an opportunity to add files (found via RT#87562)
 
 2.017     2013-08-03 19:06:44 Europe/Paris
  - fix conflicts metadata entry for Test::Kwalitee::Extra (I misinterpreted

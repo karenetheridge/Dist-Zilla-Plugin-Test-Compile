@@ -11,6 +11,7 @@ use Sub::Exporter::ForMethods 'method_installer'; # method_installer returns a s
 use Data::Section { installer => method_installer }, -setup;
 with (
     'Dist::Zilla::Role::FileGatherer',
+    'Dist::Zilla::Role::FileMunger',
     'Dist::Zilla::Role::TextTemplate',
     'Dist::Zilla::Role::FileFinderUser' => {
         method          => 'found_module_files',
@@ -101,6 +102,23 @@ sub gather_files
 {
     my $self = shift;
 
+    require Dist::Zilla::File::InMemory;
+
+    for my $file (qw( t/00-compile.t )){
+        $self->add_file( Dist::Zilla::File::InMemory->new(
+            name => $file,
+            content => ${$self->section_data($file)},
+        ));
+    }
+}
+
+sub munge_file
+{
+    my ($self, $file) = @_;
+
+    # cannot check full name, as the file may have been moved by [ExtraTests].
+    return unless $file->name =~ /\b00-compile.t$/;
+
     my @skips = map {; qr/$_/ } $self->skips;
 
     # we strip the leading lib/, and convert win32 \ to /, so the %INC entry
@@ -116,26 +134,23 @@ sub gather_files
     # pod never returns true when loaded
     @module_filenames = grep { !/\.pod$/ } @module_filenames;
 
-    require Dist::Zilla::File::InMemory;
+    $file->content(
+        $self->fill_in_string(
+            $file->content,
+            {
+                plugin_version => \($self->VERSION),
+                test_more_version => \($self->_test_more_version),
+                module_filenames => \@module_filenames,
+                script_filenames => [ $self->_script_filenames ],
+                fake_home => \($self->fake_home),
+                needs_display => \($self->needs_display),
+                bail_out_on_fail => \($self->bail_out_on_fail),
+                fail_on_warning => \($self->fail_on_warning),
+            }
+        )
+    );
 
-    for my $file (qw( t/00-compile.t )){
-        $self->add_file( Dist::Zilla::File::InMemory->new(
-            name => $file,
-            content => $self->fill_in_string(
-                ${$self->section_data($file)},
-                {
-                    plugin_version => \($self->VERSION),
-                    test_more_version => \($self->_test_more_version),
-                    module_filenames => \@module_filenames,
-                    script_filenames => [ $self->_script_filenames ],
-                    fake_home => \($self->fake_home),
-                    needs_display => \($self->needs_display),
-                    bail_out_on_fail => \($self->bail_out_on_fail),
-                    fail_on_warning => \($self->fail_on_warning),
-                }
-            ),
-        ));
-    }
+    return;
 }
 
 __PACKAGE__->meta->make_immutable;
@@ -146,6 +161,7 @@ __PACKAGE__->meta->make_immutable;
     mvp_aliases
     register_prereqs
     gather_files
+    munge_file
 
 
 =head1 SYNOPSIS
