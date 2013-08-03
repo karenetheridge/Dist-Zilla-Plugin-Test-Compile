@@ -95,9 +95,9 @@ sub register_prereqs
     );
 }
 
-sub gather_files {
-
-    my ( $self , ) = @_;
+sub gather_files
+{
+    my $self = shift;
 
     my @skips = map {; qr/$_/ } $self->skips;
 
