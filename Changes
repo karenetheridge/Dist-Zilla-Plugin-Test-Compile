@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.017     2013-08-03 19:06:44 Europe/Paris
  - fix conflicts metadata entry for Test::Kwalitee::Extra (I misinterpreted
    the metaspec as to what conflicts actually means!)
 
