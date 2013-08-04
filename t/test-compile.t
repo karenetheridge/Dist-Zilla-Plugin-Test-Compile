@@ -17,7 +17,7 @@ my $build_dir = $tzil->tempdir->subdir('build');
 my $file = file($build_dir, 't', '00-compile.t');
 ok( -e $file, 'test created');
 
-unlike($file->slurp(chomp => 1), qr/\s$/m, 'no trailing whitespace in generated test');
+unlike($file->slurp, qr/[^\S\n]\n/m, 'no trailing whitespace in generated test');
 
 my $cwd = getcwd;
 my $files_tested;
