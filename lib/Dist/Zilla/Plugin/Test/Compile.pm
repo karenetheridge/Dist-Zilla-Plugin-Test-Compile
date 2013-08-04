@@ -154,7 +154,6 @@ sub munge_file
 }
 
 __PACKAGE__->meta->make_immutable;
-1;
 
 =for Pod::Coverage::TrustPod
     mvp_multivalue_args
@@ -331,16 +330,6 @@ for my $lib (@module_files)
 }
 
 {{
-($fail_on_warning ne 'none'
-    ? q{is(scalar(@warnings), 0, 'no warnings found')}
-    : '# no warning checks')
-.
-($fail_on_warning eq 'author'
-    ? ' if $ENV{AUTHOR_TESTING};'
-    : ';')
-}}
-
-{{
 @script_filenames
     ? <<'CODE'
 use Test::Script 1.05;
@@ -349,6 +338,16 @@ foreach my $file ( @scripts ) {
 }
 CODE
     : '';
+}}
+
+{{
+($fail_on_warning ne 'none'
+    ? q{is(scalar(@warnings), 0, 'no warnings found')}
+    : '# no warning checks')
+.
+($fail_on_warning eq 'author'
+    ? ' if $ENV{AUTHOR_TESTING};'
+    : ';')
 }}
 
 {{
