@@ -8,7 +8,9 @@ package Dist::Zilla::Plugin::Test::Compile;
 use Moose;
 use Path::Tiny;
 use Sub::Exporter::ForMethods 'method_installer'; # method_installer returns a sub.
-use Data::Section { installer => method_installer }, -setup;
+use Data::Section 0.004 # fixed header_re
+    { installer => method_installer }, '-setup';
+
 with (
     'Dist::Zilla::Role::FileGatherer',
     'Dist::Zilla::Role::FileMunger',
