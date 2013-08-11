@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - now properly handling filenames with non-ascii characters
 
 2.018     2013-08-04 03:25:37 Europe/Paris
  - delay inserting the list of modules to check until after all plugins have

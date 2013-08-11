@@ -27,7 +27,7 @@ my @files = qw(
     bin/foobar
 );
 
-like($content, qr/^\Q$_\E/m, "test checks $_") foreach @files;
+like($content, qr/'\Q$_\E'/m, "test checks $_") foreach @files;
 
 my $cwd = getcwd;
 my $files_tested;

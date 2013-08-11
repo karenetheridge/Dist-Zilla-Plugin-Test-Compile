@@ -302,12 +302,12 @@ CODE
 
 use Capture::Tiny qw{ capture };
 
-my @module_files = qw(
-{{ join("\n", sort @module_filenames) }}
+my @module_files = (
+{{ join(",\n", map { "    '" . $_ . "'" } map { s/'/\\'/g; $_ } sort @module_filenames) }}
 );
 
-my @scripts = qw(
-{{ join("\n", sort @script_filenames) }}
+my @scripts = (
+{{ join(",\n", map { "    '" . $_ . "'" } map { s/'/\\'/g; $_ } sort @script_filenames) }}
 );
 
 {{
