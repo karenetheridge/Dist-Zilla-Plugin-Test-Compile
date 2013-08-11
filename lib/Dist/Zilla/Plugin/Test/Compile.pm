@@ -300,8 +300,6 @@ CODE
     : ''
 }}
 
-use Capture::Tiny qw{ capture };
-
 my @module_files = (
 {{ join(",\n", map { "    '" . $_ . "'" } map { s/'/\\'/g; $_ } sort @module_filenames) }}
 );
@@ -319,6 +317,8 @@ local $ENV{HOME} = File::Temp::tempdir( CLEANUP => 1 );
 CODE
     : '# no fake home requested';
 }}
+
+use Capture::Tiny 'capture';
 
 my @warnings;
 for my $lib (@module_files)
