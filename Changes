@@ -2,6 +2,7 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
  - now properly handling filenames with non-ascii characters
+ - use IPC::Open3 for each subprocess, rather than Capture::Tiny
 
 2.018     2013-08-04 03:25:37 UTC+0100
  - delay inserting the list of modules to check until after all plugins have
