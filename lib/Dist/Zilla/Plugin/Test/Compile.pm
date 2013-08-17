@@ -135,6 +135,11 @@ sub munge_file
     # pod never returns true when loaded
     @module_filenames = grep { !/\.pod$/ } @module_filenames;
 
+    my @script_filenames = $self->_script_filenames;
+
+    $self->log_debug('adding module ' . $_) foreach @module_filenames;
+    $self->log_debug('adding script ' . $_) foreach @script_filenames;
+
     $file->content(
         $self->fill_in_string(
             $file->content,
@@ -142,7 +147,7 @@ sub munge_file
                 plugin_version => \($self->VERSION),
                 test_more_version => \($self->_test_more_version),
                 module_filenames => \@module_filenames,
-                script_filenames => [ $self->_script_filenames ],
+                script_filenames => \@script_filenames,
                 fake_home => \($self->fake_home),
                 needs_display => \($self->needs_display),
                 bail_out_on_fail => \($self->bail_out_on_fail),
