@@ -144,7 +144,8 @@ sub munge_file
         $self->fill_in_string(
             $file->content,
             {
-                plugin_version => \($self->VERSION),
+                dist => \($self->zilla),
+                plugin => \$self,
                 test_more_version => \($self->_test_more_version),
                 module_filenames => \@module_filenames,
                 script_filenames => \@script_filenames,
@@ -286,7 +287,7 @@ ___[ t/00-compile.t ]___
 use strict;
 use warnings;
 
-# This test was generated via Dist::Zilla::Plugin::Test::Compile {{ $plugin_version }}
+# this test was generated with {{ ref($plugin) . ' ' . $plugin->VERSION }}
 
 use Test::More {{ $test_more_version }};
 
