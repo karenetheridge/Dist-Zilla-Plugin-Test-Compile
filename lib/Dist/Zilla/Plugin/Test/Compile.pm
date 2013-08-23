@@ -223,6 +223,8 @@ warnings during compilation checks. Possible values are:
 installation of modules when upstream dependencies exhibit warnings in a new
 Perl release)
 
+=back
+
 =item * module_finder
 
 This is the name of a L<FileFinder|Dist::Zilla::Role::FileFinder> for finding
@@ -239,8 +241,6 @@ L<Dist::Zilla::Plugin::FileFinder::ByName|[FileFinder::ByName]> plugin.
 Just like C<module_finder>, but for finding scripts.  The default value is
 C<:ExecFiles> (you can use the L<Dist::Zilla::Plugin::ExecDir> plugin to mark
 those files as executables).
-
-=back
 
 =item * bail_out_on_fail: a boolean to indicate whether the test will BAIL_OUT
 of all subsequent tests when compilation failures are encountered. Defaults to false.
