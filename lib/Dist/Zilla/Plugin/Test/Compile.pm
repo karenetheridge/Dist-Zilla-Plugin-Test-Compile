@@ -172,7 +172,7 @@ __PACKAGE__->meta->make_immutable;
 
 =head1 SYNOPSIS
 
-In your dist.ini:
+In your F<dist.ini>:
 
     [Test::Compile]
     skip      = Test$
@@ -208,8 +208,10 @@ This plugin accepts the following options:
 match is done against the module name (C<Foo::Bar>), not the file path
 (F<lib/Foo/Bar.pm>).  This option can be repeated to specify multiple regexes.
 
+=for stopwords cpantesters
+
 =item * fake_home: a boolean to indicate whether to fake C<< $ENV{HOME} >>.
-This may be needed if your module unilateraly creates stuff in homedir:
+This may be needed if your module unilaterally creates stuff in the user's home directory:
 indeed, some cpantesters will smoke test your dist with a read-only home
 directory. Default to false.
 
@@ -234,6 +236,8 @@ Perl release)
 
 =item * module_finder
 
+=for stopwords FileFinder
+
 This is the name of a L<FileFinder|Dist::Zilla::Role::FileFinder> for finding
 modules to check.  The default value is C<:InstallModules>; this option can be
 used more than once.  .pod files are always omitted.
@@ -244,6 +248,8 @@ You can define your own with the
 L<Dist::Zilla::Plugin::FileFinder::ByName|[FileFinder::ByName]> plugin.
 
 =item * script_finder
+
+=for stopwords executables
 
 Just like C<module_finder>, but for finding scripts.  The default value is
 C<:ExecFiles> (you can use the L<Dist::Zilla::Plugin::ExecDir> plugin to mark
@@ -261,6 +267,8 @@ L<Test::NeedsDisplay>
 You can also look for information on this module at:
 
 =over 4
+
+=for stopwords AnnoCPAN
 
 =item * AnnoCPAN: Annotated CPAN documentation
 
