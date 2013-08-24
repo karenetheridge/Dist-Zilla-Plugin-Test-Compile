@@ -7,7 +7,7 @@ use Cwd;
 use Config;
 use Test::More;
 use JSON;
-use Module::CoreList;
+use Module::CoreList 2.77;
 use version;
 
 # build fake dist

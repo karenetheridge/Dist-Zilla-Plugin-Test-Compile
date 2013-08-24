@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - fixed test prereq for Module::CoreList (thanks ambs!)
 
 2.019     2013-08-24 04:09:07Z (Karen Etheridge)
  - now properly handling filenames with non-ascii characters
