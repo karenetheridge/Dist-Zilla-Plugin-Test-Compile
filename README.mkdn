@@ -4,11 +4,11 @@ Dist::Zilla::Plugin::Test::Compile - common tests to check syntax of your module
 
 # VERSION
 
-version 2.018
+version 2.019
 
 # SYNOPSIS
 
-In your dist.ini:
+In your `dist.ini`:
 
     [Test::Compile]
     skip      = Test$
@@ -36,7 +36,7 @@ This plugin accepts the following options:
 match is done against the module name (`Foo::Bar`), not the file path
 (`lib/Foo/Bar.pm`).  This option can be repeated to specify multiple regexes.
 - fake\_home: a boolean to indicate whether to fake `$ENV{HOME}`.
-This may be needed if your module unilateraly creates stuff in homedir:
+This may be needed if your module unilaterally creates stuff in the user's home directory:
 indeed, some cpantesters will smoke test your dist with a read-only home
 directory. Default to false.
 - needs\_display: a boolean to indicate whether to skip the compile test
@@ -49,22 +49,23 @@ warnings during compilation checks. Possible values are:
     - all: always test for warnings (not recommended, as this can prevent
     installation of modules when upstream dependencies exhibit warnings in a new
     Perl release)
-    - module\_finder
+- module\_finder
 
-        This is the name of a [FileFinder](http://search.cpan.org/perldoc?Dist::Zilla::Role::FileFinder) for finding
-        modules to check.  The default value is `:InstallModules`; this option can be
-        used more than once.  .pod files are always omitted.
+    This is the name of a [FileFinder](http://search.cpan.org/perldoc?Dist::Zilla::Role::FileFinder) for finding
+    modules to check.  The default value is `:InstallModules`; this option can be
+    used more than once.  .pod files are always omitted.
 
-        Other pre-defined finders are listed in
-        [FileFinder](http://search.cpan.org/perldoc?Dist::Zilla::Role::FileFinderUser#default\_finders).
-        You can define your own with the
-        [Dist::Zilla::Plugin::FileFinder::ByName](http://search.cpan.org/perldoc?\[FileFinder::ByName\]) plugin.
+    Other pre-defined finders are listed in
+    [FileFinder](http://search.cpan.org/perldoc?Dist::Zilla::Role::FileFinderUser#default\_finders).
+    You can define your own with the
+    [Dist::Zilla::Plugin::FileFinder::ByName](http://search.cpan.org/perldoc?\[FileFinder::ByName\]) plugin.
 
-    - script\_finder
+- script\_finder
 
-        Just like `module_finder`, but for finding scripts.  The default value is
-        `:ExecFiles` (you can use the [Dist::Zilla::Plugin::ExecDir](http://search.cpan.org/perldoc?Dist::Zilla::Plugin::ExecDir) plugin to mark
-        those files as executables).
+    Just like `module_finder`, but for finding scripts.  The default value is
+    `:ExecFiles` (you can use the [Dist::Zilla::Plugin::ExecDir](http://search.cpan.org/perldoc?Dist::Zilla::Plugin::ExecDir) plugin to mark
+    those files as executables).
+
 - bail\_out\_on\_fail: a boolean to indicate whether the test will BAIL\_OUT
 of all subsequent tests when compilation failures are encountered. Defaults to false.
 
@@ -105,6 +106,7 @@ the same terms as the Perl 5 programming language system itself.
 
 - Ahmad M. Zawawi <azawawi@ubuntu.(none)>
 - Chris Weyl <cweyl@alumni.drew.edu>
+- Graham Knop <haarg@haarg.org>
 - Harley Pig <harleypig@gmail.com>
 - Jerome Quelin <jquelin@gmail.com>
 - Jesse Luehrs <doy@tozt.net>

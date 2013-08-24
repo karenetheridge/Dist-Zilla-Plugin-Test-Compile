@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.019     2013-08-24 04:09:07Z (Karen Etheridge)
  - now properly handling filenames with non-ascii characters
  - use IPC::Open3 for each subprocess, rather than Capture::Tiny; test added
    to confirm that no non-core prereqs are used (except sometimes
