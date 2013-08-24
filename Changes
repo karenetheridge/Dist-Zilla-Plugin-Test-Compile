@@ -3,42 +3,42 @@ Revision history for {{$dist->name}}
 {{$NEXT}}
  - now properly handling filenames with non-ascii characters
 
-2.018     2013-08-04 03:25:37 Europe/Paris
+2.018     2013-08-04 03:25:37 UTC+0100
  - delay inserting the list of modules to check until after all plugins have
    had an opportunity to add files (found via RT#87562)
  - fail_on_warning setting now also takes into consideration the results of
    script compilation checks
 
-2.017     2013-08-03 19:06:44 Europe/Paris
+2.017     2013-08-03 19:06:44 UTC+0100
  - fix conflicts metadata entry for Test::Kwalitee::Extra (I misinterpreted
    the metaspec as to what conflicts actually means!)
 
-2.016     2013-08-02 19:48:44 Europe/Paris
+2.016     2013-08-02 19:48:44 UTC+0100
  - convert Foo\Bar.pm to Foo/Bar.pm for proper %INC retrieval on win32
    (thanks, haarg!)
 
-2.015     2013-08-02 19:22:28 Europe/Paris
+2.015     2013-08-02 19:22:28 UTC+0100
  - fix double-quoting of file paths in require statement, introduced in v2.006
    (thanks, Peter Shangov!)
 
-2.014     2013-08-01 03:37:00 Europe/Paris
+2.014     2013-08-01 03:37:00 UTC+0100
  - fix install tests on win32, broken since 2.011 (RT#84781)
  - properly munge filenames on win32 (broken since 2.013)
 
-2.013     2013-07-30 20:54:52 Europe/Paris
+2.013     2013-07-30 20:54:52 UTC+0100
  - .pm files are tested with -Mblib again; 2.012 was a mistake.
  - now require()ing files without the leading lib/, to avoid potentially
    loading files twice (a problem since 2.009) - thanks dolmen and haarg!
 
-2.012     2013-07-30 20:12:53 Europe/Paris
+2.012     2013-07-30 20:12:53 UTC+0100
  - .pm files are once again tested with -Ilib, instead of -Mblib, to avoid
    potentially loading files twice (this was changed in 2.009).
 
-2.011     2013-07-28 23:45:53 Europe/Paris
+2.011     2013-07-28 23:45:53 UTC+0100
  - .pod files are now always omitted from the list of found modules in the
    dist (thanks for the report, Alberto Simões!)
 
-2.010     2013-07-27 01:45:51 Europe/Paris
+2.010     2013-07-27 01:45:51 UTC+0100
  - add conflicts metadata for Test::Kwalitee::Extra, which does not like the
    require() syntax we use
  - all changes since 2.002 now as a stable release:
@@ -60,20 +60,20 @@ Revision history for {{$dist->name}}
    - properly inject all used modules as test prerequisites
    - now using Text::Template to generate the test, for simpler munging code
 
-2.009-TRIAL  2013-07-20 18:40:25 Europe/Paris
+2.009-TRIAL  2013-07-20 18:40:25 UTC+0100
  - the 'skip' option can now be provided multiple times
  - now using Text::Template to generate the test, for simpler munging code
  - properly inject all used modules as test prerequisites
 
-2.008-TRIAL  2013-07-20 02:40:11 Europe/Paris
+2.008-TRIAL  2013-07-20 02:40:11 UTC+0100
  - screen out skipped files at test generation time, rather than at runtime
    (and make skips work again - broken in 2.007-TRIAL)
 
-2.007-TRIAL  2013-07-20 02:14:30 Europe/Paris
+2.007-TRIAL  2013-07-20 02:14:30 UTC+0100
  - if there are scripts to be tested, Test::Script is now mandatory; accurate
    prerequisites are injected into the dist in all cases
 
-2.006-TRIAL  2013-07-17 20:38:55 Europe/Paris
+2.006-TRIAL  2013-07-17 20:38:55 UTC+0100
  - we now load the .pm file, rather than attempting to calculate the module
    name and then loading that
  - avoid trying to load Test::Script if there are no scripts to check
@@ -81,114 +81,112 @@ Revision history for {{$dist->name}}
    File::Find at runtime; the filefinders used are configurable.
  - modules used by the test are injected as test requires dependencies.
 
-2.005-TRIAL  2013-07-14 20:54:24 Europe/Paris
+2.005-TRIAL  2013-07-14 20:54:24 UTC+0100
  - fixed use of quoting in shell command to resolve mswin32 issues (introduced
    in 2.003)
  - include a comment in the generated test indicating how it was generated
 
-2.004-TRIAL  2013-07-01 06:17:25 Europe/Paris
+2.004-TRIAL  2013-07-01 06:17:25 UTC+0100
  - fixed typo in fail_on_warning=author
 
-2.003-TRIAL  2013-07-01 05:39:31 Europe/Paris
+2.003-TRIAL  2013-07-01 05:39:31 UTC+0100
  - new fail_on_warning option (Karen Etheridge)
 
-2.002     2013-04-28 17:19:00 Europe/Paris
+2.002     2013-04-28 17:19:00 UTC+0100
  - require version of Test::More that added is_passing()
    (RT#84904, Karen Etheridge)
 
-2.001     2013-02-12 13:03:37 Europe/Paris
+2.001     2013-02-12 13:03:37 UTC+0100
  - fix EOL in generated test (Olivier Mengué)
 
-2.000     2013-02-11 13:52:18 Europe/Paris
+2.000     2013-02-11 13:52:18 UTC+0100
  - new bail_out_on_fail option (Karen Etheridge)
  - dzil migrated to @Author::JQUELIN
 
-1.112820  2011-10-09 10:31:56 Europe/Paris
+1.112820  2011-10-09 10:31:56 UTC+0100
  - look for scripts in scripts/ too (chris weyl)
 
-1.112400  2011-08-28 13:41:01 Europe/Paris
+1.112400  2011-08-28 13:41:01 UTC+0100
  - fix breakage introduced by __END__ markers (randy stauner)
  - added test suite (randy stauner)
 
-1.112392  2011-08-27 11:56:36 Europe/Paris
+1.112392  2011-08-27 11:56:36 UTC+0100
  - examples/ updated to use new module name
 
-1.112391  2011-08-27 11:50:33 Europe/Paris
+1.112391  2011-08-27 11:50:33 UTC+0100
  - more aggressive deprecation in documentation
  - minimum date before DZP::CompileTests removal: 2012-08-27
  - github repository renamed to match new dist name
 
-1.112390  2011-08-27 11:40:32 Europe/Paris
+1.112390  2011-08-27 11:40:32 UTC+0100
  - renamed to Dist::Zilla::Plugin::Test::Compile. DZP::CompileTests,
    although deprecated, continues to work (fredric kent)
  - eliminate multiple phases work (fredric kent)
 
-1.112380  2011-08-26 13:28:44 Europe/Paris
+1.112380  2011-08-26 13:28:44 UTC+0100
  - skip non-perl scripts in bin directory (harley pig)
 
-1.110930  2011-04-03 11:19:08 Europe/Paris
+1.110930  2011-04-03 11:19:08 UTC+0100
  - fix rt#67183 - do not fail if no bin directory exists
 
-1.110870  2011-03-28 12:44:54 Europe/Paris
+1.110870  2011-03-28 12:44:54 UTC+0100
  - allow regex skip of script files (jesse luehrs)
 
-1.103030  2010-10-30 15:00:24 Europe/Paris
+1.103030  2010-10-30 15:00:24 UTC+0100
  - Removed reuse of Test::NeedsDisplay. It fails when DISPLAY is not
    set! (ahmad m. zawawi)
 
-1.103010  2010-10-28 17:26:19 Europe/Paris
+1.103010  2010-10-28 17:26:19 UTC+0100
  - no_display is now called needs_display and it reuses
    Test::NeedsDisplay (ahmad m. zawawi)
 
-1.103000  2010-10-27 09:16:26 Europe/Paris
+1.103000  2010-10-27 09:16:26 UTC+0100
  - new option no_display to skip tests on non win32 systems when
    $ENV{DISPLAY} is not set (ahmad m. zawawi)
 
-1.101800  2010-06-29 18:42:20 Europe/Paris
+1.101800  2010-06-29 18:42:20 UTC+0100
  - skip all if no test are to be run (jesse luehrs)
  - require module instead of use, to test only compilation (jesse luehrs)
 
-1.101600  2010-06-09 13:01:21 Europe/Paris
+1.101600  2010-06-09 13:01:21 UTC+0100
  - fix #55957: strip leading white spaces in module output
 
-1.101500  2010-05-30 17:55:12 Europe/Paris
+1.101500  2010-05-30 17:55:12 UTC+0100
  - fix #57974: test::script 1.05 changed its interface
 
-1.100740  2010-03-15 18:29:52 Europe/Paris
+1.100740  2010-03-15 18:29:52 UTC+0100
  - allow PERL5OPT to get a chance to be respected (marcel gruenauer)
 
-1.100220  2010-01-22 16:26:16 Europe/Paris
+1.100220  2010-01-22 16:26:16 UTC+0100
  - new param fake_home to control $ENV{HOME} faking
 
-1.100160  2010-01-16 14:43:14 Europe/Paris
+1.100160  2010-01-16 14:43:14 UTC+0100
  - requiring perl 5.8.x
  - faking $ENV{HOME} for cpantesters
 
-1.092870 Wed Oct 14 09:10:00 2009
+1.092870  2009-10-14 09:10:00
  - fix: skip did not update test count
 
-1.092840 Sun Oct 11 19:12:32 2009
+1.092840  2009-10-11 19:12:32
  - support for skip parameter
 
-1.092460 Thu Sep  3 17:26:23 2009
+1.092460  2009-09-03 17:26:23
  - using less magical load test (as kentnl reported)
 
-1.092370 Tue Aug 25 16:57:16 2009
+1.092370  2009-08-25 16:57:16
  - using plain File::Find which is core (rjbs)
  - moving to autoversion: 1.yydddn
 
-**
-
-0.1.3 Tue Aug 11 15:58:19 CEST 2009
+0.1.3   2009-08-11 15:58:19 CEST
  - automatically add File::Find::Rule to prereqs (fix #48602)
 
-0.1.2 Fri Aug  7 10:26:31 2009
+0.1.2   2009-08-07 10:26:31
  - skip script tests if test::script isn't installed
 
-0.1.1 Thu Aug  6 15:43:34 2009
+0.1.1   2009-08-06 15:43:34
  - fix manifest
 
-0.1.0 Thu Aug  6 15:34:26 2009
+0.1.0   2009-08-06 15:34:26
  - original release
  - basic compilation tests
 
