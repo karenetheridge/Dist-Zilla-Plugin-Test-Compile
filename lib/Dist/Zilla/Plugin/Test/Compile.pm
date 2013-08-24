@@ -93,7 +93,9 @@ sub register_prereqs
             phase => 'test',
         },
         'Test::More' => $self->_test_more_version,
-        'Capture::Tiny' => '0',
+        'IPC::Open3' => 0,
+        'IO::Handle' => 0,
+        'File::Spec' => 0,
         $self->fake_home ? ( 'File::Temp' => '0' ) : (),
         $self->_script_filenames ? ( 'Test::Script' => '1.05' ) : (),
     );
@@ -331,17 +333,26 @@ CODE
     : '# no fake home requested';
 }}
 
-use Capture::Tiny 'capture';
+use IPC::Open3;
+use IO::Handle;
+use File::Spec;
 
 my @warnings;
 for my $lib (@module_files)
 {
-    my ($stdout, $stderr, $exit) = capture {
-        system($^X, '-Mblib', '-e', qq{require q[$lib]});
-    };
-    is($?, 0, "$lib loaded ok");
-    warn $stderr if $stderr;
-    push @warnings, $stderr if $stderr;
+    open my $stdout, '>', File::Spec->devnull or die $!;
+    open my $stdin, '<', File::Spec->devnull or die $!;
+    my $stderr = IO::Handle->new;
+
+    my $pid = open3($stdin, $stdout, $stderr, qq{$^X -Mblib -e"require q[$lib]"});
+    waitpid($pid, 0);
+    is($? >> 8, 0, "$lib loaded ok");
+
+    if (my @_warnings = <$stderr>)
+    {
+        warn @_warnings;
+        push @warnings, @_warnings;
+    }
 }
 
 {{
