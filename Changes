@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.021     2013-08-27 00:59:49Z (Karen Etheridge)
  - fix incomplete prereq declaration on Test::Warnings
  - work around dubious test failure on win32 with absolute filenames in tests
 
