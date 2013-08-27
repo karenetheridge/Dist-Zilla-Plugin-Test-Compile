@@ -2,6 +2,7 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
  - fix incomplete prereq declaration on Test::Warnings
+ - work around dubious test failure on win32 with absolute filenames in tests
 
 2.020     2013-08-24 18:06:49Z (Karen Etheridge)
  - fixed test prereq for Module::CoreList (thanks ambs!)
