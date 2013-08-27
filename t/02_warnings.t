@@ -2,7 +2,7 @@ use strict;
 use warnings FATAL => 'all';
 
 use Test::More;
-use Test::Warnings ':all';
+use Test::Warnings 0.005 ':all';
 use Test::DZil;
 use Path::Class;
 use Cwd;
