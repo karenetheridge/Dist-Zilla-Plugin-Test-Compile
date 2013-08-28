@@ -245,9 +245,9 @@ modules to check.  The default value is C<:InstallModules>; this option can be
 used more than once.  .pod files are always omitted.
 
 Other pre-defined finders are listed in
-L<FileFinder|Dist::Zilla::Role::FileFinderUser/default_finders>.
+L<Dist::Zilla::Role::FileFinderUser/default_finders>.
 You can define your own with the
-L<Dist::Zilla::Plugin::FileFinder::ByName|[FileFinder::ByName]> plugin.
+L<[FileFinder::ByName]|Dist::Zilla::Plugin::FileFinder::ByName> plugin.
 
 =item * C<script_finder>
 
