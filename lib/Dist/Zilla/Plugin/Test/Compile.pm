@@ -254,8 +254,8 @@ L<Dist::Zilla::Plugin::FileFinder::ByName|[FileFinder::ByName]> plugin.
 =for stopwords executables
 
 Just like C<module_finder>, but for finding scripts.  The default value is
-C<:ExecFiles> (you can use the L<Dist::Zilla::Plugin::ExecDir> plugin to mark
-those files as executables).
+C<:ExecFiles> (see also L<Dist::Zilla::Plugin::ExecDir>, to make sure these
+files are properly marked as executables for the installer).
 
 =back
 
