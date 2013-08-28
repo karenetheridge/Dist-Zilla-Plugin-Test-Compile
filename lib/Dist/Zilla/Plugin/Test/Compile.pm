@@ -261,7 +261,13 @@ files are properly marked as executables for the installer).
 
 =head1 SEE ALSO
 
-L<Test::NeedsDisplay>
+=over 4
+
+=item * L<Test::NeedsDisplay>
+
+=item * L<Test::Script>
+
+=back
 
 You can also look for information on this module at:
 
