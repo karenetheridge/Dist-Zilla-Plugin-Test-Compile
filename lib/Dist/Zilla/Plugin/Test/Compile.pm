@@ -197,10 +197,7 @@ This test will find all modules and scripts in your dist, and try to
 compile them one by one. This means it's a bit slower than loading them
 all at once, but it will catch more errors.
 
-We currently only check F<bin/>, F<script/> and F<scripts/> for scripts.
-
 =back
-
 
 This plugin accepts the following options:
 
