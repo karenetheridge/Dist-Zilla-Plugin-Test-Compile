@@ -269,30 +269,6 @@ files are properly marked as executables for the installer).
 
 =back
 
-You can also look for information on this module at:
-
-=over 4
-
-=for stopwords AnnoCPAN
-
-=item * AnnoCPAN: Annotated CPAN documentation
-
-L<http://annocpan.org/dist/Dist-Zilla-Plugin-Test-Compile>
-
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/d/Dist-Zilla-Plugin-Test-Compile>
-
-=item * Open bugs
-
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Dist-Zilla-Plugin-Test-Compile>
-
-=item * Git repository
-
-L<http://github.com/jquelin/dist-zilla-plugin-test-compile.git>.
-
-=back
-
 =cut
 
 __DATA__
