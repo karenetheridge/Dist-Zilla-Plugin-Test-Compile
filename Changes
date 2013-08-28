@@ -2,6 +2,8 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
  - documentation fixes and cleanup
+ - added missing test prereq on Test::Script (but still not injected into the
+   built dist unless scripts are being shipped)
 
 2.021     2013-08-27 00:59:49Z (Karen Etheridge)
  - fix incomplete prereq declaration on Test::Warnings
