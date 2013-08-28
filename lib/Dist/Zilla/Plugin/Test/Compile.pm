@@ -203,37 +203,37 @@ This plugin accepts the following options:
 
 =over 4
 
-=item * skip: a regex to skip compile test for modules matching it. The
+=item * C<skip>: a regex to skip compile test for modules matching it. The
 match is done against the module name (C<Foo::Bar>), not the file path
 (F<lib/Foo/Bar.pm>).  This option can be repeated to specify multiple regexes.
 
 =for stopwords cpantesters
 
-=item * fake_home: a boolean to indicate whether to fake C<< $ENV{HOME} >>.
+=item * C<fake_home>: a boolean to indicate whether to fake C<< $ENV{HOME} >>.
 This may be needed if your module unilaterally creates stuff in the user's home directory:
 indeed, some cpantesters will smoke test your dist with a read-only home
 directory. Default to false.
 
-=item * needs_display: a boolean to indicate whether to skip the compile test
+=item * C<needs_display>: a boolean to indicate whether to skip the compile test
 on non-Win32 systems when C<< $ENV{DISPLAY} >> is not set. Defaults to false.
 
-=item * fail_on_warning: a string to indicate when to add a test for
+=item * C<fail_on_warning>: a string to indicate when to add a test for
 warnings during compilation checks. Possible values are:
 
 =over 4
 
-=item * none: do not check for warnings
+=item * C<none>: do not check for warnings
 
-=item * author: check for warnings only when AUTHOR_TESTING is set
+=item * C<author>: check for warnings only when AUTHOR_TESTING is set
 (default, and recommended)
 
-=item * all: always test for warnings (not recommended, as this can prevent
+=item * C<all>: always test for warnings (not recommended, as this can prevent
 installation of modules when upstream dependencies exhibit warnings in a new
 Perl release)
 
 =back
 
-=item * module_finder
+=item * C<module_finder>
 
 =for stopwords FileFinder
 
@@ -246,7 +246,7 @@ L<FileFinder|Dist::Zilla::Role::FileFinderUser/default_finders>.
 You can define your own with the
 L<Dist::Zilla::Plugin::FileFinder::ByName|[FileFinder::ByName]> plugin.
 
-=item * script_finder
+=item * C<script_finder>
 
 =for stopwords executables
 
@@ -254,7 +254,7 @@ Just like C<module_finder>, but for finding scripts.  The default value is
 C<:ExecFiles> (you can use the L<Dist::Zilla::Plugin::ExecDir> plugin to mark
 those files as executables).
 
-=item * bail_out_on_fail: a boolean to indicate whether the test will BAIL_OUT
+=item * C<bail_out_on_fail>: a boolean to indicate whether the test will BAIL_OUT
 of all subsequent tests when compilation failures are encountered. Defaults to false.
 
 =back
