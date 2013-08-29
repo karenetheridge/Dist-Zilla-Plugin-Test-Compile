@@ -319,8 +319,9 @@ use File::Spec;
 my @warnings;
 for my $lib (@module_files)
 {
+    # see L<perlfaq8/How can I capture STDERR from an external command?>
+    my $stdin = '';     # converted to a gensym by open3
     open my $stdout, '>', File::Spec->devnull or die $!;
-    open my $stdin, '<', File::Spec->devnull or die $!;
     my $stderr = IO::Handle->new;
 
     my $pid = open3($stdin, $stdout, $stderr, qq{$^X -Mblib -e"require q[$lib]"});
