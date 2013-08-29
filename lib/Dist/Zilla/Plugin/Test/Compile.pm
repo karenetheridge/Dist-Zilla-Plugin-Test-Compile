@@ -96,7 +96,6 @@ sub register_prereqs
         'IPC::Open3' => 0,
         'IO::Handle' => 0,
         $self->fake_home ? ( 'File::Temp' => '0' ) : (),
-        $self->_script_filenames ? ( 'Test::Script' => '1.05' ) : (),
     );
 }
 
@@ -339,9 +338,20 @@ for my $lib (@module_files)
 {{
 @script_filenames
     ? <<'CODE'
-use Test::Script 1.05;
-foreach my $file ( @scripts ) {
-    script_compiles( $file, "$file compiles" );
+foreach my $file (@scripts)
+{
+    my $stdin = '';     # converted to a gensym by open3
+    my $stderr = IO::Handle->new;
+
+    my $pid = open3($stdin, '>&STDERR', $stderr, qq{$^X -Mblib -c $file});
+    waitpid($pid, 0);
+    is($? >> 8, 0, "$file compiled ok");
+
+    if (my @_warnings = grep { !/syntax OK$/ } <$stderr>)
+    {
+        warn @_warnings;
+        push @warnings, @_warnings;
+    }
 }
 CODE
     : '';
