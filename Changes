@@ -7,6 +7,7 @@ Revision history for {{$dist->name}}
  - removed use of Test::Script entirely for testing scripts - now instead we
    call perl -c ourselves
  - we can now properly test scripts using special flags such as -T
+ - now skipping non-perl scripts, by checking shebang lines
 
 2.022     2013-08-29 02:04:55Z (Karen Etheridge)
  - documentation fixes and cleanup

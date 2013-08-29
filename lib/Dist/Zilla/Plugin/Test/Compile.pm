@@ -342,7 +342,9 @@ foreach my $file (@scripts)
 {
     open my $fh, '<', $file or warn("Unable to open $file: $!"), next;
     my $line = <$fh>;
-    my ($flags) = ($line =~ /^#!.*?\bperl\b\s*(.*)$/);
+    close $fh and next unless $line =~ /^#!.*?\bperl\b\s*(.*)$/;
+
+    my $flags = $1;
 
     my $stdin = '';     # converted to a gensym by open3
     my $stderr = IO::Handle->new;
