@@ -37,20 +37,21 @@ ok( -e $file, 'test created');
 # run the tests
 
 my $cwd = getcwd;
-like(
-    warning {
-        subtest 'run the generated test' => sub
-        {
-            chdir $build_dir;
-            system($^X, 'Makefile.PL');
-            system($Config{make});
+my $warning = warning {
+    subtest 'run the generated test' => sub
+    {
+        chdir $build_dir;
+        system($^X, 'Makefile.PL');
+        system($Config{make});
 
-            do $file;
-        };
-    },
+        do $file;
+    };
+};
+like(
+    $warning,
     qr/^there was supposed to be a kaboom/,
     'warnings from compiling LittleKaboom are captured',
-);
+) or diag 'got warning(s): ', explain($warning);
 
 chdir $cwd;
 
