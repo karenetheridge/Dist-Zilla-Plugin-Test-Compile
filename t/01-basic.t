@@ -1,17 +1,18 @@
 use strict;
 use warnings;
 
-use Dist::Zilla::Tester;
+use Test::More;
+use Test::Warnings;
+use Test::DZil;
 use Path::Class;
 use Cwd;
 use Config;
-use Test::More;
 use JSON;
 use Module::CoreList 2.77;
 use version;
 
 # build fake dist
-my $tzil = Dist::Zilla::Tester->from_config({
+my $tzil = Builder->from_config({
     dist_root => dir(qw(t test-compile)),
 });
 $tzil->build;
