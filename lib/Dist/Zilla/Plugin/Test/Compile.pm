@@ -340,10 +340,14 @@ for my $lib (@module_files)
     ? <<'CODE'
 foreach my $file (@scripts)
 {
+    open my $fh, '<', $file or warn("Unable to open $file: $!"), next;
+    my $line = <$fh>;
+    my ($flags) = ($line =~ /^#!.*?\bperl\b\s*(.*)$/);
+
     my $stdin = '';     # converted to a gensym by open3
     my $stderr = IO::Handle->new;
 
-    my $pid = open3($stdin, '>&STDERR', $stderr, qq{$^X -Mblib -c $file});
+    my $pid = open3($stdin, '>&STDERR', $stderr, qq{$^X -Mblib $flags -c $file});
     waitpid($pid, 0);
     is($? >> 8, 0, "$file compiled ok");
 
