@@ -21,7 +21,7 @@ my $tzil = Builder->from_config(
 package LittleKaboom;
 use strict;
 use warnings;
-warn "there was supposed to be a kaboom\n";
+warn 'there was supposed to be a kaboom';
 1;
 MODULE
         },
@@ -37,7 +37,7 @@ ok( -e $file, 'test created');
 # run the tests
 
 my $cwd = getcwd;
-is(
+like(
     warning {
         subtest 'run the generated test' => sub
         {
@@ -48,7 +48,7 @@ is(
             do $file;
         };
     },
-    "there was supposed to be a kaboom\n",
+    qr/^there was supposed to be a kaboom/,
     'warnings from compiling LittleKaboom are captured',
 );
 
