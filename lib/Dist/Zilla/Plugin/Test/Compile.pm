@@ -95,7 +95,6 @@ sub register_prereqs
         'Test::More' => $self->_test_more_version,
         'IPC::Open3' => 0,
         'IO::Handle' => 0,
-        'File::Spec' => 0,
         $self->fake_home ? ( 'File::Temp' => '0' ) : (),
         $self->_script_filenames ? ( 'Test::Script' => '1.05' ) : (),
     );
@@ -314,17 +313,15 @@ CODE
 
 use IPC::Open3;
 use IO::Handle;
-use File::Spec;
 
 my @warnings;
 for my $lib (@module_files)
 {
     # see L<perlfaq8/How can I capture STDERR from an external command?>
     my $stdin = '';     # converted to a gensym by open3
-    open my $stdout, '>', File::Spec->devnull or die $!;
     my $stderr = IO::Handle->new;
 
-    my $pid = open3($stdin, $stdout, $stderr, qq{$^X -Mblib -e"require q[$lib]"});
+    my $pid = open3($stdin, '>&STDERR', $stderr, qq{$^X -Mblib -e"require q[$lib]"});
     waitpid($pid, 0);
     is($? >> 8, 0, "$lib loaded ok");
 
