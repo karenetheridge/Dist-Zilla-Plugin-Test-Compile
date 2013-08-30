@@ -37,6 +37,7 @@ ok( -e $file, 'test created');
 # run the tests
 
 my $cwd = getcwd;
+my $files_tested;
 my $warning = warning {
     subtest 'run the generated test' => sub
     {
@@ -46,6 +47,8 @@ my $warning = warning {
 
         do $file;
         warn $@ if $@;
+
+        $files_tested = Test::Builder->new->current_test;
     };
 };
 like(
@@ -53,6 +56,8 @@ like(
     qr/^there was supposed to be a kaboom/,
     'warnings from compiling LittleKaboom are captured',
 ) or diag 'got warning(s): ', explain($warning);
+
+is($files_tested, 1, 'correct number of files were tested (no warning checks');
 
 chdir $cwd;
 

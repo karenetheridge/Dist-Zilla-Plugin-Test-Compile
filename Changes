@@ -8,6 +8,8 @@ Revision history for {{$dist->name}}
    call perl -c ourselves
  - we can now properly test scripts using special flags such as -T
  - now skipping non-perl scripts, by checking shebang lines
+ - now any version of Test::More can be used (if the bail_out_on_fail option
+   is not set)
 
 2.022     2013-08-29 02:04:55Z (Karen Etheridge)
  - documentation fixes and cleanup

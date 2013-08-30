@@ -24,6 +24,7 @@ my $tzil = Builder->from_config(
 echo 'this is not perl!';
 exit 1;
 EXECUTABLE
+            file(qw(source bin qux)) => qq{#!/usr/bin/perl\nprint "script after foo\n";\n},
         },
     },
 );
@@ -45,6 +46,7 @@ my @warnings = warnings {
         system($Config{make});
 
         do $file;
+        warn $@ if $@;
     };
 };
 

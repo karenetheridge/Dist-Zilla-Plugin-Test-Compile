@@ -52,7 +52,7 @@ has _test_more_version => (
     is => 'ro', isa => 'Str',
     init_arg => undef,
     lazy => 1,
-    default => sub { shift->bail_out_on_fail ? '0.94' : '0.88' },
+    default => sub { shift->bail_out_on_fail ? '0.94' : '0' },
 );
 
 # note that these two attributes could conceivably be settable via dist.ini,
@@ -276,7 +276,12 @@ use warnings;
 
 # this test was generated with {{ ref($plugin) . ' ' . $plugin->VERSION }}
 
-use Test::More {{ $test_more_version }};
+use Test::More {{ $test_more_version || '' }} tests => {{
+    my $count = @module_filenames + @script_filenames;
+    $count += 1 if $fail_on_warning eq 'all';
+    $count .= ' + ($ENV{AUTHOR_TESTING} ? 1 : 0)' if $fail_on_warning eq 'author';
+    $count;
+}};
 
 {{
 $needs_display
@@ -339,10 +344,10 @@ for my $lib (@module_files)
 @script_filenames
     ? <<'CODE'
 foreach my $file (@scripts)
-{
+{ SKIP: {
     open my $fh, '<', $file or warn("Unable to open $file: $!"), next;
     my $line = <$fh>;
-    close $fh and next unless $line =~ /^#!.*?\bperl\b\s*(.*)$/;
+    close $fh and skip("$file isn't perl", 1) unless $line =~ /^#!.*?\bperl\b\s*(.*)$/;
 
     my $flags = $1;
 
@@ -358,7 +363,7 @@ foreach my $file (@scripts)
         warn @_warnings;
         push @warnings, @_warnings;
     }
-}
+} }
 CODE
     : '';
 }}
@@ -378,5 +383,3 @@ $bail_out_on_fail
     ? 'BAIL_OUT("Compilation problems") if !Test::More->builder->is_passing;'
     : '';
 }}
-
-done_testing;
