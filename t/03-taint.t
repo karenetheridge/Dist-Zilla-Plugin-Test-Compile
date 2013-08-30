@@ -44,6 +44,7 @@ my @warnings = warnings {
         system($Config{make});
 
         do $file;
+        warn $@ if $@;
     };
 };
 

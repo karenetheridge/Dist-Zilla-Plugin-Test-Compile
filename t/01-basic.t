@@ -43,6 +43,7 @@ subtest 'run the generated test' => sub
 
     local $ENV{AUTHOR_TESTING} = 1;
     do $file;
+    warn $@ if $@;
 
     $files_tested = Test::Builder->new->current_test;
 };

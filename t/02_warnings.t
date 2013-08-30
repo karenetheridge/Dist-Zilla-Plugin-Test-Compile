@@ -45,6 +45,7 @@ my $warning = warning {
         system($Config{make});
 
         do $file;
+        warn $@ if $@;
     };
 };
 like(
