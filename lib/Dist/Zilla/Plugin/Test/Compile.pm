@@ -297,9 +297,13 @@ my @module_files = (
 {{ join(",\n", map { "    '" . $_ . "'" } map { s/'/\\'/g; $_ } sort @module_filenames) }}
 );
 
-my @scripts = (
-{{ join(",\n", map { "    '" . $_ . "'" } map { s/'/\\'/g; $_ } sort @script_filenames) }}
-);
+{{
+    @script_filenames
+        ? 'my @scripts = (' . "\n"
+          . join(",\n", map { "    '" . $_ . "'" } map { s/'/\\'/g; $_ } sort @script_filenames)
+          . "\n" . ');'
+        : ''
+}}
 
 {{
 $fake_home
