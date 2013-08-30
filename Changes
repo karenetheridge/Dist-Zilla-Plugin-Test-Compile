@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.023     2013-08-30 01:27:54Z (Karen Etheridge)
  - now routing subprocesses' stdout to our stderr rather than throwing it
    away, for greater visibility into any side effects caused by loading
    modules
