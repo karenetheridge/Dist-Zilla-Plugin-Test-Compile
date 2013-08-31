@@ -220,9 +220,9 @@ warnings during compilation checks. Possible values are:
 
 =over 4
 
-=item * C<none>: do not check for warnings
+=item * C<none>: do not test for warnings
 
-=item * C<author>: check for warnings only when AUTHOR_TESTING is set
+=item * C<author>: test for warnings only when AUTHOR_TESTING is set
 (default, and recommended)
 
 =item * C<all>: always test for warnings (not recommended, as this can prevent
