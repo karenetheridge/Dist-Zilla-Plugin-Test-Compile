@@ -4,7 +4,7 @@ use warnings;
 use Test::More;
 use Test::Warnings;
 use Test::DZil;
-use Path::Class;
+use Path::Tiny;
 use Cwd;
 use Config;
 use JSON;
@@ -13,12 +13,12 @@ use version;
 
 # build fake dist
 my $tzil = Builder->from_config({
-    dist_root => dir(qw(t test-compile)),
+    dist_root => path(qw(t test-compile)),
 });
 $tzil->build;
 
 my $build_dir = $tzil->tempdir->subdir('build');
-my $file = file($build_dir, 't', '00-compile.t');
+my $file = path($build_dir, 't', '00-compile.t');
 ok( -e $file, 'test created');
 
 my $content = $file->slurp;

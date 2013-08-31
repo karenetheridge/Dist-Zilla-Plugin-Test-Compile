@@ -4,7 +4,7 @@ use warnings FATAL => 'all';
 use Test::More;
 use Test::Warnings 0.005 ':all';
 use Test::DZil;
-use Path::Class;
+use Path::Tiny;
 use Cwd;
 use Config;
 
@@ -18,13 +18,13 @@ my $tzil = Builder->from_config(
                 [ ExecDir => ],
                 [ 'Test::Compile' => { fail_on_warning => 'none' } ],
             ),
-            file(qw(source lib Foo.pm)) => "package Foo;\n1;\n",
-            file(qw(source bin foo)) => <<'EXECUTABLE',
+            path(qw(source lib Foo.pm)) => "package Foo;\n1;\n",
+            path(qw(source bin foo)) => <<'EXECUTABLE',
 #!/bin/bash
 echo 'this is not perl!';
 exit 1;
 EXECUTABLE
-            file(qw(source bin qux)) => qq{#!/usr/bin/perl\nprint "script after foo\n";\n},
+            path(qw(source bin qux)) => qq{#!/usr/bin/perl\nprint "script after foo\n";\n},
         },
     },
 );
@@ -32,7 +32,7 @@ EXECUTABLE
 $tzil->build;
 
 my $build_dir = $tzil->tempdir->subdir('build');
-my $file = file($build_dir, 't', '00-compile.t');
+my $file = path($build_dir, 't', '00-compile.t');
 ok(-e $file, 'test created');
 
 # run the tests
