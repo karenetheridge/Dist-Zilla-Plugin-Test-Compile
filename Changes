@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - update warning regexp in test yet again, due to win32 failures (does not
+   concern the generated test)
 
 2.023     2013-08-30 01:27:54Z (Karen Etheridge)
  - now routing subprocesses' stdout to our stderr rather than throwing it
