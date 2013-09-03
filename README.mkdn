@@ -4,7 +4,7 @@ Dist::Zilla::Plugin::Test::Compile - common tests to check syntax of your module
 
 # VERSION
 
-version 2.023
+version 2.024
 
 # SYNOPSIS
 
@@ -41,8 +41,8 @@ directory. Default to false.
 on non-Win32 systems when `$ENV{DISPLAY}` is not set. Defaults to false.
 - `fail_on_warning`: a string to indicate when to add a test for
 warnings during compilation checks. Possible values are:
-    - `none`: do not check for warnings
-    - `author`: check for warnings only when AUTHOR\_TESTING is set
+    - `none`: do not test for warnings
+    - `author`: test for warnings only when AUTHOR\_TESTING is set
     (default, and recommended)
     - `all`: always test for warnings (not recommended, as this can prevent
     installation of modules when upstream dependencies exhibit warnings in a new
