@@ -358,7 +358,7 @@ foreach my $file (@scripts)
     waitpid($pid, 0);
     is($? >> 8, 0, "$file compiled ok");
 
-    if (my @_warnings = grep { !/syntax OK\R/ } <$stderr>)
+    if (my @_warnings = grep { chomp; !/\bsyntax OK$/ } <$stderr>)
     {
         # temporary measure - win32 newline issues?
         warn map { _show_whitespace($_) } @_warnings;
