@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.025     2013-09-04 01:32:34Z (Karen Etheridge)
  - more thoroughly test the generated test that no non-core modules are
    required, and syntax does not require a perl later than 5.8.8
  - fix use of regex syntax in script checking that required perl 5.9.5
