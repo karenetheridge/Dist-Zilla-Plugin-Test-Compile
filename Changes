@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - more thoroughly test the generated test that no non-core modules are
+   required, and syntax does not require a perl later than 5.8.8
 
 2.024     2013-09-03 00:02:21Z (Karen Etheridge)
  - update warning regexp in test yet again, due to win32 failures (does not

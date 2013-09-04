@@ -7,8 +7,6 @@ use Test::DZil;
 use Path::Tiny;
 use Cwd;
 use Config;
-use JSON;
-use Module::CoreList 2.77;
 use version;
 
 # build fake dist
@@ -49,47 +47,6 @@ subtest 'run the generated test' => sub
 };
 
 is($files_tested, @files + 1, 'correct number of files were tested, plus warnings checked');
-
-
-# confirm that all injected prereqs are in core
-
-my $minimum_perl = version->parse('5.006002');  # minimum perl for any version of the prereq
-my $in_core_perl = version->parse('5.012000');  # minimum perl to contain the version we use
-
-my $metadata = JSON->new->ascii(1)->decode($tzil->slurp_file('build/META.json'));
-
-foreach my $prereq (keys %{$metadata->{prereqs}{test}{requires}})
-{
-    my $added_in = Module::CoreList->first_release($prereq);
-
-    # this code is borrowed ethusiastically from [OnlyCorePrereqs]
-    fail('detected a ' . 'test'
-        . ' requires dependency that is not in core: ' . $prereq)
-            if not defined $added_in;
-
-    fail('detected a ' . 'test'
-        . ' requires dependency that was not added to core until '
-        . $added_in . ': ' . $prereq)
-            if version->parse($added_in) > $minimum_perl;
-
-    my $has = $Module::CoreList::version{$in_core_perl->numify}{$prereq};
-    $has = version->parse($has);    # version.pm XS hates tie() - RT#87983
-    my $wanted = version->parse($metadata->{prereqs}{test}{requires}{$prereq});
-
-    fail('detected a ' . 'test' . ' requires dependency on '
-        . $prereq . ' ' . $wanted . ': perl ' . $in_core_perl
-        . ' only has ' . $has)
-                if $has < $wanted;
-
-    my $deprecated_in = Module::CoreList->deprecated_in($prereq);
-    fail('detected a ' . 'test'
-        . ' requires dependency that was deprecated from core in '
-        . $deprecated_in . ': '. $prereq)
-            if $deprecated_in;
-
-    pass("$prereq is available in perl $minimum_perl");
-    pass("$prereq $wanted is available in perl $in_core_perl") if $wanted;
-}
 
 chdir $cwd;
 
