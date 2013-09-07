@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - more fixes (hopefully the last) for script checking on win32
 
 2.025     2013-09-04 01:32:34Z (Karen Etheridge)
  - more thoroughly test the generated test that no non-core modules are
