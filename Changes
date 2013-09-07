@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.026     2013-09-07 00:47:15Z (Karen Etheridge)
  - more fixes (hopefully the last) for script checking on win32
 
 2.025     2013-09-04 01:32:34Z (Karen Etheridge)
