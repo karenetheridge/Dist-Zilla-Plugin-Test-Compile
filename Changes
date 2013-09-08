@@ -3,6 +3,7 @@ Revision history for {{$dist->name}}
 {{$NEXT}}
  - promise in documentation that the generated test requires no non-core
    modules, and is compatible with perl 5.6.2
+ - re-release with properly encoded META.yml
 
 2.026     2013-09-07 00:47:15Z (Karen Etheridge)
  - more fixes (hopefully the last) for script checking on win32
