@@ -3,7 +3,7 @@ use strict;
 use warnings;
 
 package Dist::Zilla::Plugin::Test::Compile;
-# ABSTRACT: common tests to check syntax of your modules
+# ABSTRACT: common tests to check syntax of your modules, only using core modules
 
 use Moose;
 use Path::Tiny;
@@ -194,6 +194,11 @@ providing the following files:
 This test will find all modules and scripts in your dist, and try to
 compile them one by one. This means it's a bit slower than loading them
 all at once, but it will catch more errors.
+
+The generated test is guaranteed to only depend on modules that are available
+in core.  Most options only require perl 5.6.2; the C<bail_out_on_fail> option
+requires the version of L<Test::More> that shipped with perl 5.12 (but the
+test still runs on perl 5.6).
 
 =back
 

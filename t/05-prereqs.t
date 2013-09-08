@@ -41,14 +41,15 @@ ok( -e $file, 'test created');
 # - check minimum perl version
 # - check prereqs required by this file - analyse for core (against latest perl)
 
-minimum_version_ok($file->stringify, '5.008008') or diag `perlver --blame $file`;
+my $minimum_perl = version->parse('5.006002');  # minimum perl for any version of the prereq
+my $in_core_perl = version->parse('5.012000');  # minimum perl to contain the version we use
+
+
+minimum_version_ok($file->stringify, $minimum_perl) or diag `perlver --blame $file`;
 
 
 my $scanner = Perl::PrereqScanner->new();
 my $file_req = $scanner->scan_string(scalar $file->slurp);
-
-my $minimum_perl = version->parse('5.008008');  # minimum perl for any version of the prereq
-my $in_core_perl = version->parse('5.012000');  # minimum perl to contain the version we use
 
 my $req_hash = $file_req->as_string_hash;
 
