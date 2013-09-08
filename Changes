@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.027     2013-09-08 16:36:45Z (Karen Etheridge)
  - promise in documentation that the generated test requires no non-core
    modules, and is compatible with perl 5.6.2
  - re-release with properly encoded META.yml
