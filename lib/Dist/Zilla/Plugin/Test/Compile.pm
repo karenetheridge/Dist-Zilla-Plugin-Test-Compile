@@ -38,6 +38,8 @@ has needs_display => ( is=>'ro', isa=>'Bool', default=>0 );
 has fail_on_warning => ( is=>'ro', isa=>enum([qw(none author all)]), default=>'author' );
 has bail_out_on_fail => ( is=>'ro', isa=>'Bool', default=>0 );
 
+has filename => ( is => 'ro', isa => 'Str', default => 't/00-compile.t' );
+
 sub mvp_multivalue_args { qw(skips) }
 sub mvp_aliases { return { skip => 'skips' } }
 
@@ -87,6 +89,8 @@ around dump_config => sub
 sub register_prereqs
 {
     my $self = shift;
+    # TODO: what if we install somewhere other than t/ ?
+    # maybe we need to also be told what phase to use.
     $self->zilla->register_prereqs(
         {
             type  => 'requires',
@@ -105,20 +109,17 @@ sub gather_files
 
     require Dist::Zilla::File::InMemory;
 
-    for my $file (qw( t/00-compile.t )){
-        $self->add_file( Dist::Zilla::File::InMemory->new(
-            name => $file,
-            content => ${$self->section_data($file)},
-        ));
-    }
+    $self->add_file( Dist::Zilla::File::InMemory->new(
+        name => $self->filename,
+        content => ${$self->section_data('test-compile')},
+    ));
 }
 
 sub munge_file
 {
     my ($self, $file) = @_;
 
-    # cannot check full name, as the file may have been moved by [ExtraTests].
-    return unless $file->name =~ /\b00-compile.t$/;
+    return unless $file->name eq $self->filename;
 
     my @skips = map {; qr/$_/ } $self->skips;
 
@@ -185,11 +186,7 @@ In your F<dist.ini>:
 =head1 DESCRIPTION
 
 This is a plugin that runs at the L<gather files|Dist::Zilla::Role::FileGatherer> stage,
-providing the following files:
-
-=over 4
-
-=item * F<t/00-compile.t> - a standard test to check syntax of bundled modules
+providing a test file (configurable, defaulting to F<t/00-compile.t>).
 
 This test will find all modules and scripts in your dist, and try to
 compile them one by one. This means it's a bit slower than loading them
@@ -200,11 +197,12 @@ in core.  Most options only require perl 5.6.2; the C<bail_out_on_fail> option
 requires the version of L<Test::More> that shipped with perl 5.12 (but the
 test still runs on perl 5.6).
 
-=back
-
 This plugin accepts the following options:
 
 =over 4
+
+=item * C<filename>: the name of the generated file. Defaults to
+F<t/00-compile.t>.
 
 =item * C<skip>: a regex to skip compile test for modules matching it. The
 match is done against the module name (C<Foo::Bar>), not the file path
@@ -275,7 +273,7 @@ files are properly marked as executables for the installer).
 =cut
 
 __DATA__
-___[ t/00-compile.t ]___
+___[ test-compile ]___
 use strict;
 use warnings;
 

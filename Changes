@@ -5,6 +5,8 @@ Revision history for {{$dist->name}}
  - warnings tests bypassed during installation, to prevent installation issues
    in the presence of deprecation warnings from upstream dependencies (in this
    case, via Moose 2.1100)
+ - new 'filename' option, for creating the compile test in a different
+   location
 
 2.027     2013-09-08 16:36:45Z (Karen Etheridge)
  - promise in documentation that the generated test requires no non-core
