@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - fix binmode issue on win32 (introduced in 2.026)
 
 2.027     2013-09-08 16:36:45Z (Karen Etheridge)
  - promise in documentation that the generated test requires no non-core
