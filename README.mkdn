@@ -4,7 +4,7 @@ Dist::Zilla::Plugin::Test::Compile - common tests to check syntax of your module
 
 # VERSION
 
-version 2.027
+version 2.028
 
 # SYNOPSIS
 
@@ -20,21 +20,21 @@ In your `dist.ini`:
 # DESCRIPTION
 
 This is a plugin that runs at the [gather files](http://search.cpan.org/perldoc?Dist::Zilla::Role::FileGatherer) stage,
-providing the following files:
+providing a test file (configurable, defaulting to `t/00-compile.t`).
 
-- `t/00-compile.t` - a standard test to check syntax of bundled modules
+This test will find all modules and scripts in your dist, and try to
+compile them one by one. This means it's a bit slower than loading them
+all at once, but it will catch more errors.
 
-    This test will find all modules and scripts in your dist, and try to
-    compile them one by one. This means it's a bit slower than loading them
-    all at once, but it will catch more errors.
-
-    The generated test is guaranteed to only depend on modules that are available
-    in core.  Most options only require perl 5.6.2; the `bail_out_on_fail` option
-    requires the version of [Test::More](http://search.cpan.org/perldoc?Test::More) that shipped with perl 5.12 (but the
-    test still runs on perl 5.6).
+The generated test is guaranteed to only depend on modules that are available
+in core.  Most options only require perl 5.6.2; the `bail_out_on_fail` option
+requires the version of [Test::More](http://search.cpan.org/perldoc?Test::More) that shipped with perl 5.12 (but the
+test still runs on perl 5.6).
 
 This plugin accepts the following options:
 
+- `filename`: the name of the generated file. Defaults to
+`t/00-compile.t`.
 - `skip`: a regex to skip compile test for modules matching it. The
 match is done against the module name (`Foo::Bar`), not the file path
 (`lib/Foo/Bar.pm`).  This option can be repeated to specify multiple regexes.

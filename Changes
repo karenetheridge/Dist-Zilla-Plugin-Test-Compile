@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.028     2013-09-10 01:12:53Z (Karen Etheridge)
  - fix binmode issue on win32 (introduced in 2.026)
  - warnings tests bypassed during installation, to prevent installation issues
    in the presence of deprecation warnings from upstream dependencies (in this
