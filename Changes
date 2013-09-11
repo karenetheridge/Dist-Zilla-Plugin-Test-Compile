@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - depend on fixed Test::Warning, where ':no_end_tests' also covers the
+   done_testing case
 
 2.029     2013-09-10 01:19:46Z (Karen Etheridge)
  - fix test failures for non-authors (oops)
