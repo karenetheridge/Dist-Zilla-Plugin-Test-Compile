@@ -57,7 +57,7 @@ like(
     'warnings from compiling LittleKaboom are captured',
 ) or diag 'got warning(s): ', explain($warning);
 
-is($files_tested, 1, 'correct number of files were tested (no warning checks');
+is($files_tested, 1, 'correct number of files were tested (no warning checks)');
 
 chdir $cwd;
 
