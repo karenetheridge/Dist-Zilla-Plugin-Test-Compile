@@ -2,8 +2,7 @@ use strict;
 use warnings FATAL => 'all';
 
 use Test::More;
-use Test::Warnings ':no_end_test', 'warnings';
-use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
+use Test::Warnings ':no_end_test', ':all';
 use Test::DZil;
 use Path::Tiny;
 use Cwd;
@@ -56,4 +55,5 @@ is(@warnings, 0, "no warnings when a script isn't perl")
 
 chdir $cwd;
 
+had_no_warnings if $ENV{AUTHOR_TESTING};
 done_testing;
