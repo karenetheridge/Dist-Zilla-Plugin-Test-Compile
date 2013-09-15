@@ -163,6 +163,8 @@ sub munge_file
 
 __PACKAGE__->meta->make_immutable;
 
+=pod
+
 =for Pod::Coverage::TrustPod
     mvp_multivalue_args
     mvp_aliases
