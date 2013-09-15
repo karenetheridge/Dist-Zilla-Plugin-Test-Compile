@@ -8,6 +8,13 @@ use Path::Tiny;
 use Cwd;
 use Config;
 
+BEGIN {
+    use Dist::Zilla::Plugin::Test::Compile;
+    $Dist::Zilla::Plugin::Test::Compile::VERSION = 9999
+        unless $Dist::Zilla::Plugin::Test::Compile::VERSION;
+}
+
+
 # build fake dist
 my $tzil = Builder->from_config({
     dist_root => path(qw(t test-compile)),
@@ -22,10 +29,10 @@ my $content = $file->slurp;
 unlike($content, qr/[^\S\n]\n/m, 'no trailing whitespace in generated test');
 
 my @files = (
-    path(qw(blib lib Foo.pm)),
-    path(qw(blib lib Baz.pm)),
-    path(qw(blib lib Baz Quz.pm)),
-    path(qw(script foobar)),
+    path(qw(Foo.pm)),
+    path(qw(Baz.pm)),
+    path(qw(Baz Quz.pm)),
+    path(qw(bin foobar)),
 );
 
 like($content, qr/'\Q$_\E'/m, "test checks $_") foreach @files;
