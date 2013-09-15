@@ -21,11 +21,11 @@ ok( -e $file, 'test created');
 my $content = $file->slurp;
 unlike($content, qr/[^\S\n]\n/m, 'no trailing whitespace in generated test');
 
-my @files = qw(
-    Foo.pm
-    Baz.pm
-    Baz/Quz.pm
-    bin/foobar
+my @files = (
+    path(qw(blib lib Foo.pm)),
+    path(qw(blib lib Baz.pm)),
+    path(qw(blib lib Baz Quz.pm)),
+    path(qw(script foobar)),
 );
 
 like($content, qr/'\Q$_\E'/m, "test checks $_") foreach @files;
