@@ -16,9 +16,45 @@ BEGIN {
 
 
 # build fake dist
-my $tzil = Builder->from_config({
-    dist_root => path(qw(t test-compile)),
-});
+my $tzil = Builder->from_config(
+    { dist_root => 't/does-not-exist' },
+    {
+        add_files => {
+            'source/dist.ini' => simple_ini(
+                [ GatherDir => ],
+                [ MakeMaker => ],
+                [ ExecDir => ],
+                [ MetaJSON => ],
+                [ 'Test::Compile' => { bail_out_on_fail => 1, fake_home => 1, } ],
+                # we generate a new module after we insert the compile test,
+                # to confirm that this module is picked up too
+                [ GenerateFile => 'file-from-code' => {
+                        filename => 'lib/Baz.pm',
+                        is_template => 0,
+                        content => [ 'package Baz;', '$VERSION = 0.001;', '1;' ],
+                    },
+                ],
+            ),
+            path(qw(source lib Foo.pm)) => <<'FOO',
+package Foo;
+# ABSTRACT: Foo
+1;
+__END__
+FOO
+            path(qw(source lib Bar.pod)) => qq{die 'this .pod file is not valid perl!';\n},
+            path(qw(source lib Baz Quz.pm)) => <<'BAZQUZ',
+package Baz::Quz;
+# ABSTRACT: Baz::Quz
+1;
+__END__
+BAZQUZ
+            path(qw(source bin foobar)) => <<'FOOBAR',
+#!/usr/bin/perl
+print "foo\n";
+FOOBAR
+        },
+    },
+);
 $tzil->build;
 
 my $build_dir = $tzil->tempdir->subdir('build');

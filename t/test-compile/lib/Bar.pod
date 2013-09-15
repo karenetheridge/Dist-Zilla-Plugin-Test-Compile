@@ -1,1 +1,0 @@
-die 'this .pod file is not valid perl!';
