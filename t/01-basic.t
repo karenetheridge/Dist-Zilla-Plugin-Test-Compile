@@ -7,7 +7,6 @@ use Test::DZil;
 use Path::Tiny;
 use Cwd;
 use Config;
-use version;
 
 # build fake dist
 my $tzil = Builder->from_config({
