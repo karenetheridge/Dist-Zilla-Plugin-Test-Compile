@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - explicitly funnel /dev/null into stdin when testing, to avoid win32 hang
+   issues (RT#88783)
 
 2.031     2013-09-19 04:49:51Z (Karen Etheridge)
  - bypass cmd.exe on win32 to try to avoid occasional hang issue (RT#88783)

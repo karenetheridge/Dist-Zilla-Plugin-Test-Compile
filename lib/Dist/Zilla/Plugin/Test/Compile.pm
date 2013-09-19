@@ -324,6 +324,7 @@ CODE
     : '# no fake home requested';
 }}
 
+use File::Spec;
 use IPC::Open3;
 use IO::Handle;
 
@@ -331,7 +332,7 @@ my @warnings;
 for my $lib (@module_files)
 {
     # see L<perlfaq8/How can I capture STDERR from an external command?>
-    my $stdin = '';     # converted to a gensym by open3
+    open my $stdin, '<', File::Spec->devnull or die $!;
     my $stderr = IO::Handle->new;
 
     my $pid = open3($stdin, '>&STDERR', $stderr, $^X, '-Mblib', '-e', "require q[$lib]");
@@ -349,7 +350,6 @@ for my $lib (@module_files)
 {{
 @script_filenames
     ? <<'CODE'
-use File::Spec;
 foreach my $file (@scripts)
 { SKIP: {
     open my $fh, '<', $file or warn("Unable to open $file: $!"), next;
@@ -358,7 +358,7 @@ foreach my $file (@scripts)
 
     my @flags = $1 ? split(/\s+/, $1) : ();
 
-    my $stdin = '';     # converted to a gensym by open3
+    open my $stdin, '<', File::Spec->devnull or die $!;
     my $stderr = IO::Handle->new;
 
     my $pid = open3($stdin, '>&STDERR', $stderr, $^X, '-Mblib', @flags, '-c', $file);
