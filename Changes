@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - bypass cmd.exe on win32 to try to avoid occasional hang issue (RT#88783)
 
 2.030     2013-09-11 05:01:26Z (Karen Etheridge)
  - depend on fixed Test::Warning, where ':no_end_tests' also covers the
