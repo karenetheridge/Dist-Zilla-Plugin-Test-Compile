@@ -335,7 +335,7 @@ for my $lib (@module_files)
     my $stderr = IO::Handle->new;
 
     my $pid = open3($stdin, '>&STDERR', $stderr, $^X, '-Mblib', '-e', "require q[$lib]");
-    binmode $stderr, ':crlf' if $^O; # eq 'MSWin32';
+    binmode $stderr, ':crlf' if $^O eq 'MSWin32';
     waitpid($pid, 0);
     is($? >> 8, 0, "$lib loaded ok");
 
