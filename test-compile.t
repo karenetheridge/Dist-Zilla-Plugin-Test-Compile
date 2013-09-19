@@ -27,7 +27,7 @@ for my $lib (@module_files)
     my $stderr = IO::Handle->new;
 
     # XXX I changed -Mblib to -Ilib so a build is not needed
-    my $pid = open3($stdin, '>&STDERR', $stderr, qq{$^X -Ilib -e"require q[$lib]"});
+    my $pid = open3($stdin, '>&STDERR', $stderr, $^X, '-Ilib', '-e', "require q[$lib]");
     binmode $stderr, ':crlf' if $^O eq 'MSWin32';
     waitpid($pid, 0);
     is($? >> 8, 0, "$lib loaded ok");
