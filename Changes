@@ -2,6 +2,10 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
  - add missing prereq injection for File::Spec, when scripts are being tested
+ - redo entire implementation, reverting from IPC::Open3 back to a capture{},
+   using an inlined form of the guts of Capture::Tiny courtesy of David
+   Golden, to address ongoing occasional hang issues on win32 (see RT#88783
+   for the longer version)
 
 2.031     2013-09-19 04:49:51Z (Karen Etheridge)
  - bypass cmd.exe on win32 to try to avoid occasional hang issue (RT#88783)
