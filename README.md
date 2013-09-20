@@ -4,7 +4,7 @@ Dist::Zilla::Plugin::Test::Compile - common tests to check syntax of your module
 
 # VERSION
 
-version 2.032
+version 2.033
 
 # SYNOPSIS
 
@@ -91,6 +91,7 @@ the same terms as the Perl 5 programming language system itself.
 
 - Ahmad M. Zawawi <azawawi@ubuntu.(none)>
 - Chris Weyl <cweyl@alumni.drew.edu>
+- David Golden <dagolden@cpan.org>
 - Graham Knop <haarg@haarg.org>
 - Harley Pig <harleypig@gmail.com>
 - Jerome Quelin <jquelin@gmail.com>
