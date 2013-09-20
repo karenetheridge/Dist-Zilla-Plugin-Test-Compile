@@ -360,17 +360,18 @@ foreach my $file (@scripts)
 
     my @flags = $1 ? split(/\s+/, $1) : ();
 
-    my $stdin = '';     # converted to a gensym by open3
+    open my $stdin, '<', File::Spec->devnull or die "can't open devnull: $!";
     my $stderr = IO::Handle->new;
 
     my $pid = open3($stdin, '>&STDERR', $stderr, $^X, '-Mblib', @flags, '-c', $file);
     binmode $stderr, ':crlf' if $^O eq 'MSWin32';
+    my @_warnings = <$stderr>;
     waitpid($pid, 0);
     is($? >> 8, 0, "$file compiled ok");
 
    # in older perls, -c output is simply the file portion of the path being tested
-    if (my @_warnings = grep { !/\bsyntax OK$/ }
-        grep { chomp; $_ ne (File::Spec->splitpath($file))[2] } <$stderr>)
+    if (@_warnings = grep { !/\bsyntax OK$/ }
+        grep { chomp; $_ ne (File::Spec->splitpath($file))[2] } @_warnings)
     {
         # temporary measure - win32 newline issues?
         warn map { _show_whitespace($_) } @_warnings;
