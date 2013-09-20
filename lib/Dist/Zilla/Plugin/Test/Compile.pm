@@ -280,7 +280,7 @@ ___[ test-compile ]___
 use strict;
 use warnings;
 
-# this test was generated with {{ ref($plugin) . ' ' . $plugin->VERSION }}
+# this test was generated with {{ ref($plugin) . ' ' . ($plugin->VERSION || '<self>') }}
 
 use Test::More {{ $test_more_version || '' }} tests => {{
     my $count = @module_filenames + @script_filenames;

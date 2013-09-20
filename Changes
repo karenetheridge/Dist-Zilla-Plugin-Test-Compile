@@ -3,6 +3,8 @@ Revision history for {{$dist->name}}
 {{$NEXT}}
  - revert to IPC::Open3 implementation from v2.031 and earlier, but with
    waitpid ordering fixed so we never hang (thanks haarg!)
+ - now bootstrapping ourselves so our own compile test is generated with the
+   version of code we are shipping, rather than version N-1
 
 2.032     2013-09-20 01:02:20Z (Karen Etheridge)
  - add missing prereq injection for File::Spec, when scripts are being tested
