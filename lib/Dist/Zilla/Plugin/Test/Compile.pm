@@ -97,10 +97,10 @@ sub register_prereqs
             phase => 'test',
         },
         'Test::More' => $self->_test_more_version,
+        'File::Spec' => '0',
         'IPC::Open3' => 0,
         'IO::Handle' => 0,
         $self->fake_home ? ( 'File::Temp' => '0' ) : (),
-        $self->_script_filenames ? ( 'File::Spec' => '0' ) : (),
     );
 }
 
@@ -325,6 +325,7 @@ CODE
     : '# no fake home requested';
 }}
 
+use File::Spec;
 use IPC::Open3;
 use IO::Handle;
 
@@ -351,7 +352,6 @@ for my $lib (@module_files)
 {{
 @script_filenames
     ? <<'CODE'
-use File::Spec;
 foreach my $file (@scripts)
 { SKIP: {
     open my $fh, '<', $file or warn("Unable to open $file: $!"), next;
