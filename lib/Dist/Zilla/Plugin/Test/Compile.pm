@@ -100,6 +100,7 @@ sub register_prereqs
         'IPC::Open3' => 0,
         'IO::Handle' => 0,
         $self->fake_home ? ( 'File::Temp' => '0' ) : (),
+        $self->_script_filenames ? ( 'File::Spec' => '0' ) : (),
     );
 }
 
