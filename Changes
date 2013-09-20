@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.032     2013-09-20 01:02:20Z (Karen Etheridge)
  - add missing prereq injection for File::Spec, when scripts are being tested
  - redo entire implementation, reverting from IPC::Open3 back to a capture{},
    using an inlined form of the guts of Capture::Tiny courtesy of David
