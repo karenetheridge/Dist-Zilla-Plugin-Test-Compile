@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - now checking the full, unshifted value of $? (thanks, ribasushi!)
 
 2.033     2013-09-20 23:52:40Z (Karen Etheridge)
  - revert to IPC::Open3 implementation from v2.031 and earlier, but with

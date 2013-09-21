@@ -340,7 +340,7 @@ for my $lib (@module_files)
     binmode $stderr, ':crlf' if $^O eq 'MSWin32';
     my @_warnings = <$stderr>;
     waitpid($pid, 0);
-    is($? >> 8, 0, "$lib loaded ok");
+    is($?, 0, "$lib loaded ok");
 
     if (@_warnings)
     {
@@ -367,7 +367,7 @@ foreach my $file (@scripts)
     binmode $stderr, ':crlf' if $^O eq 'MSWin32';
     my @_warnings = <$stderr>;
     waitpid($pid, 0);
-    is($? >> 8, 0, "$file compiled ok");
+    is($?, 0, "$file compiled ok");
 
    # in older perls, -c output is simply the file portion of the path being tested
     if (@_warnings = grep { !/\bsyntax OK$/ }
