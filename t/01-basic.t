@@ -35,19 +35,9 @@ my $tzil = Builder->from_config(
                     },
                 ],
             ),
-            path(qw(source lib Foo.pm)) => <<'FOO',
-package Foo;
-# ABSTRACT: Foo
-1;
-__END__
-FOO
+            path(qw(source lib Foo.pm)) => "package Foo;\n1;\n",
             path(qw(source lib Bar.pod)) => qq{die 'this .pod file is not valid perl!';\n},
-            path(qw(source lib Baz Quz.pm)) => <<'BAZQUZ',
-package Baz::Quz;
-# ABSTRACT: Baz::Quz
-1;
-__END__
-BAZQUZ
+            path(qw(source lib Baz Quz.pm)) => "package Baz::Quz;\n1;\n",
             path(qw(source bin foobar)) => <<'FOOBAR',
 #!/usr/bin/perl
 print "foo\n";
