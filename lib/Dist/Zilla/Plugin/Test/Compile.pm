@@ -190,7 +190,7 @@ In your F<dist.ini>:
 
 =head1 DESCRIPTION
 
-This is a plugin that runs at the L<gather files|Dist::Zilla::Role::FileGatherer> stage,
+This is a L<Dist::Zilla> plugin that runs at the L<gather files|Dist::Zilla::Role::FileGatherer> stage,
 providing a test file (configurable, defaulting to F<t/00-compile.t>).
 
 This test will find all modules and scripts in your dist, and try to
