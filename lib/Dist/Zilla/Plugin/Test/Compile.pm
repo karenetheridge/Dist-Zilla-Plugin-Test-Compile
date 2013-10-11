@@ -39,6 +39,7 @@ has fail_on_warning => ( is=>'ro', isa=>enum([qw(none author all)]), default=>'a
 has bail_out_on_fail => ( is=>'ro', isa=>'Bool', default=>0 );
 
 has filename => ( is => 'ro', isa => 'Str', default => 't/00-compile.t' );
+has phase => ( is => 'ro', isa => 'Str', default => 'test' );
 
 sub mvp_multivalue_args { qw(skips) }
 sub mvp_aliases { return { skip => 'skips' } }
@@ -89,12 +90,13 @@ around dump_config => sub
 sub register_prereqs
 {
     my $self = shift;
-    # TODO: what if we install somewhere other than t/ ?
-    # maybe we need to also be told what phase to use.
+
+    return unless $self->phase;
+
     $self->zilla->register_prereqs(
         {
             type  => 'requires',
-            phase => 'test',
+            phase => $self->phase,
         },
         'Test::More' => $self->_test_more_version,
         'File::Spec' => '0',
@@ -206,6 +208,10 @@ This plugin accepts the following options:
 
 =item * C<filename>: the name of the generated file. Defaults to
 F<t/00-compile.t>.
+
+=item * C<phase>: the phase for which to register prerequisites. Defaults
+to C<test>.  Setting this to a false value will disable prerequisite
+registration.
 
 =item * C<skip>: a regex to skip compile test for modules matching it. The
 match is done against the module name (C<Foo::Bar>), not the file path
