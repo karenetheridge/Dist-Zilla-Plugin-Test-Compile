@@ -6,7 +6,6 @@ use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 use Test::DZil;
 use Path::Tiny;
 use Cwd;
-use Config;
 
 my $tzil = Builder->from_config(
     { dist_root => 't/does-not-exist' },
@@ -14,9 +13,7 @@ my $tzil = Builder->from_config(
         add_files => {
             'source/dist.ini' => simple_ini(
                 [ GatherDir => ],
-                [ MakeMaker => ],
-                [ ExecDir => ],
-                [ 'Test::Compile' => { fail_on_warning => 'none', filename => 'xt/author/foo.t' } ],
+                [ 'Test::Compile' => { fail_on_warning => 'none', xt_mode => 1 } ],
             ),
             path(qw(source lib Foo.pm)) => "package Foo;\n1;\n",
         },
@@ -27,7 +24,7 @@ $tzil->build;
 
 my $build_dir = $tzil->tempdir->subdir('build');
 ok(!-e path($build_dir, 't', '00-compile.t'), 'default test not created');
-my $file = path($build_dir, 'xt', 'author', 'foo.t');
+my $file = path($build_dir, 'xt', 'author', '00-compile.t');
 ok(-e $file, 'test created using new name');
 
 my $cwd = getcwd;
@@ -35,8 +32,7 @@ my $files_tested;
 subtest 'run the generated test' => sub
 {
     chdir $build_dir;
-    system($^X, 'Makefile.PL');
-    system($Config{make});
+    # intentionally not running Makefile.PL...
 
     do $file;
     warn $@ if $@;

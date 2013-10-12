@@ -39,11 +39,17 @@ has fail_on_warning => ( is=>'ro', isa=>enum([qw(none author all)]), default=>'a
 has bail_out_on_fail => ( is=>'ro', isa=>'Bool', default=>0 );
 has xt_mode => ( is=>'ro', isa=>'Bool', default=>0 );
 
-has filename => ( is => 'ro', isa => 'Str', lazy_build => 1, );
-has phase => ( is => 'ro', isa => 'Str', lazy_build => 1 );
+has filename => (
+    is => 'ro', isa => 'Str',
+    lazy => 1,
+    default => sub { return ($_[0]->xt_mode ? 'xt/author' : 't') . '/00-compile.t' },
+);
 
-sub _build_filename { return( ($_[0]->xt_mode ? "xt/author" : "t" ) . "/00-compile.t" ) }
-sub _build_phase    { return(  $_[0]->xt_mode ? "develop" : "test" ) }
+has phase => (
+    is => 'ro', isa => 'Str',
+    lazy => 1,
+    default => sub { return $_[0]->xt_mode ? 'develop' : 'test' },
+);
 
 sub mvp_multivalue_args { qw(skips) }
 sub mvp_aliases { return { skip => 'skips' } }
