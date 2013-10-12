@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - files are loaded from lib/ if blib/ does not exist
 
 2.036     2013-10-12 21:32:51Z (Karen Etheridge)
  - new "xt_mode" option (thanks, David Golden!)

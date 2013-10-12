@@ -168,7 +168,6 @@ sub munge_file
                 needs_display => \($self->needs_display),
                 bail_out_on_fail => \($self->bail_out_on_fail),
                 fail_on_warning => \($self->fail_on_warning),
-                xt_mode => \($self->xt_mode),
             }
         )
     );
@@ -282,8 +281,7 @@ files are properly marked as executables for the installer).
 =item * C<xt_mode>
 
 When true, the default C<filename> becomes F<xt/author/00-compile.t> and the
-default C<dependency> phase becomes C<develop>. The test is adjusted to
-run against F<lib> instead of F<blib>.
+default C<dependency> phase becomes C<develop>.
 
 =back
 
@@ -349,7 +347,7 @@ CODE
     : '# no fake home requested';
 }}
 
-my $inc_switch = q[{{ $xt_mode ? '-Ilib' : '-Mblib' }}];
+my $inc_switch = -d 'blib' ? '-Mblib' : '-Ilib';
 
 use File::Spec;
 use IPC::Open3;
