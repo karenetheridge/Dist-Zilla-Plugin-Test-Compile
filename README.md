@@ -4,7 +4,7 @@ Dist::Zilla::Plugin::Test::Compile - common tests to check syntax of your module
 
 # VERSION
 
-version 2.034
+version 2.035
 
 # SYNOPSIS
 
@@ -19,7 +19,7 @@ In your `dist.ini`:
 
 # DESCRIPTION
 
-This is a plugin that runs at the [gather files](http://search.cpan.org/perldoc?Dist::Zilla::Role::FileGatherer) stage,
+This is a [Dist::Zilla](http://search.cpan.org/perldoc?Dist::Zilla) plugin that runs at the [gather files](http://search.cpan.org/perldoc?Dist::Zilla::Role::FileGatherer) stage,
 providing a test file (configurable, defaulting to `t/00-compile.t`).
 
 This test will find all modules and scripts in your dist, and try to
@@ -35,6 +35,9 @@ This plugin accepts the following options:
 
 - `filename`: the name of the generated file. Defaults to
 `t/00-compile.t`.
+- `phase`: the phase for which to register prerequisites. Defaults
+to `test`.  Setting this to a false value will disable prerequisite
+registration.
 - `skip`: a regex to skip compile test for modules matching it. The
 match is done against the module name (`Foo::Bar`), not the file path
 (`lib/Foo/Bar.pm`).  This option can be repeated to specify multiple regexes.
