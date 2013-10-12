@@ -7,6 +7,8 @@ use Test::DZil;
 use Path::Tiny;
 use Cwd;
 use Config;
+use Test::Deep;
+use Test::Deep::JSON;
 
 BEGIN {
     use Dist::Zilla::Plugin::Test::Compile;
@@ -49,7 +51,7 @@ $tzil->build;
 
 my $build_dir = $tzil->tempdir->subdir('build');
 my $file = path($build_dir, 't', '00-compile.t');
-ok( -e $file, 'test created');
+ok(-e $file, 'test created');
 
 my $content = $file->slurp;
 unlike($content, qr/[^\S\n]\n/m, 'no trailing whitespace in generated test');
@@ -62,6 +64,27 @@ my @files = (
 );
 
 like($content, qr/'\Q$_\E'/m, "test checks $_") foreach @files;
+
+my $json = $tzil->slurp_file('build/META.json');
+cmp_deeply(
+    $json,
+    json(superhashof({
+        prereqs => {
+                configure => ignore,
+                test => {
+                    requires => {
+                        'Test::More' => '0.94',
+                        'File::Spec' => '0',
+                        'IPC::Open3' => '0',
+                        'IO::Handle' => '0',
+                        'File::Temp' => '0',
+                    },
+                },
+            },
+        }),
+    ),
+    'prereqs are properly injected for the test phase',
+);
 
 my $cwd = getcwd;
 my $files_tested;
