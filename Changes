@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.036     2013-10-12 21:32:51Z (Karen Etheridge)
  - new "xt_mode" option (thanks, David Golden!)
 
 2.035     2013-10-12 17:35:49Z (Karen Etheridge)

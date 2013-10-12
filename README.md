@@ -4,7 +4,7 @@ Dist::Zilla::Plugin::Test::Compile - common tests to check syntax of your module
 
 # VERSION
 
-version 2.035
+version 2.036
 
 # SYNOPSIS
 
@@ -73,6 +73,12 @@ of all subsequent tests when compilation failures are encountered. Defaults to f
     Just like `module_finder`, but for finding scripts.  The default value is
     `:ExecFiles` (see also [Dist::Zilla::Plugin::ExecDir](http://search.cpan.org/perldoc?Dist::Zilla::Plugin::ExecDir), to make sure these
     files are properly marked as executables for the installer).
+
+- `xt_mode`
+
+    When true, the default `filename` becomes `xt/author/00-compile.t` and the
+    default `dependency` phase becomes `develop`. The test is adjusted to
+    run against `lib` instead of `blib`.
 
 # SEE ALSO
 
