@@ -83,6 +83,7 @@ around dump_config => sub
     $config->{'' . __PACKAGE__} = {
          module_finder => $self->module_finder,
          script_finder => $self->script_finder,
+         filename => $self->filename,
     };
     return $config;
 };
