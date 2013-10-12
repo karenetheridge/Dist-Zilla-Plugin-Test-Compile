@@ -37,9 +37,13 @@ has fake_home     => ( is=>'ro', isa=>'Bool', default=>0 );
 has needs_display => ( is=>'ro', isa=>'Bool', default=>0 );
 has fail_on_warning => ( is=>'ro', isa=>enum([qw(none author all)]), default=>'author' );
 has bail_out_on_fail => ( is=>'ro', isa=>'Bool', default=>0 );
+has xt_mode => ( is=>'ro', isa=>'Bool', default=>0 );
 
-has filename => ( is => 'ro', isa => 'Str', default => 't/00-compile.t' );
-has phase => ( is => 'ro', isa => 'Str', default => 'test' );
+has filename => ( is => 'ro', isa => 'Str', lazy_build => 1, );
+has phase => ( is => 'ro', isa => 'Str', lazy_build => 1 );
+
+sub _build_filename { return( ($_[0]->xt_mode ? "xt/author" : "t" ) . "/00-compile.t" ) }
+sub _build_phase    { return(  $_[0]->xt_mode ? "develop" : "test" ) }
 
 sub mvp_multivalue_args { qw(skips) }
 sub mvp_aliases { return { skip => 'skips' } }
@@ -158,6 +162,7 @@ sub munge_file
                 needs_display => \($self->needs_display),
                 bail_out_on_fail => \($self->bail_out_on_fail),
                 fail_on_warning => \($self->fail_on_warning),
+                xt_mode => \($self->xt_mode),
             }
         )
     );
@@ -268,6 +273,12 @@ Just like C<module_finder>, but for finding scripts.  The default value is
 C<:ExecFiles> (see also L<Dist::Zilla::Plugin::ExecDir>, to make sure these
 files are properly marked as executables for the installer).
 
+=item * C<xt_mode>
+
+When true, the default C<filename> becomes F<xt/author/00-compile.t> and the
+default C<dependency> phase becomes C<develop>. The test is adjusted to
+run against F<lib> instead of F<blib>.
+
 =back
 
 =head1 SEE ALSO
@@ -332,6 +343,8 @@ CODE
     : '# no fake home requested';
 }}
 
+my $inc_switch = q[{{ $xt_mode ? '-Ilib' : '-Mblib' }}];
+
 use File::Spec;
 use IPC::Open3;
 use IO::Handle;
@@ -343,7 +356,7 @@ for my $lib (@module_files)
     open my $stdin, '<', File::Spec->devnull or die "can't open devnull: $!";
     my $stderr = IO::Handle->new;
 
-    my $pid = open3($stdin, '>&STDERR', $stderr, $^X, '-Mblib', '-e', "require q[$lib]");
+    my $pid = open3($stdin, '>&STDERR', $stderr, $^X, $inc_switch, '-e', "require q[$lib]");
     binmode $stderr, ':crlf' if $^O eq 'MSWin32';
     my @_warnings = <$stderr>;
     waitpid($pid, 0);
