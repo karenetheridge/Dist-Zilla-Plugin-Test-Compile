@@ -397,21 +397,10 @@ foreach my $file (@scripts)
     if (@_warnings = grep { !/\bsyntax OK$/ }
         grep { chomp; $_ ne (File::Spec->splitpath($file))[2] } @_warnings)
     {
-        # temporary measure - win32 newline issues?
-        warn map { _show_whitespace($_) } @_warnings;
+        warn @_warnings;
         push @warnings, @_warnings;
     }
 } }
-
-sub _show_whitespace
-{
-    my $string = shift;
-    $string =~ s/\012/[\\012]/g;
-    $string =~ s/\015/[\\015]/g;
-    $string =~ s/\t/[\\t]/g;
-    $string =~ s/ /[\\s]/g;
-    return $string;
-}
 
 CODE
     : '';
