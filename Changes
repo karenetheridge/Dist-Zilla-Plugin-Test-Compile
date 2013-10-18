@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.037     2013-10-18 01:18:15Z (Karen Etheridge)
  - files are loaded from lib/ if blib/ does not exist
  - now properly falling back to lib/ for scripts too
 

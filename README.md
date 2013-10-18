@@ -4,7 +4,7 @@ Dist::Zilla::Plugin::Test::Compile - common tests to check syntax of your module
 
 # VERSION
 
-version 2.036
+version 2.037
 
 # SYNOPSIS
 
@@ -77,8 +77,7 @@ of all subsequent tests when compilation failures are encountered. Defaults to f
 - `xt_mode`
 
     When true, the default `filename` becomes `xt/author/00-compile.t` and the
-    default `dependency` phase becomes `develop`. The test is adjusted to
-    run against `lib` instead of `blib`.
+    default `dependency` phase becomes `develop`.
 
 # SEE ALSO
 
