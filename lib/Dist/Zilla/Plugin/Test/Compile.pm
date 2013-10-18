@@ -387,7 +387,7 @@ foreach my $file (@scripts)
     open my $stdin, '<', File::Spec->devnull or die "can't open devnull: $!";
     my $stderr = IO::Handle->new;
 
-    my $pid = open3($stdin, '>&STDERR', $stderr, $^X, '-Mblib', @flags, '-c', $file);
+    my $pid = open3($stdin, '>&STDERR', $stderr, $^X, $inc_switch, @flags, '-c', $file);
     binmode $stderr, ':crlf' if $^O eq 'MSWin32';
     my @_warnings = <$stderr>;
     waitpid($pid, 0);
