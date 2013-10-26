@@ -33,11 +33,11 @@ use namespace::autoclean;
 
 # -- attributes
 
-has fake_home     => ( is=>'ro', isa=>'Bool', default=>0 );
-has needs_display => ( is=>'ro', isa=>'Bool', default=>0 );
-has fail_on_warning => ( is=>'ro', isa=>enum([qw(none author all)]), default=>'author' );
-has bail_out_on_fail => ( is=>'ro', isa=>'Bool', default=>0 );
-has xt_mode => ( is=>'ro', isa=>'Bool', default=>0 );
+has fake_home       => ( is => 'ro', isa => 'Bool', default => 0 );
+has needs_display   => ( is => 'ro', isa => 'Bool', default => 0 );
+has fail_on_warning => ( is => 'ro', isa => enum([qw(none author all)]), default => 'author' );
+has bail_out_on_fail => ( is => 'ro', isa => 'Bool', default => 0 );
+has xt_mode         => ( is => 'ro', isa => 'Bool', default => 0 );
 
 has filename => (
     is => 'ro', isa => 'Str',
