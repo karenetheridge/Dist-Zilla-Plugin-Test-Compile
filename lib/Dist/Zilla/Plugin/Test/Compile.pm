@@ -359,6 +359,7 @@ my $inc_switch = -d 'blib' ? '-Mblib' : '-Ilib';
 use File::Spec;
 use IPC::Open3;
 use IO::Handle;
+{{ $max_processes > 1 ? q[use POSIX ':sys_wait_h';] : '' }}
 
 open my $stdin, '<', File::Spec->devnull or die "can't open devnull: $!";
 my $stderr = IO::Handle->new;
@@ -394,7 +395,7 @@ note "spawning pid $pid for $lib";
         {
             # reap whoever is ready, but don't block
             $pid = waitpid(-1, WNOHANG);
-            redo LOOP if $pid == -1;    # no process is ready
+            redo LOOP if $pid < 1;      # no process is ready
         }
 
         $processes--;
