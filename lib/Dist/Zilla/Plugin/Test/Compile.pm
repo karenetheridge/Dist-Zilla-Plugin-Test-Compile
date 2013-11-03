@@ -371,7 +371,7 @@ my $processes = 0;
 LOOP: {
     MODULES: while ($processes < {{ $max_processes }})
     {
-        my $lib = shift @module_files or last;
+        my $lib = shift @module_files or last MODULES;
         my $pid = open3($stdin, '>&STDERR', $stderr, $^X, $inc_switch, '-e', "require q[$lib]");
         $pids{$pid} = $lib;
 note "spawning pid $pid for $lib";
@@ -379,15 +379,30 @@ note "spawning pid $pid for $lib";
         next MODULES;
     }
 
-    my @_warnings = <$stderr>;
-    push @warnings, @_warnings if @_warnings;
+    REAP: {
+        my @_warnings = <$stderr>;
+        push @warnings, @_warnings if @_warnings;
 
-    my $pid = wait;
-    last LOOP if $pid == -1;    # all done!
-    $processes--;
-    my $lib = $pids{$pid} || 'UNKNOWN!';
+        my $pid;
+        if ($processes >= {{ $max_processes }} or not @module_files)
+        {
+            # no more slots, or no more files to test - blocking wait
+            $pid = wait;
+            last LOOP if $pid == -1;    # all done!
+        }
+        else
+        {
+            # reap whoever is ready, but don't block
+            $pid = waitpid(-1, WNOHANG);
+            redo LOOP if $pid == -1;    # no process is ready
+        }
+
+        $processes--;
+        my $lib = $pids{$pid} || 'UNKNOWN!';
 note "reaping pid $pid for $lib";
-    is($?, 0, "$lib loaded ok");
+        is($?, 0, "$lib loaded ok");
+        redo REAP;
+    }
 
     redo LOOP;
 }
@@ -398,9 +413,6 @@ $processes = 0;
 my %filenames;   # filename -> pid
 
 
-# XXX we want to do these in parallel too - how can we manage it?
-# is there a perlio layer where we can grep out the filename?
-# or just grep out all the strings!
 {{
 @script_filenames
     ? sprintf(<<'CODE',
