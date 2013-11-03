@@ -38,6 +38,7 @@ has needs_display   => ( is => 'ro', isa => 'Bool', default => 0 );
 has fail_on_warning => ( is => 'ro', isa => enum([qw(none author all)]), default => 'author' );
 has bail_out_on_fail => ( is => 'ro', isa => 'Bool', default => 0 );
 has xt_mode         => ( is => 'ro', isa => 'Bool', default => 0 );
+has max_processes   => ( is => 'ro', isa => subtype('Int', where { $_ > 0 }), default => 4 );
 
 has filename => (
     is => 'ro', isa => 'Str',
@@ -168,6 +169,7 @@ sub munge_file
                 needs_display => \($self->needs_display),
                 bail_out_on_fail => \($self->bail_out_on_fail),
                 fail_on_warning => \($self->fail_on_warning),
+                max_processes => \($self->max_processes),
             }
         )
     );
@@ -197,6 +199,7 @@ In your F<dist.ini>:
     needs_display = 1
     fail_on_warning = author
     bail_out_on_fail = 1
+    max_processes = 9
 
 
 =head1 DESCRIPTION
@@ -256,6 +259,10 @@ Perl release)
 
 =item * C<bail_out_on_fail>: a boolean to indicate whether the test will BAIL_OUT
 of all subsequent tests when compilation failures are encountered. Defaults to false.
+
+=item * C<max_processes>: an integer indicating the maximum number of parallel
+processes that will be spawned; if 1, all files are tested serially. (Warning:
+this can be very slow on MSWin32!)  Defaults to 4.
 
 =item * C<module_finder>
 
@@ -358,48 +365,91 @@ my $stderr = IO::Handle->new;
 binmode $stderr, ':crlf' if $^O eq 'MSWin32';
 
 my @warnings;
-for my $lib (@module_files)
-{
-    # see L<perlfaq8/How can I capture STDERR from an external command?>
+my %pids;   # pid -> filename
+my $processes = 0;
 
-    my $pid = open3($stdin, '>&STDERR', $stderr, $^X, $inc_switch, '-e', "require q[$lib]");
+LOOP: {
+    MODULES: while ($processes < {{ $max_processes }})
+    {
+        my $lib = shift @module_files or last;
+        my $pid = open3($stdin, '>&STDERR', $stderr, $^X, $inc_switch, '-e', "require q[$lib]");
+        $pids{$pid} = $lib;
+note "spawning pid $pid for $lib";
+        $processes++;
+        next MODULES;
+    }
+
     my @_warnings = <$stderr>;
-    waitpid($pid, 0);
+    push @warnings, @_warnings if @_warnings;
+
+    my $pid = wait;
+    last LOOP if $pid == -1;    # all done!
+    $processes--;
+    my $lib = $pids{$pid} || 'UNKNOWN!';
+note "reaping pid $pid for $lib";
     is($?, 0, "$lib loaded ok");
 
-    if (@_warnings)
-    {
-        warn @_warnings;
-        push @warnings, @_warnings;
-    }
+    redo LOOP;
 }
 
+warn @warnings if @warnings;
+
+$processes = 0;
+my %filenames;   # filename -> pid
+
+
+# XXX we want to do these in parallel too - how can we manage it?
+# is there a perlio layer where we can grep out the filename?
+# or just grep out all the strings!
 {{
 @script_filenames
-    ? <<'CODE'
-foreach my $file (@scripts)
-{ SKIP: {
-    open my $fh, '<', $file or warn("Unable to open $file: $!"), next;
-    my $line = <$fh>;
-    close $fh and skip("$file isn't perl", 1) unless $line =~ /^#!.*?\bperl\b\s*(.*)$/;
+    ? sprintf(<<'CODE',
 
-    my @flags = $1 ? split(/\s+/, $1) : ();
+LOOP: { SKIP: {
+    SCRIPTS: while ($processes < %d)
+    {
+        my $file = shift @scripts or last;
+        open my $fh, '<', $file or warn("Unable to open $file: $!"), next;
+        my $line = <$fh>;
+        close $fh and skip("$file isn't perl", 1) unless $line =~ /^#!.*?\bperl\b\s*(.*)$/;
 
-    my $pid = open3($stdin, '>&STDERR', $stderr, $^X, $inc_switch, @flags, '-c', $file);
+        my @flags = $1 ? split(/\s+/, $1) : ();
+
+        my $pid = open3($stdin, '>&STDERR', $stderr, $^X, $inc_switch, @flags, '-c', $file);
+
+        $pids{$pid} = $file;
+        $filenames{$file} = $pid;
+note "spawning pid $pid for $file";
+        $processes++;
+        next SCRIPTS;
+    }
+
     my @_warnings = <$stderr>;
-    waitpid($pid, 0);
+
+    my $pid = wait;
+    last LOOP if $pid == -1;    # all done!
+    $processes--;
+    my $file = $pids{$pid} || 'UNKNOWN!';
+note "reaping pid $pid for $file";
     is($?, 0, "$file compiled ok");
 
-   # in older perls, -c output is simply the file portion of the path being tested
-    if (@_warnings = grep { !/\bsyntax OK$/ }
-        grep { chomp; $_ ne (File::Spec->splitpath($file))[2] } @_warnings)
+    # in older perls, -c output is simply the file portion of the path being tested
+    if (@_warnings = grep {
+            chomp(my $warning = $_);
+            not grep { $warning eq (File::Spec->splitpath($_))[2] } keys %%filenames;
+        } grep { !/\bsyntax OK$/ }
+        @_warnings)
     {
         warn @_warnings;
         push @warnings, @_warnings;
     }
+    delete $filenames{$file};
+
+    redo LOOP;
 } }
 
 CODE
+    $max_processes)
     : '';
 }}
 
