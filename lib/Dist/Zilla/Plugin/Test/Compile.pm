@@ -268,7 +268,8 @@ used more than once.  .pod files are always omitted.
 Other predefined finders are listed in
 L<Dist::Zilla::Role::FileFinderUser/default_finders>.
 You can define your own with the
-L<[FileFinder::ByName]|Dist::Zilla::Plugin::FileFinder::ByName> plugin.
+L<[FileFinder::ByName]|Dist::Zilla::Plugin::FileFinder::ByName> and
+L<[FileFinder::Filter]|Dist::Zilla::Plugin::FileFinder::Filter> plugins.
 
 =item * C<script_finder>
 
