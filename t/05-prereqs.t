@@ -57,6 +57,7 @@ my $req_hash = $file_req->as_string_hash;
 
 foreach my $prereq (keys %$req_hash)
 {
+    next if $prereq eq 'perl';
     my $added_in = Module::CoreList->first_release($prereq);
 
     # this code is borrowed ethusiastically from [OnlyCorePrereqs]

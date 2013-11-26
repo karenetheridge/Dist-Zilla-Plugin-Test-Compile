@@ -2,6 +2,7 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
  - test now reuses the same $stdin and $stderr handles across all processes
+ - now asserting minimum perl version required (5.6) in the generated test
 
 2.037     2013-10-18 01:18:15Z (Karen Etheridge)
  - files are loaded from lib/ if blib/ does not exist

@@ -300,6 +300,7 @@ default C<dependency> phase becomes C<develop>.
 
 __DATA__
 ___[ test-compile ]___
+use 5.006;
 use strict;
 use warnings;
 
