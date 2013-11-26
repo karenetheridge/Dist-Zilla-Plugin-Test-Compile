@@ -4,7 +4,7 @@ Dist::Zilla::Plugin::Test::Compile - common tests to check syntax of your module
 
 # VERSION
 
-version 2.037
+version 2.038
 
 # SYNOPSIS
 
@@ -19,7 +19,7 @@ In your `dist.ini`:
 
 # DESCRIPTION
 
-This is a [Dist::Zilla](http://search.cpan.org/perldoc?Dist::Zilla) plugin that runs at the [gather files](http://search.cpan.org/perldoc?Dist::Zilla::Role::FileGatherer) stage,
+This is a [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla) plugin that runs at the [gather files](https://metacpan.org/pod/Dist::Zilla::Role::FileGatherer) stage,
 providing a test file (configurable, defaulting to `t/00-compile.t`).
 
 This test will find all modules and scripts in your dist, and try to
@@ -28,7 +28,7 @@ all at once, but it will catch more errors.
 
 The generated test is guaranteed to only depend on modules that are available
 in core.  Most options only require perl 5.6.2; the `bail_out_on_fail` option
-requires the version of [Test::More](http://search.cpan.org/perldoc?Test::More) that shipped with perl 5.12 (but the
+requires the version of [Test::More](https://metacpan.org/pod/Test::More) that shipped with perl 5.12 (but the
 test still runs on perl 5.6).
 
 This plugin accepts the following options:
@@ -59,19 +59,20 @@ warnings during compilation checks. Possible values are:
 of all subsequent tests when compilation failures are encountered. Defaults to false.
 - `module_finder`
 
-    This is the name of a [FileFinder](http://search.cpan.org/perldoc?Dist::Zilla::Role::FileFinder) for finding
+    This is the name of a [FileFinder](https://metacpan.org/pod/Dist::Zilla::Role::FileFinder) for finding
     modules to check.  The default value is `:InstallModules`; this option can be
     used more than once.  .pod files are always omitted.
 
     Other predefined finders are listed in
-    ["default\_finders" in Dist::Zilla::Role::FileFinderUser](http://search.cpan.org/perldoc?Dist::Zilla::Role::FileFinderUser#default\_finders).
+    ["default_finders" in Dist::Zilla::Role::FileFinderUser](https://metacpan.org/pod/Dist::Zilla::Role::FileFinderUser#default_finders).
     You can define your own with the
-    [\[FileFinder::ByName\]](http://search.cpan.org/perldoc?Dist::Zilla::Plugin::FileFinder::ByName) plugin.
+    [[FileFinder::ByName]](https://metacpan.org/pod/Dist::Zilla::Plugin::FileFinder::ByName) and
+    [[FileFinder::Filter]](https://metacpan.org/pod/Dist::Zilla::Plugin::FileFinder::Filter) plugins.
 
 - `script_finder`
 
     Just like `module_finder`, but for finding scripts.  The default value is
-    `:ExecFiles` (see also [Dist::Zilla::Plugin::ExecDir](http://search.cpan.org/perldoc?Dist::Zilla::Plugin::ExecDir), to make sure these
+    `:ExecFiles` (see also [Dist::Zilla::Plugin::ExecDir](https://metacpan.org/pod/Dist::Zilla::Plugin::ExecDir), to make sure these
     files are properly marked as executables for the installer).
 
 - `xt_mode`
@@ -81,8 +82,8 @@ of all subsequent tests when compilation failures are encountered. Defaults to f
 
 # SEE ALSO
 
-- [Test::NeedsDisplay](http://search.cpan.org/perldoc?Test::NeedsDisplay)
-- [Test::Script](http://search.cpan.org/perldoc?Test::Script)
+- [Test::NeedsDisplay](https://metacpan.org/pod/Test::NeedsDisplay)
+- [Test::Script](https://metacpan.org/pod/Test::Script)
 
 # AUTHOR
 
@@ -107,7 +108,7 @@ the same terms as the Perl 5 programming language system itself.
 - Karen Etheridge <ether@cpan.org>
 - Kent Fredric <kentfredric@gmail.com>
 - Marcel Gruenauer <hanekomu@gmail.com>
-- Olivier Mengué <dolmen@cpan.org>
+- Olivier MenguÃ© <dolmen@cpan.org>
 - Peter Shangov <pshangov@yahoo.com>
 - Randy Stauner <randy@magnificent-tears.com>
 - Ricardo SIGNES <rjbs@cpan.org>
