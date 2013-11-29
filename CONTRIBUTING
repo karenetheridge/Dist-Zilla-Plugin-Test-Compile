@@ -50,7 +50,7 @@ Once installed, here are some dzil commands you might try:
   $ dzil test --release
   $ dzil xtest
   $ dzil listdeps --json
-  $ dzil build --not
+  $ dzil build --notgz
 
 You can learn more about Dist::Zilla at http://dzil.org/.
 
@@ -73,4 +73,4 @@ http://dzil.org/#mailing-list.
 
 
 This file was generated via Dist::Zilla::Plugin::GenerateFile::ShareDir 0.002 from a
-template file originating in Dist-Zilla-PluginBundle-Author-ETHER-0.040.
+template file originating in Dist-Zilla-PluginBundle-Author-ETHER-0.041.

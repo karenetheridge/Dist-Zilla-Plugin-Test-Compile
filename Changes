@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.038     2013-11-29 18:20:37Z
  - test now reuses the same $stdin and $stderr handles across all processes
  - now asserting minimum perl version required (5.6) in the generated test
  - new 'file' option, for adding extra files to be checked

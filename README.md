@@ -38,9 +38,15 @@ This plugin accepts the following options:
 - `phase`: the phase for which to register prerequisites. Defaults
 to `test`.  Setting this to a false value will disable prerequisite
 registration.
-- `skip`: a regex to skip compile test for modules matching it. The
+- `skip`: a regex to skip compile test for __modules__ matching it. The
 match is done against the module name (`Foo::Bar`), not the file path
 (`lib/Foo/Bar.pm`).  This option can be repeated to specify multiple regexes.
+- `file`: a filename to also test, in addition to any files found
+earlier.  It will be tested as a module if it ends with `.pm` or `.PM`,
+and as a script otherwise.
+Module filenames should be relative to `lib`; others should be relative to
+the base of the repository.
+This option can be repeated to specify multiple additional files.
 - `fake_home`: a boolean to indicate whether to fake `$ENV{HOME}`.
 This may be needed if your module unilaterally creates stuff in the user's home directory:
 indeed, some cpantesters will smoke test your dist with a read-only home
