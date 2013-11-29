@@ -51,13 +51,20 @@ has phase => (
     default => sub { return $_[0]->xt_mode ? 'develop' : 'test' },
 );
 
-sub mvp_multivalue_args { qw(skips) }
-sub mvp_aliases { return { skip => 'skips' } }
+sub mvp_multivalue_args { qw(skips files) }
+sub mvp_aliases { return { skip => 'skips', file => 'files' } }
 
 has skips => (
     isa => 'ArrayRef[Str]',
     traits => ['Array'],
     handles => { skips => 'elements' },
+    default => sub { [] },
+);
+
+has files => (
+    isa => 'ArrayRef[Str]',
+    traits => ['Array'],
+    handles => { files => 'elements' },
     default => sub { [] },
 );
 
@@ -137,9 +144,12 @@ sub munge_file
 
     my @skips = map {; qr/$_/ } $self->skips;
 
+    my @more_files = $self->files;
+
     # we strip the leading lib/, and convert win32 \ to /, so the %INC entry
     # is correct - to avoid potentially loading the file again later
     my @module_filenames = map { path($_)->relative('lib')->stringify } $self->_module_filenames;
+    push @module_filenames, grep { /\.pm/i } @more_files if @more_files;
 
     @module_filenames = grep {
         (my $module = $_) =~ s{[/\\]}{::}g;
@@ -151,6 +161,7 @@ sub munge_file
     @module_filenames = grep { !/\.pod$/ } @module_filenames;
 
     my @script_filenames = $self->_script_filenames;
+    push @script_filenames, grep { !/\.pm/i } @more_files if @more_files;
 
     $self->log_debug('adding module ' . $_) foreach @module_filenames;
     $self->log_debug('adding script ' . $_) foreach @script_filenames;
@@ -224,9 +235,16 @@ F<t/00-compile.t>.
 to C<test>.  Setting this to a false value will disable prerequisite
 registration.
 
-=item * C<skip>: a regex to skip compile test for modules matching it. The
+=item * C<skip>: a regex to skip compile test for B<modules> matching it. The
 match is done against the module name (C<Foo::Bar>), not the file path
 (F<lib/Foo/Bar.pm>).  This option can be repeated to specify multiple regexes.
+
+=item * C<file>: a filename to also test, in addition to any files found
+earlier.  It will be tested as a module if it ends with C<.pm> or C<.PM>,
+and as a script otherwise.
+Module filenames should be relative to F<lib>; others should be relative to
+the base of the repository.
+This option can be repeated to specify multiple additional files.
 
 =for stopwords cpantesters
 
