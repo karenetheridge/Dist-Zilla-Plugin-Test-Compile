@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.039     2013-12-02 05:23:01Z
  - fix bad handling of $stderr handle on win32 (from v2.038)
 
 2.038     2013-11-29 18:20:37Z
