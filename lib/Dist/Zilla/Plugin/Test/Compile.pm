@@ -58,6 +58,7 @@ has skips => (
     isa => 'ArrayRef[Str]',
     traits => ['Array'],
     handles => { skips => 'elements' },
+    lazy => 1,
     default => sub { [] },
 );
 
@@ -65,6 +66,7 @@ has files => (
     isa => 'ArrayRef[Str]',
     traits => ['Array'],
     handles => { files => 'elements' },
+    lazy => 1,
     default => sub { [] },
 );
 
