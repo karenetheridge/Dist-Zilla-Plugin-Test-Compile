@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - fix bad handling of $stderr handle on win32 (from v2.038)
 
 2.038     2013-11-29 18:20:37Z
  - test now reuses the same $stdin and $stderr handles across all processes
