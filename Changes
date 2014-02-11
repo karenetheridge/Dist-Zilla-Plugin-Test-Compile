@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - fix bad x_breaks metadata
 
 2.039     2013-12-02 05:23:01Z
  - fix bad handling of $stderr handle on win32 (from v2.038)
