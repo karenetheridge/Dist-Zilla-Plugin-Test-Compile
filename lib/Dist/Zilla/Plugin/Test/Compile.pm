@@ -100,7 +100,7 @@ around dump_config => sub
     my ($orig, $self) = @_;
     my $config = $self->$orig;
 
-    $config->{'' . __PACKAGE__} = {
+    $config->{+__PACKAGE__} = {
          module_finder => $self->module_finder,
          script_finder => $self->script_finder,
          filename => $self->filename,
