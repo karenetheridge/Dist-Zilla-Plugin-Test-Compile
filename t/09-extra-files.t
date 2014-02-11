@@ -5,7 +5,6 @@ use Test::More;
 use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 use Test::DZil;
 use Path::Tiny;
-use Cwd;
 
 my $tzil = Builder->from_config(
     { dist_root => 't/does-not-exist' },

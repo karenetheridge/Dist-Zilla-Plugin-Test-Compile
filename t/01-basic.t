@@ -5,7 +5,7 @@ use Test::More;
 use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 use Test::DZil;
 use Path::Tiny;
-use Cwd;
+use File::pushd 'pushd';
 use Config;
 use Test::Deep;
 use Test::Deep::JSON;
@@ -86,11 +86,10 @@ cmp_deeply(
     'prereqs are properly injected for the test phase',
 );
 
-my $cwd = getcwd;
 my $files_tested;
 subtest 'run the generated test' => sub
 {
-    chdir $build_dir;
+    my $wd = pushd $build_dir;
     system($^X, 'Makefile.PL');
     system($Config{make});
 
@@ -102,7 +101,5 @@ subtest 'run the generated test' => sub
 };
 
 is($files_tested, @files + 1, 'correct number of files were tested, plus warnings checked');
-
-chdir $cwd;
 
 done_testing;

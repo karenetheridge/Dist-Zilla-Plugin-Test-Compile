@@ -5,7 +5,7 @@ use Test::More;
 use Test::Warnings 0.009 ':no_end_test', ':all';
 use Test::DZil;
 use Path::Tiny;
-use Cwd;
+use File::pushd 'pushd';
 use Config;
 
 my $tzil = Builder->from_config(
@@ -36,12 +36,11 @@ ok( -e $file, 'test created');
 
 # run the tests
 
-my $cwd = getcwd;
 my $files_tested;
 my $warning = warning {
     subtest 'run the generated test' => sub
     {
-        chdir $build_dir;
+        my $wd = pushd $build_dir;
         system($^X, 'Makefile.PL');
         system($Config{make});
 
@@ -58,8 +57,6 @@ like(
 ) or diag 'got warning(s): ', explain($warning);
 
 is($files_tested, 1, 'correct number of files were tested (no warning checks)');
-
-chdir $cwd;
 
 had_no_warnings if $ENV{AUTHOR_TESTING};
 done_testing;

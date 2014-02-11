@@ -5,7 +5,7 @@ use Test::More;
 use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 use Test::DZil;
 use Path::Tiny;
-use Cwd;
+use File::pushd 'pushd';
 use Config;
 
 my $tzil = Builder->from_config(
@@ -30,11 +30,10 @@ ok(!-e path($build_dir, 't', '00-compile.t'), 'default test not created');
 my $file = path($build_dir, 'xt', 'author', 'foo.t');
 ok(-e $file, 'test created using new name');
 
-my $cwd = getcwd;
 my $files_tested;
 subtest 'run the generated test' => sub
 {
-    chdir $build_dir;
+    my $wd = pushd $build_dir;
     system($^X, 'Makefile.PL');
     system($Config{make});
 
@@ -45,7 +44,5 @@ subtest 'run the generated test' => sub
 };
 
 is($files_tested, 1, 'correct number of files were tested');
-
-chdir $cwd;
 
 done_testing;
