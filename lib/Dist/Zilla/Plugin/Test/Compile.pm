@@ -8,6 +8,8 @@ package Dist::Zilla::Plugin::Test::Compile;
 
 use Moose;
 use Path::Tiny;
+use MooseX::Types::Stringlike 'Stringlike';
+use MooseX::Types::Path::Tiny;
 use Sub::Exporter::ForMethods 'method_installer'; # method_installer returns a sub.
 use Data::Section 0.004 # fixed header_re
     { installer => method_installer }, '-setup';
@@ -41,7 +43,8 @@ has bail_out_on_fail => ( is=>'ro', isa=>'Bool', default=>0 );
 has xt_mode => ( is=>'ro', isa=>'Bool', default=>0 );
 
 has filename => (
-    is => 'ro', isa => 'Str',
+    is => 'ro', isa => Stringlike,
+    coerce => 1,
     lazy => 1,
     default => sub { return ($_[0]->xt_mode ? 'xt/author' : 't') . '/00-compile.t' },
 );

@@ -15,7 +15,7 @@ my $tzil = Builder->from_config(
                 [ GatherDir => ],
                 [ MakeMaker => ],
                 [ ExecDir => ],
-                [ 'Test::Compile' => { fail_on_warning => 'none', filename => 'xt/author/foo.t' } ],
+                [ 'Test::Compile' => { fail_on_warning => 'none', filename => path(qw(xt author foo.t)) } ],
             ),
             path(qw(source lib Foo.pm)) => "package Foo;\n1;\n",
         },
