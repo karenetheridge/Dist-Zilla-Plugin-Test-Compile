@@ -19,7 +19,7 @@ BEGIN {
         { dist_root => 't/does-not-exist' },
         {
             add_files => {
-                'source/dist.ini' => simple_ini(
+                path(qw(source dist.ini)) => simple_ini(
                     [ GatherDir => ],
                     [ MetaJSON => ],
                     [ 'Test::Compile' => { phase => 'develop' } ],
@@ -31,11 +31,11 @@ BEGIN {
 
     $tzil->build;
 
-    my $build_dir = $tzil->tempdir->subdir('build');
-    my $file = path($build_dir, 't', '00-compile.t');
+    my $build_dir = path($tzil->tempdir)->child('build');
+    my $file = $build_dir->child(qw(t 00-compile.t));
     ok(-e $file, 'test created');
 
-    my $json = $tzil->slurp_file('build/META.json');
+    my $json = $build_dir->child('META.json')->slurp_utf8;
     cmp_deeply(
         $json,
         json(superhashof({
@@ -60,7 +60,7 @@ BEGIN {
         { dist_root => 't/does-not-exist' },
         {
             add_files => {
-                'source/dist.ini' => simple_ini(
+                path(qw(source dist.ini)) => simple_ini(
                     [ GatherDir => ],
                     [ MetaJSON => ],
                     [ 'Test::Compile' => { phase => '' } ],
@@ -72,11 +72,11 @@ BEGIN {
 
     $tzil->build;
 
-    my $build_dir = $tzil->tempdir->subdir('build');
-    my $file = path($build_dir, 't', '00-compile.t');
+    my $build_dir = path($tzil->tempdir)->child('build');
+    my $file = $build_dir->child(qw(t 00-compile.t));
     ok(-e $file, 'test created');
 
-    my $json = $tzil->slurp_file('build/META.json');
+    my $json = $build_dir->child('META.json')->slurp_utf8;
     cmp_deeply(
         $json,
         json(superhashof({ prereqs => {} })),

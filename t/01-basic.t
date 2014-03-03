@@ -22,7 +22,7 @@ my $tzil = Builder->from_config(
     { dist_root => 't/does-not-exist' },
     {
         add_files => {
-            'source/dist.ini' => simple_ini(
+            path(qw(source dist.ini)) => simple_ini(
                 [ GatherDir => ],
                 [ MakeMaker => ],
                 [ ExecDir => ],
@@ -49,11 +49,11 @@ FOOBAR
 );
 $tzil->build;
 
-my $build_dir = $tzil->tempdir->subdir('build');
-my $file = path($build_dir, 't', '00-compile.t');
+my $build_dir = path($tzil->tempdir)->child('build');
+my $file = $build_dir->child(qw(t 00-compile.t));
 ok(-e $file, 'test created');
 
-my $content = $file->slurp;
+my $content = $file->slurp_utf8;
 unlike($content, qr/[^\S\n]\n/m, 'no trailing whitespace in generated test');
 
 my @files = (
@@ -65,7 +65,7 @@ my @files = (
 
 like($content, qr/'\Q$_\E'/m, "test checks $_") foreach @files;
 
-my $json = $tzil->slurp_file('build/META.json');
+my $json = $build_dir->child('META.json')->slurp_utf8;
 cmp_deeply(
     $json,
     json(superhashof({

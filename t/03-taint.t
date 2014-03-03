@@ -12,7 +12,7 @@ my $tzil = Builder->from_config(
     { dist_root => 't/does-not-exist' },
     {
         add_files => {
-            'source/dist.ini' => simple_ini(
+            path(qw(source dist.ini)) => simple_ini(
                 [ GatherDir => ],
                 [ MakeMaker => ],
                 [ ExecDir => ],
@@ -29,8 +29,8 @@ EXECUTABLE
 
 $tzil->build;
 
-my $build_dir = $tzil->tempdir->subdir('build');
-my $file = path($build_dir, 't', '00-compile.t');
+my $build_dir = path($tzil->tempdir)->child('build');
+my $file = $build_dir->child(qw(t 00-compile.t));
 ok( -e $file, 'test created');
 
 # run the tests
