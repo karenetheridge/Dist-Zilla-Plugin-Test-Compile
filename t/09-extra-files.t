@@ -10,7 +10,7 @@ my $tzil = Builder->from_config(
     { dist_root => 't/does-not-exist' },
     {
         add_files => {
-            'source/dist.ini' => simple_ini(
+            path(qw(source dist.ini)) => simple_ini(
                 [ GatherDir => ],
                 [ 'Test::Compile' => { fail_on_warning => 'none', file => [ 'Bar.pm' ] } ],
             ),
@@ -21,8 +21,7 @@ my $tzil = Builder->from_config(
 
 $tzil->build;
 
-my $build_dir = $tzil->tempdir->subdir('build');
-my $content = path($build_dir, 't', '00-compile.t')->slurp;
+my $content = path($tzil->tempdir)->child(qw(build t 00-compile.t))->slurp_utf8;
 
 like($content, qr'
 my @module_files = \(
