@@ -6,7 +6,6 @@ use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 use Test::DZil;
 use Path::Tiny;
 use File::pushd 'pushd';
-use Config;
 use Test::Deep;
 use Test::Deep::JSON;
 
@@ -90,8 +89,7 @@ my $files_tested;
 subtest 'run the generated test' => sub
 {
     my $wd = pushd $build_dir;
-    system($^X, 'Makefile.PL');
-    system($Config{make});
+    $tzil->plugin_named('MakeMaker')->build;
 
     local $ENV{AUTHOR_TESTING} = 1;
     do $file;

@@ -6,7 +6,6 @@ use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 use Test::DZil;
 use Path::Tiny;
 use File::pushd 'pushd';
-use Config;
 
 my $tzil = Builder->from_config(
     { dist_root => 't/does-not-exist' },
@@ -34,8 +33,7 @@ my $files_tested;
 subtest 'run the generated test' => sub
 {
     my $wd = pushd $build_dir;
-    system($^X, 'Makefile.PL');
-    system($Config{make});
+    $tzil->plugin_named('MakeMaker')->build;
 
     do $file;
     warn $@ if $@;
