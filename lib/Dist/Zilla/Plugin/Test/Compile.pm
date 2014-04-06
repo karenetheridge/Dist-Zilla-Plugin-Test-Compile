@@ -218,7 +218,7 @@ In your F<dist.ini>:
 This is a L<Dist::Zilla> plugin that runs at the L<gather files|Dist::Zilla::Role::FileGatherer> stage,
 providing a test file (configurable, defaulting to F<t/00-compile.t>).
 
-This test will find all modules and scripts in your dist, and try to
+This test will find all modules and scripts in your distribution, and try to
 compile them one by one. This means it's a bit slower than loading them
 all at once, but it will catch more errors.
 
@@ -253,8 +253,8 @@ This option can be repeated to specify multiple additional files.
 
 =item * C<fake_home>: a boolean to indicate whether to fake C<< $ENV{HOME} >>.
 This may be needed if your module unilaterally creates stuff in the user's home directory:
-indeed, some cpantesters will smoke test your dist with a read-only home
-directory. Default to false.
+indeed, some cpantesters will smoke test your distribution with a read-only home
+directory. Defaults to false.
 
 =item * C<needs_display>: a boolean to indicate whether to skip the compile test
 on non-Win32 systems when C<< $ENV{DISPLAY} >> is not set. Defaults to false.
