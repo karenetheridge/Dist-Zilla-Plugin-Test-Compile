@@ -2,6 +2,8 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
  - fix bad x_breaks metadata
+ - line numbers in shipped code are now almost the same (within 3) as the
+   repository source, for easier debugging
 
 2.039     2013-12-02 05:23:01Z
  - fix bad handling of $stderr handle on win32 (from v2.038)
