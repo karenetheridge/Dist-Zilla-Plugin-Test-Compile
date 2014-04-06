@@ -1,10 +1,10 @@
 # NAME
 
-Dist::Zilla::Plugin::Test::Compile - common tests to check syntax of your modules, only using core modules
+Dist::Zilla::Plugin::Test::Compile - Common tests to check syntax of your modules, only using core modules
 
 # VERSION
 
-version 2.039
+version 2.040
 
 # SYNOPSIS
 
@@ -22,7 +22,7 @@ In your `dist.ini`:
 This is a [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla) plugin that runs at the [gather files](https://metacpan.org/pod/Dist::Zilla::Role::FileGatherer) stage,
 providing a test file (configurable, defaulting to `t/00-compile.t`).
 
-This test will find all modules and scripts in your dist, and try to
+This test will find all modules and scripts in your distribution, and try to
 compile them one by one. This means it's a bit slower than loading them
 all at once, but it will catch more errors.
 
@@ -49,8 +49,8 @@ the base of the repository.
 This option can be repeated to specify multiple additional files.
 - `fake_home`: a boolean to indicate whether to fake `$ENV{HOME}`.
 This may be needed if your module unilaterally creates stuff in the user's home directory:
-indeed, some cpantesters will smoke test your dist with a read-only home
-directory. Default to false.
+indeed, some cpantesters will smoke test your distribution with a read-only home
+directory. Defaults to false.
 - `needs_display`: a boolean to indicate whether to skip the compile test
 on non-Win32 systems when `$ENV{DISPLAY}` is not set. Defaults to false.
 - `fail_on_warning`: a string to indicate when to add a test for
@@ -70,10 +70,10 @@ of all subsequent tests when compilation failures are encountered. Defaults to f
     used more than once.  .pod files are always omitted.
 
     Other predefined finders are listed in
-    ["default_finders" in Dist::Zilla::Role::FileFinderUser](https://metacpan.org/pod/Dist::Zilla::Role::FileFinderUser#default_finders).
+    ["default\_finders" in Dist::Zilla::Role::FileFinderUser](https://metacpan.org/pod/Dist::Zilla::Role::FileFinderUser#default_finders).
     You can define your own with the
-    [[FileFinder::ByName]](https://metacpan.org/pod/Dist::Zilla::Plugin::FileFinder::ByName) and
-    [[FileFinder::Filter]](https://metacpan.org/pod/Dist::Zilla::Plugin::FileFinder::Filter) plugins.
+    [\[FileFinder::ByName\]](https://metacpan.org/pod/Dist::Zilla::Plugin::FileFinder::ByName) and
+    [\[FileFinder::Filter\]](https://metacpan.org/pod/Dist::Zilla::Plugin::FileFinder::Filter) plugins.
 
 - `script_finder`
 
