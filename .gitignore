@@ -1,6 +1,9 @@
+/.ackrc
 /.build/
-!.gitignore
-/Dist-Zilla-Plugin-Test-Compile-*
+!/.gitignore
+/.latest
+/Dist-Zilla-Plugin-Test-Compile-*/
+/Dist-Zilla-Plugin-Test-Compile-*.tar.gz
 /todo.txt
 /todo/
 /tmp/
