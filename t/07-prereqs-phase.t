@@ -35,7 +35,7 @@ BEGIN {
     my $file = $build_dir->child(qw(t 00-compile.t));
     ok(-e $file, 'test created');
 
-    my $json = $build_dir->child('META.json')->slurp_utf8;
+    my $json = $build_dir->child('META.json')->slurp_raw;
     cmp_deeply(
         $json,
         json(superhashof({
@@ -76,7 +76,7 @@ BEGIN {
     my $file = $build_dir->child(qw(t 00-compile.t));
     ok(-e $file, 'test created');
 
-    my $json = $build_dir->child('META.json')->slurp_utf8;
+    my $json = $build_dir->child('META.json')->slurp_raw;
     cmp_deeply(
         $json,
         json(superhashof({ prereqs => {} })),

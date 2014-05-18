@@ -63,7 +63,7 @@ my @files = (
 
 like($content, qr/'\Q$_\E'/m, "test checks $_") foreach @files;
 
-my $json = $build_dir->child('META.json')->slurp_utf8;
+my $json = $build_dir->child('META.json')->slurp_raw;
 cmp_deeply(
     $json,
     json(superhashof({
