@@ -33,8 +33,6 @@ my $build_dir = path($tzil->tempdir)->child('build');
 my $file = $build_dir->child(qw(t 00-compile.t));
 ok( -e $file, 'test created');
 
-# run the tests
-
 my $files_tested;
 my $warning = warning {
     subtest 'run the generated test' => sub

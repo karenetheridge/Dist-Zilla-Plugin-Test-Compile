@@ -19,8 +19,8 @@ my $tzil = Builder->from_config(
             ),
             path(qw(source lib Foo.pm)) => "package Foo;\n1;\n",
             path(qw(source bin foo)) => <<'EXECUTABLE',
-#!/usr/bin/perl -wT
-warn 'warning issued when executable is run';
+#!/usr/bin/perl -T
+print "hello world\n";
 EXECUTABLE
         },
     },
@@ -31,8 +31,6 @@ $tzil->build;
 my $build_dir = path($tzil->tempdir)->child('build');
 my $file = $build_dir->child(qw(t 00-compile.t));
 ok( -e $file, 'test created');
-
-# run the tests
 
 my @warnings = warnings {
     subtest 'run the generated test' => sub
