@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - properly handle scripts with shebang lines with dashes in the path name, or
+   extra whitespace, or comments (RT#95897)
 
 2.040     2014-04-06 18:54:08Z
  - fix bad x_breaks metadata
