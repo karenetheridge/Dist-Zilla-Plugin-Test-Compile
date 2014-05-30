@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.041     2014-05-30 17:54:57Z
  - properly handle scripts with shebang lines with dashes in the path name, or
    extra whitespace, or comments (RT#95897)
 

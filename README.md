@@ -4,7 +4,7 @@ Dist::Zilla::Plugin::Test::Compile - Common tests to check syntax of your module
 
 # VERSION
 
-version 2.040
+version 2.041
 
 # SYNOPSIS
 
@@ -38,7 +38,7 @@ This plugin accepts the following options:
 - `phase`: the phase for which to register prerequisites. Defaults
 to `test`.  Setting this to a false value will disable prerequisite
 registration.
-- `skip`: a regex to skip compile test for __modules__ matching it. The
+- `skip`: a regex to skip compile test for **modules** matching it. The
 match is done against the module name (`Foo::Bar`), not the file path
 (`lib/Foo/Bar.pm`).  This option can be repeated to specify multiple regexes.
 - `file`: a filename to also test, in addition to any files found
@@ -93,11 +93,11 @@ of all subsequent tests when compilation failures are encountered. Defaults to f
 
 # AUTHOR
 
-Jerome Quelin
+Jérôme Quelin
 
 # COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2009 by Jerome Quelin.
+This software is copyright (c) 2009 by Jérôme Quelin.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
@@ -105,12 +105,12 @@ the same terms as the Perl 5 programming language system itself.
 # CONTRIBUTORS
 
 - Ahmad M. Zawawi <azawawi@ubuntu.(none)>
-- Chris Weyl <cweyl@alumni.drew.edu>
+- Chris Weyl <rsrchboy@cpan.org>
 - David Golden <dagolden@cpan.org>
 - Graham Knop <haarg@haarg.org>
 - Harley Pig <harleypig@gmail.com>
-- Jerome Quelin <jquelin@gmail.com>
 - Jesse Luehrs <doy@tozt.net>
+- Jérôme Quelin <jquelin@gmail.com>
 - Karen Etheridge <ether@cpan.org>
 - Kent Fredric <kentfredric@gmail.com>
 - Marcel Gruenauer <hanekomu@gmail.com>
