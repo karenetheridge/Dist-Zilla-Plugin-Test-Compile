@@ -229,37 +229,50 @@ test still runs on perl 5.6).
 
 This plugin accepts the following options:
 
-=over 4
+=head1 CONFIGURATION OPTIONS
 
-=item * C<filename>: the name of the generated file. Defaults to
-F<t/00-compile.t>.
+=head2 C<filename>
 
-=item * C<phase>: the phase for which to register prerequisites. Defaults
+The name of the generated file. Defaults to F<t/00-compile.t>
+
+=head2 C<phase>
+
+The phase for which to register prerequisites. Defaults
 to C<test>.  Setting this to a false value will disable prerequisite
 registration.
 
-=item * C<skip>: a regex to skip compile test for B<modules> matching it. The
+=head2 C<skip>
+
+A regex to skip compile test for B<modules> matching it. The
 match is done against the module name (C<Foo::Bar>), not the file path
 (F<lib/Foo/Bar.pm>).  This option can be repeated to specify multiple regexes.
 
-=item * C<file>: a filename to also test, in addition to any files found
+=head2 C<file>
+
+A filename to also test, in addition to any files found
 earlier.  It will be tested as a module if it ends with C<.pm> or C<.PM>,
 and as a script otherwise.
 Module filenames should be relative to F<lib>; others should be relative to
 the base of the repository.
 This option can be repeated to specify multiple additional files.
 
+=head2 C<fake_home>
+
 =for stopwords cpantesters
 
-=item * C<fake_home>: a boolean to indicate whether to fake C<< $ENV{HOME} >>.
+A boolean to indicate whether to fake C<< $ENV{HOME} >>.
 This may be needed if your module unilaterally creates stuff in the user's home directory:
 indeed, some cpantesters will smoke test your distribution with a read-only home
 directory. Defaults to false.
 
-=item * C<needs_display>: a boolean to indicate whether to skip the compile test
+=head2 C<needs_display>
+
+A boolean to indicate whether to skip the compile test
 on non-Win32 systems when C<< $ENV{DISPLAY} >> is not set. Defaults to false.
 
-=item * C<fail_on_warning>: a string to indicate when to add a test for
+=head2 C<fail_on_warning>
+
+A string to indicate when to add a test for
 warnings during compilation checks. Possible values are:
 
 =over 4
@@ -275,10 +288,12 @@ Perl release)
 
 =back
 
-=item * C<bail_out_on_fail>: a boolean to indicate whether the test will BAIL_OUT
+=head2 C<bail_out_on_fail>
+
+A boolean to indicate whether the test will BAIL_OUT
 of all subsequent tests when compilation failures are encountered. Defaults to false.
 
-=item * C<module_finder>
+=head2 C<module_finder>
 
 =for stopwords FileFinder
 
@@ -292,7 +307,7 @@ You can define your own with the
 L<[FileFinder::ByName]|Dist::Zilla::Plugin::FileFinder::ByName> and
 L<[FileFinder::Filter]|Dist::Zilla::Plugin::FileFinder::Filter> plugins.
 
-=item * C<script_finder>
+=head2 C<script_finder>
 
 =for stopwords executables
 
@@ -300,12 +315,10 @@ Just like C<module_finder>, but for finding scripts.  The default value is
 C<:ExecFiles> (see also L<Dist::Zilla::Plugin::ExecDir>, to make sure these
 files are properly marked as executables for the installer).
 
-=item * C<xt_mode>
+=head2 C<xt_mode>
 
 When true, the default C<filename> becomes F<xt/author/00-compile.t> and the
 default C<dependency> phase becomes C<develop>.
-
-=back
 
 =head1 SEE ALSO
 
