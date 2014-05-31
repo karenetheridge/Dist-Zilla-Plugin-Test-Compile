@@ -200,7 +200,6 @@ __PACKAGE__->meta->make_immutable;
     gather_files
     munge_file
 
-
 =head1 SYNOPSIS
 
 In your F<dist.ini>:
@@ -211,7 +210,6 @@ In your F<dist.ini>:
     needs_display = 1
     fail_on_warning = author
     bail_out_on_fail = 1
-
 
 =head1 DESCRIPTION
 
@@ -299,7 +297,7 @@ of all subsequent tests when compilation failures are encountered. Defaults to f
 
 This is the name of a L<FileFinder|Dist::Zilla::Role::FileFinder> for finding
 modules to check.  The default value is C<:InstallModules>; this option can be
-used more than once.  .pod files are always omitted.
+used more than once.  F<.pod> files are always skipped.
 
 Other predefined finders are listed in
 L<Dist::Zilla::Role::FileFinderUser/default_finders>.
@@ -322,16 +320,11 @@ default C<dependency> phase becomes C<develop>.
 
 =head1 SEE ALSO
 
-=over 4
-
-=item * L<Test::NeedsDisplay>
-
-=item * L<Test::Script>
-
-=back
+=for :list
+* L<Test::NeedsDisplay>
+* L<Test::Script>
 
 =cut
-
 __DATA__
 ___[ test-compile ]___
 use 5.006;
