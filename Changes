@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - fix test failures on older perls introduced in 2.041
 
 2.041     2014-05-30 17:54:57Z
  - properly handle scripts with shebang lines with dashes in the path name, or
