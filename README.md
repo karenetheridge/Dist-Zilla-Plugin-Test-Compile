@@ -4,7 +4,7 @@ Dist::Zilla::Plugin::Test::Compile - Common tests to check syntax of your module
 
 # VERSION
 
-version 2.041
+version 2.042
 
 # SYNOPSIS
 
@@ -33,58 +33,84 @@ test still runs on perl 5.6).
 
 This plugin accepts the following options:
 
-- `filename`: the name of the generated file. Defaults to
-`t/00-compile.t`.
-- `phase`: the phase for which to register prerequisites. Defaults
+# CONFIGURATION OPTIONS
+
+## `filename`
+
+The name of the generated file. Defaults to `t/00-compile.t`
+
+## `phase`
+
+The phase for which to register prerequisites. Defaults
 to `test`.  Setting this to a false value will disable prerequisite
 registration.
-- `skip`: a regex to skip compile test for **modules** matching it. The
+
+## `skip`
+
+A regex to skip compile test for **modules** matching it. The
 match is done against the module name (`Foo::Bar`), not the file path
 (`lib/Foo/Bar.pm`).  This option can be repeated to specify multiple regexes.
-- `file`: a filename to also test, in addition to any files found
+
+## `file`
+
+A filename to also test, in addition to any files found
 earlier.  It will be tested as a module if it ends with `.pm` or `.PM`,
 and as a script otherwise.
 Module filenames should be relative to `lib`; others should be relative to
 the base of the repository.
 This option can be repeated to specify multiple additional files.
-- `fake_home`: a boolean to indicate whether to fake `$ENV{HOME}`.
+
+## `fake_home`
+
+A boolean to indicate whether to fake `$ENV{HOME}`.
 This may be needed if your module unilaterally creates stuff in the user's home directory:
 indeed, some cpantesters will smoke test your distribution with a read-only home
 directory. Defaults to false.
-- `needs_display`: a boolean to indicate whether to skip the compile test
+
+## `needs_display`
+
+A boolean to indicate whether to skip the compile test
 on non-Win32 systems when `$ENV{DISPLAY}` is not set. Defaults to false.
-- `fail_on_warning`: a string to indicate when to add a test for
+
+## `fail_on_warning`
+
+A string to indicate when to add a test for
 warnings during compilation checks. Possible values are:
-    - `none`: do not test for warnings
-    - `author`: test for warnings only when AUTHOR\_TESTING is set
-    (default, and recommended)
-    - `all`: always test for warnings (not recommended, as this can prevent
-    installation of modules when upstream dependencies exhibit warnings in a new
-    Perl release)
-- `bail_out_on_fail`: a boolean to indicate whether the test will BAIL\_OUT
+
+- `none`: do not test for warnings
+- `author`: test for warnings only when AUTHOR\_TESTING is set
+(default, and recommended)
+- `all`: always test for warnings (not recommended, as this can prevent
+installation of modules when upstream dependencies exhibit warnings in a new
+Perl release)
+
+## `bail_out_on_fail`
+
+A boolean to indicate whether the test will BAIL\_OUT
 of all subsequent tests when compilation failures are encountered. Defaults to false.
-- `module_finder`
 
-    This is the name of a [FileFinder](https://metacpan.org/pod/Dist::Zilla::Role::FileFinder) for finding
-    modules to check.  The default value is `:InstallModules`; this option can be
-    used more than once.  .pod files are always omitted.
+## `module_finder`
 
-    Other predefined finders are listed in
-    ["default\_finders" in Dist::Zilla::Role::FileFinderUser](https://metacpan.org/pod/Dist::Zilla::Role::FileFinderUser#default_finders).
-    You can define your own with the
-    [\[FileFinder::ByName\]](https://metacpan.org/pod/Dist::Zilla::Plugin::FileFinder::ByName) and
-    [\[FileFinder::Filter\]](https://metacpan.org/pod/Dist::Zilla::Plugin::FileFinder::Filter) plugins.
+This is the name of a [FileFinder](https://metacpan.org/pod/Dist::Zilla::Role::FileFinder) for finding
+modules to check.  The default value is `:InstallModules`; this option can be
+used more than once.  `.pod` files are always skipped.
 
-- `script_finder`
+Other predefined finders are listed in
+["default\_finders" in Dist::Zilla::Role::FileFinderUser](https://metacpan.org/pod/Dist::Zilla::Role::FileFinderUser#default_finders).
+You can define your own with the
+[\[FileFinder::ByName\]](https://metacpan.org/pod/Dist::Zilla::Plugin::FileFinder::ByName) and
+[\[FileFinder::Filter\]](https://metacpan.org/pod/Dist::Zilla::Plugin::FileFinder::Filter) plugins.
 
-    Just like `module_finder`, but for finding scripts.  The default value is
-    `:ExecFiles` (see also [Dist::Zilla::Plugin::ExecDir](https://metacpan.org/pod/Dist::Zilla::Plugin::ExecDir), to make sure these
-    files are properly marked as executables for the installer).
+## `script_finder`
 
-- `xt_mode`
+Just like `module_finder`, but for finding scripts.  The default value is
+`:ExecFiles` (see also [Dist::Zilla::Plugin::ExecDir](https://metacpan.org/pod/Dist::Zilla::Plugin::ExecDir), to make sure these
+files are properly marked as executables for the installer).
 
-    When true, the default `filename` becomes `xt/author/00-compile.t` and the
-    default `dependency` phase becomes `develop`.
+## `xt_mode`
+
+When true, the default `filename` becomes `xt/author/00-compile.t` and the
+default `dependency` phase becomes `develop`.
 
 # SEE ALSO
 
