@@ -1,6 +1,7 @@
 use strict;
 use warnings FATAL => 'all';
 
+use utf8;
 use Test::More;
 use Test::Warnings 0.009 ':no_end_test', ':all';
 use Test::DZil;
