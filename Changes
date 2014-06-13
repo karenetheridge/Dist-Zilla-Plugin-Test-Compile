@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - fix remaining failures on 5.10.0 (due to buggy -C flags) introduced in
+   2.041
 
 2.042     2014-06-04 02:28:25Z
  - fix test failures on older perls introduced in 2.041
