@@ -4,7 +4,7 @@ Dist::Zilla::Plugin::Test::Compile - Common tests to check syntax of your module
 
 # VERSION
 
-version 2.042
+version 2.043
 
 # SYNOPSIS
 
