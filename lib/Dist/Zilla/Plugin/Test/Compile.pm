@@ -128,23 +128,30 @@ sub register_prereqs
     );
 }
 
+has _file => (
+    is => 'rw', isa => role_type('Dist::Zilla::Role::File'),
+);
+
 sub gather_files
 {
     my $self = shift;
 
     require Dist::Zilla::File::InMemory;
 
-    $self->add_file( Dist::Zilla::File::InMemory->new(
-        name => $self->filename,
-        content => ${$self->section_data('test-compile')},
-    ));
+    $self->add_file( $self->_file(
+        Dist::Zilla::File::InMemory->new(
+            name => $self->filename,
+            content => ${$self->section_data('test-compile')},
+        ))
+    );
+    return;
 }
 
 sub munge_file
 {
     my ($self, $file) = @_;
 
-    return unless $file->name eq $self->filename;
+    return unless $file == $self->_file;
 
     my @skips = map {; qr/$_/ } $self->skips;
 

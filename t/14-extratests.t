@@ -1,0 +1,56 @@
+use strict;
+use warnings FATAL => 'all';
+
+use Test::More;
+use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
+use Test::DZil;
+use Path::Tiny;
+use File::pushd 'pushd';
+
+BEGIN {
+    use Dist::Zilla::Plugin::Test::Compile;
+    $Dist::Zilla::Plugin::Test::Compile::VERSION = 9999
+        unless $Dist::Zilla::Plugin::Test::Compile::VERSION;
+}
+
+
+my $tzil = Builder->from_config(
+    { dist_root => 't/does-not-exist' },
+    {
+        add_files => {
+            path(qw(source dist.ini)) => simple_ini(
+                [ GatherDir => ],
+                [ MakeMaker => ],
+                [ ExecDir => ],
+                [ ExtraTests => ],
+                [ 'Test::Compile' => { bail_out_on_fail => 1, xt_mode => 1, } ],
+            ),
+            path(qw(source lib Foo.pm)) => "package Foo;\n1;\n",
+            path(qw(source bin foobar)) => <<'FOOBAR',
+#!/usr/bin/perl
+print "foo\n";
+FOOBAR
+        },
+    },
+);
+$tzil->build;
+
+my $build_dir = path($tzil->tempdir)->child('build');
+my $file = $build_dir->child(qw(t author-00-compile.t));
+ok(-e $file, 'test created under xt/ and moved to t/author- by [ExtraTests]');
+
+my $content = $file->slurp_utf8;
+unlike($content, qr/[^\S\n]\n/m, 'no trailing whitespace in generated test');
+
+subtest 'run the generated test' => sub
+{
+    my $wd = pushd $build_dir;
+    $tzil->plugin_named('MakeMaker')->build;
+
+    local $ENV{AUTHOR_TESTING} = 1;
+    do $file;
+    note 'ran tests successfully' if not $@;
+    fail($@) if $@;
+};
+
+done_testing;
