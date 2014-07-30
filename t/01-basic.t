@@ -68,7 +68,7 @@ cmp_deeply(
     $json,
     json(superhashof({
         prereqs => {
-                configure => ignore,
+                configure => ignore,            # populated by [MakeMaker]
                 test => {
                     requires => {
                         'Test::More' => '0.94',
