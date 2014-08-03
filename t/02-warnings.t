@@ -41,7 +41,8 @@ my $warning = warning {
         $tzil->plugin_named('MakeMaker')->build;
 
         do $file;
-        warn $@ if $@;
+        note 'ran tests successfully' if not $@;
+        fail($@) if $@;
 
         $files_tested = Test::Builder->new->current_test;
     };

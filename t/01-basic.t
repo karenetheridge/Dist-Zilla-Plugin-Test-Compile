@@ -88,7 +88,8 @@ subtest 'run the generated test' => sub
 
     local $ENV{AUTHOR_TESTING} = 1;
     do $file;
-    warn $@ if $@;
+    note 'ran tests successfully' if not $@;
+    fail($@) if $@;
 
     $files_tested = Test::Builder->new->current_test;
 };

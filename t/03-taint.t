@@ -39,7 +39,8 @@ my @warnings = warnings {
         $tzil->plugin_named('MakeMaker')->build;
 
         do $file;
-        warn $@ if $@;
+        note 'ran tests successfully' if not $@;
+        fail($@) if $@;
     };
 };
 
