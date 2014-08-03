@@ -7,7 +7,6 @@ use Test::DZil;
 use Path::Tiny;
 use File::pushd 'pushd';
 use Test::Deep;
-use Test::Deep::JSON;
 
 BEGIN {
     use Dist::Zilla::Plugin::Test::Compile;
@@ -24,7 +23,6 @@ my $tzil = Builder->from_config(
                 [ GatherDir => ],
                 [ MakeMaker => ],
                 [ ExecDir => ],
-                [ MetaJSON => ],
                 [ 'Test::Compile' => { bail_out_on_fail => 1, fake_home => 1, } ],
                 # we generate a new module after we insert the compile test,
                 # to confirm that this module is picked up too
@@ -63,24 +61,22 @@ my @files = (
 
 like($content, qr/'\Q$_\E'/m, "test checks $_") foreach @files;
 
-my $json = $build_dir->child('META.json')->slurp_raw;
 cmp_deeply(
-    $json,
-    json(superhashof({
+    $tzil->distmeta,
+    superhashof({
         prereqs => {
-                configure => ignore,            # populated by [MakeMaker]
-                test => {
-                    requires => {
-                        'Test::More' => '0.94',
-                        'File::Spec' => '0',
-                        'IPC::Open3' => '0',
-                        'IO::Handle' => '0',
-                        'File::Temp' => '0',
-                    },
+            configure => ignore,            # populated by [MakeMaker]
+            test => {
+                requires => {
+                    'Test::More' => '0.94',
+                    'File::Spec' => '0',
+                    'IPC::Open3' => '0',
+                    'IO::Handle' => '0',
+                    'File::Temp' => '0',
                 },
             },
-        }),
-    ),
+        },
+    }),
     'prereqs are properly injected for the test phase',
 );
 
