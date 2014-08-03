@@ -1,0 +1,228 @@
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Dist::Zilla::Plugin::Test::Compile - Common tests to check syntax of your modules, only using core modules
+
+=head1 VERSION
+
+version 2.044
+
+=head1 SYNOPSIS
+
+In your F<dist.ini>:
+
+    [Test::Compile]
+    skip      = Test$
+    fake_home = 1
+    needs_display = 1
+    fail_on_warning = author
+    bail_out_on_fail = 1
+
+=head1 DESCRIPTION
+
+This is a L<Dist::Zilla> plugin that runs at the L<gather files|Dist::Zilla::Role::FileGatherer> stage,
+providing a test file (configurable, defaulting to F<t/00-compile.t>).
+
+This test will find all modules and scripts in your distribution, and try to
+compile them one by one. This means it's a bit slower than loading them
+all at once, but it will catch more errors.
+
+The generated test is guaranteed to only depend on modules that are available
+in core.  Most options only require perl 5.6.2; the C<bail_out_on_fail> option
+requires the version of L<Test::More> that shipped with perl 5.12 (but the
+test still runs on perl 5.6).
+
+This plugin accepts the following options:
+
+=for Pod::Coverage::TrustPod mvp_multivalue_args
+    mvp_aliases
+    register_prereqs
+    gather_files
+    munge_file
+
+=head1 CONFIGURATION OPTIONS
+
+=head2 C<filename>
+
+The name of the generated file. Defaults to F<t/00-compile.t>
+
+=head2 C<phase>
+
+The phase for which to register prerequisites. Defaults
+to C<test>.  Setting this to a false value will disable prerequisite
+registration.
+
+=head2 C<skip>
+
+A regex to skip compile test for B<modules> matching it. The
+match is done against the module name (C<Foo::Bar>), not the file path
+(F<lib/Foo/Bar.pm>).  This option can be repeated to specify multiple regexes.
+
+=head2 C<file>
+
+A filename to also test, in addition to any files found
+earlier.  It will be tested as a module if it ends with C<.pm> or C<.PM>,
+and as a script otherwise.
+Module filenames should be relative to F<lib>; others should be relative to
+the base of the repository.
+This option can be repeated to specify multiple additional files.
+
+=head2 C<fake_home>
+
+=for stopwords cpantesters
+
+A boolean to indicate whether to fake C<< $ENV{HOME} >>.
+This may be needed if your module unilaterally creates stuff in the user's home directory:
+indeed, some cpantesters will smoke test your distribution with a read-only home
+directory. Defaults to false.
+
+=head2 C<needs_display>
+
+A boolean to indicate whether to skip the compile test
+on non-Win32 systems when C<< $ENV{DISPLAY} >> is not set. Defaults to false.
+
+=head2 C<fail_on_warning>
+
+A string to indicate when to add a test for
+warnings during compilation checks. Possible values are:
+
+=over 4
+
+=item * C<none>: do not test for warnings
+
+=item * C<author>: test for warnings only when AUTHOR_TESTING is set
+(default, and recommended)
+
+=item * C<all>: always test for warnings (not recommended, as this can prevent
+installation of modules when upstream dependencies exhibit warnings in a new
+Perl release)
+
+=back
+
+=head2 C<bail_out_on_fail>
+
+A boolean to indicate whether the test will BAIL_OUT
+of all subsequent tests when compilation failures are encountered. Defaults to false.
+
+=head2 C<module_finder>
+
+=for stopwords FileFinder
+
+This is the name of a L<FileFinder|Dist::Zilla::Role::FileFinder> for finding
+modules to check.  The default value is C<:InstallModules>; this option can be
+used more than once.  F<.pod> files are always skipped.
+
+Other predefined finders are listed in
+L<Dist::Zilla::Role::FileFinderUser/default_finders>.
+You can define your own with the
+L<[FileFinder::ByName]|Dist::Zilla::Plugin::FileFinder::ByName> and
+L<[FileFinder::Filter]|Dist::Zilla::Plugin::FileFinder::Filter> plugins.
+
+=head2 C<script_finder>
+
+=for stopwords executables
+
+Just like C<module_finder>, but for finding scripts.  The default value is
+C<:ExecFiles> (see also L<Dist::Zilla::Plugin::ExecDir>, to make sure these
+files are properly marked as executables for the installer).
+
+=head2 C<xt_mode>
+
+When true, the default C<filename> becomes F<xt/author/00-compile.t> and the
+default C<dependency> phase becomes C<develop>.
+
+=head1 SEE ALSO
+
+=over 4
+
+=item *
+
+L<Test::NeedsDisplay>
+
+=item *
+
+L<Test::Script>
+
+=back
+
+=head1 AUTHOR
+
+Jérôme Quelin
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2009 by Jérôme Quelin.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=head1 CONTRIBUTORS
+
+=over 4
+
+=item *
+
+Ahmad M. Zawawi <azawawi@ubuntu.(none)>
+
+=item *
+
+Chris Weyl <rsrchboy@cpan.org>
+
+=item *
+
+David Golden <dagolden@cpan.org>
+
+=item *
+
+Graham Knop <haarg@haarg.org>
+
+=item *
+
+Harley Pig <harleypig@gmail.com>
+
+=item *
+
+Jesse Luehrs <doy@tozt.net>
+
+=item *
+
+Jérôme Quelin <jquelin@gmail.com>
+
+=item *
+
+Karen Etheridge <ether@cpan.org>
+
+=item *
+
+Kent Fredric <kentfredric@gmail.com>
+
+=item *
+
+Marcel Gruenauer <hanekomu@gmail.com>
+
+=item *
+
+Olivier Mengué <dolmen@cpan.org>
+
+=item *
+
+Peter Shangov <pshangov@yahoo.com>
+
+=item *
+
+Randy Stauner <randy@magnificent-tears.com>
+
+=item *
+
+Ricardo SIGNES <rjbs@cpan.org>
+
+=item *
+
+fayland <fayland@gmail.com>
+
+=back
+
+=cut
