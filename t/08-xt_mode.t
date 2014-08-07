@@ -43,7 +43,7 @@ cmp_deeply(
         },
     }),
     'prereqs are properly injected for the develop phase',
-);
+) or diag 'got distmeta: ', explain $tzil->distmeta;
 
 my $files_tested;
 subtest 'run the generated test' => sub

@@ -48,7 +48,7 @@ BEGIN {
             },
         }),
         'prereqs are properly injected for the develop phase',
-    );
+    ) or diag 'got distmeta: ', explain $tzil->distmeta;
 }
 
 {
@@ -75,7 +75,7 @@ BEGIN {
         $tzil->distmeta,
         superhashof({ prereqs => {} }),
         'no prereqs are injected',
-    );
+    ) or diag 'got distmeta: ', explain $tzil->distmeta;
 }
 
 done_testing;
