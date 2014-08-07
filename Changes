@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - re-release to remove README.pod from shipped dist
 
 2.044     2014-08-03 01:11:31Z
  - clean up dynamic prerequisite calculations
