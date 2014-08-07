@@ -8,7 +8,7 @@ Dist::Zilla::Plugin::Test::Compile - Common tests to check syntax of your module
 
 =head1 VERSION
 
-version 2.044
+version 2.045
 
 =head1 SYNOPSIS
 
@@ -161,6 +161,8 @@ the same terms as the Perl 5 programming language system itself.
 
 =head1 CONTRIBUTORS
 
+=for stopwords Ahmad M. Zawawi Chris Weyl David Golden Graham Knop Harley Pig Jesse Luehrs Jérôme Quelin Kent Fredric Marcel Gruenauer Olivier Mengué Peter Shangov Randy Stauner Ricardo SIGNES fayland
+
 =over 4
 
 =item *
@@ -169,7 +171,7 @@ Ahmad M. Zawawi <azawawi@ubuntu.(none)>
 
 =item *
 
-Chris Weyl <rsrchboy@cpan.org>
+Chris Weyl <cweyl@alumni.drew.edu>
 
 =item *
 
@@ -190,10 +192,6 @@ Jesse Luehrs <doy@tozt.net>
 =item *
 
 Jérôme Quelin <jquelin@gmail.com>
-
-=item *
-
-Karen Etheridge <ether@cpan.org>
 
 =item *
 
