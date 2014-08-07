@@ -23,6 +23,7 @@ my $tzil = Builder->from_config(
                 [ GatherDir => ],
                 [ MakeMaker => ],
                 [ ExecDir => ],
+                [ MetaConfig => ],
                 [ 'Test::Compile' => { bail_out_on_fail => 1, fake_home => 1, } ],
                 # we generate a new module after we insert the compile test,
                 # to confirm that this module is picked up too
@@ -76,8 +77,30 @@ cmp_deeply(
                 },
             },
         },
+        x_Dist_Zilla => superhashof({
+            plugins => supersetof(
+                {
+                    class => 'Dist::Zilla::Plugin::Test::Compile',
+                    config => {
+                        'Dist::Zilla::Plugin::Test::Compile' => {
+                            module_finder => [ ':InstallModules' ],
+                            script_finder => [ ':ExecFiles' ],
+                            filename => 't/00-compile.t',
+                            fake_home => 1,
+                            needs_display => 0,
+                            fail_on_warning => 'author',
+                            bail_out_on_fail => 1,
+                            phase => 'test',
+                            skips => [],
+                        },
+                    },
+                    name => 'Test::Compile',
+                    version => ignore,
+                },
+            ),
+        }),
     }),
-    'prereqs are properly injected for the test phase',
+    'prereqs are properly injected for the test phase; dumped configs are good',
 ) or diag 'got distmeta: ', explain $tzil->distmeta;
 
 my $files_tested;
