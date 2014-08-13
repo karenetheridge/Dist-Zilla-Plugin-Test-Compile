@@ -31,6 +31,7 @@ EXECUTABLE
     },
 );
 
+$tzil->chrome->logger->set_debug(1);
 $tzil->build;
 
 my $build_dir = path($tzil->tempdir)->child('build');
@@ -52,6 +53,9 @@ my @warnings = warnings {
 # -c without -CS gives: Too late for "-CS" option at...
 is(@warnings, 0, 'no warnings from compiling the executable using -CS')
     or diag 'got warning(s): ', explain(\@warnings);
+
+diag 'got log messages: ', explain $tzil->log_messages
+    if not Test::Builder->new->is_passing;
 
 had_no_warnings if $ENV{AUTHOR_TESTING};
 done_testing;

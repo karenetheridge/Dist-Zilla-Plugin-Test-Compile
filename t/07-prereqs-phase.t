@@ -27,6 +27,7 @@ BEGIN {
         },
     );
 
+    $tzil->chrome->logger->set_debug(1);
     $tzil->build;
 
     my $build_dir = path($tzil->tempdir)->child('build');
@@ -49,6 +50,9 @@ BEGIN {
         }),
         'prereqs are properly injected for the develop phase',
     ) or diag 'got distmeta: ', explain $tzil->distmeta;
+
+    diag 'got log messages: ', explain $tzil->log_messages
+        if not Test::Builder->new->is_passing;
 }
 
 {
@@ -65,6 +69,7 @@ BEGIN {
         },
     );
 
+    $tzil->chrome->logger->set_debug(1);
     $tzil->build;
 
     my $build_dir = path($tzil->tempdir)->child('build');
@@ -76,6 +81,9 @@ BEGIN {
         superhashof({ prereqs => {} }),
         'no prereqs are injected',
     ) or diag 'got distmeta: ', explain $tzil->distmeta;
+
+    diag 'got log messages: ', explain $tzil->log_messages
+        if not Test::Builder->new->is_passing;
 }
 
 done_testing;

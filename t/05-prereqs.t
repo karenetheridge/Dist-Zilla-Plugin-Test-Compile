@@ -31,6 +31,7 @@ my $tzil = Builder->from_config(
     },
 );
 
+$tzil->chrome->logger->set_debug(1);
 $tzil->build;
 
 my $build_dir = path($tzil->tempdir)->child('build');
@@ -84,5 +85,8 @@ foreach my $prereq (keys %$req_hash)
         or note 'detected a dependency that was deprecated from core in '
             . $deprecated_in . ': '. $prereq;
 }
+
+diag 'got log messages: ', explain $tzil->log_messages
+    if not Test::Builder->new->is_passing;
 
 done_testing;

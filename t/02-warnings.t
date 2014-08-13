@@ -27,6 +27,7 @@ MODULE
     },
 );
 
+$tzil->chrome->logger->set_debug(1);
 $tzil->build;
 
 my $build_dir = path($tzil->tempdir)->child('build');
@@ -54,6 +55,9 @@ like(
 ) or diag 'got warning(s): ', explain($warning);
 
 is($files_tested, 1, 'correct number of files were tested (no warning checks)');
+
+diag 'got log messages: ', explain $tzil->log_messages
+    if not Test::Builder->new->is_passing;
 
 had_no_warnings if $ENV{AUTHOR_TESTING};
 done_testing;

@@ -19,6 +19,7 @@ my $tzil = Builder->from_config(
     },
 );
 
+$tzil->chrome->logger->set_debug(1);
 $tzil->build;
 
 my $content = path($tzil->tempdir)->child(qw(build t 00-compile.t))->slurp_utf8;
@@ -29,5 +30,8 @@ my @module_files = \(
     \'Foo\.pm\'
 \);
 ', 'test checks explicitly added file',);
+
+diag 'got log messages: ', explain $tzil->log_messages
+    if not Test::Builder->new->is_passing;
 
 done_testing;

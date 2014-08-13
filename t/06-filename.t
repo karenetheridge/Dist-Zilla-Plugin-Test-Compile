@@ -22,6 +22,7 @@ my $tzil = Builder->from_config(
     },
 );
 
+$tzil->chrome->logger->set_debug(1);
 $tzil->build;
 
 my $build_dir = path($tzil->tempdir)->child('build');
@@ -43,5 +44,8 @@ subtest 'run the generated test' => sub
 };
 
 is($files_tested, 1, 'correct number of files were tested');
+
+diag 'got log messages: ', explain $tzil->log_messages
+    if not Test::Builder->new->is_passing;
 
 done_testing;

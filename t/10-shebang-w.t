@@ -33,6 +33,7 @@ EXECUTABLE
     },
 );
 
+$tzil->chrome->logger->set_debug(1);
 $tzil->build;
 
 my $build_dir = path($tzil->tempdir)->child('build');
@@ -60,6 +61,9 @@ cmp_deeply(
     'got warnings from compiling an executable using -w, not from the one without it',
 )
     or diag 'got warning(s): ', explain(\@warnings);
+
+diag 'got log messages: ', explain $tzil->log_messages
+    if not Test::Builder->new->is_passing;
 
 had_no_warnings if $ENV{AUTHOR_TESTING};
 done_testing;
