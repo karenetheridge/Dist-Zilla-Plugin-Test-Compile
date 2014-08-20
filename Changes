@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - When warnings occur under fail_on_warning, diag them. (GH #9, Kent Fredric)
 
 2.045     2014-08-07 04:25:14Z
  - re-release to remove README.pod from shipped dist

@@ -446,7 +446,7 @@ CODE
 
 {{
 ($fail_on_warning ne 'none'
-    ? q{is(scalar(@warnings), 0, 'no warnings found')}
+    ? q{is(scalar(@warnings), 0, 'no warnings found') or diag(@warnings)}
     : '# no warning checks')
 .
 ($fail_on_warning eq 'author'
