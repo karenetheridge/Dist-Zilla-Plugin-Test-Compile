@@ -9,6 +9,7 @@ use Test::MinimumVersion;
 use Perl::PrereqScanner 1.016; # don't skip "lib"
 use Module::CoreList 2.77;
 use version;
+use File::pushd 'pushd';
 
 my $tzil = Builder->from_config(
     { dist_root => 't/does-not-exist' },
@@ -85,6 +86,16 @@ foreach my $prereq (keys %$req_hash)
         or note 'detected a dependency that was deprecated from core in '
             . $deprecated_in . ': '. $prereq;
 }
+
+subtest 'run the generated test' => sub
+{
+    my $wd = pushd $build_dir;
+    $tzil->plugin_named('MakeMaker')->build;
+
+    do $file;
+    note 'ran tests successfully' if not $@;
+    fail($@) if $@;
+};
 
 diag 'got log messages: ', explain $tzil->log_messages
     if not Test::Builder->new->is_passing;

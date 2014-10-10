@@ -446,7 +446,8 @@ CODE
 
 {{
 ($fail_on_warning ne 'none'
-    ? q{is(scalar(@warnings), 0, 'no warnings found') or diag 'got warnings: ', explain \@warnings}
+    ? q{is(scalar(@warnings), 0, 'no warnings found')} . "\n"
+        . q{  or diag 'got warnings: ', ( Test::More->can('explain') ? Test::More::explain(\@warnings) : join("\n", '', @warnings) )}
     : '# no warning checks')
 .
 ($fail_on_warning eq 'author'

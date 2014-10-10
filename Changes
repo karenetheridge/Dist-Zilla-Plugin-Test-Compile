@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - avoid use of Test::More::explain in generated test when version is too old
 
 2.046     2014-08-20 15:10:15Z
  - When warnings occur under fail_on_warning, diag them. (GH #9, Kent Fredric)
