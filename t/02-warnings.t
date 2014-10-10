@@ -51,6 +51,7 @@ my $warning = warning {
         $files_tested = Test::Builder->new->current_test;
     };
 };
+
 like(
     $warning,
     qr/^there was supposed to be a kaboom/,
