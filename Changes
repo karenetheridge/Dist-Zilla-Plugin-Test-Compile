@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.047     2014-10-10 05:19:20Z
  - avoid use of Test::More::explain in generated test when version is too old
 
 2.046     2014-08-20 15:10:15Z
