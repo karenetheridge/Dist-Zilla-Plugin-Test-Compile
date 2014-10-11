@@ -356,7 +356,6 @@ BEGIN {
     # Skip all tests if you need a display for this test and $ENV{DISPLAY} is not set
     if( not $ENV{DISPLAY} and not $^O eq 'MSWin32' ) {
         plan skip_all => 'Needs DISPLAY';
-        exit 0;
     }
 }
 CODE
