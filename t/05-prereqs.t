@@ -49,7 +49,7 @@ my $in_core_perl = version->parse('5.012000');  # minimum perl to contain the ve
 minimum_version_ok($file->stringify, $minimum_perl) or diag `perlver --blame $file`;
 
 my $scanner = Perl::PrereqScanner->new();
-my $file_req = $scanner->scan_string(scalar $file->slurp);
+my $file_req = $scanner->scan_string(scalar $file->slurp_utf8);
 
 my $req_hash = $file_req->as_string_hash;
 
