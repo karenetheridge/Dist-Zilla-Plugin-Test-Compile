@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.048     2014-10-11 21:54:16Z
  - make tests (and generated test) run when needs_display=1 and $DISPLAY is
    not set
 
