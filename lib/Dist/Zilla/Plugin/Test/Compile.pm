@@ -342,25 +342,23 @@ use warnings;
 
 # this test was generated with {{ ref($plugin) . ' ' . ($plugin->VERSION || '<self>') }}
 
-use Test::More {{ $test_more_version || '' }} tests => {{
+use Test::More{{ $test_more_version ? " $test_more_version" : '' }};
+{{
+$needs_display
+    ? <<'CODE'
+# Skip all tests if you need a display for this test and $ENV{DISPLAY} is not set
+if( not $ENV{DISPLAY} and not $^O eq 'MSWin32' ) {
+    plan skip_all => 'Needs DISPLAY';
+}
+CODE
+    : ''
+}}
+plan tests => {{
     my $count = @module_filenames + @script_filenames;
     $count += 1 if $fail_on_warning eq 'all';
     $count .= ' + ($ENV{AUTHOR_TESTING} ? 1 : 0)' if $fail_on_warning eq 'author';
     $count;
 }};
-
-{{
-$needs_display
-    ? <<'CODE'
-BEGIN {
-    # Skip all tests if you need a display for this test and $ENV{DISPLAY} is not set
-    if( not $ENV{DISPLAY} and not $^O eq 'MSWin32' ) {
-        plan skip_all => 'Needs DISPLAY';
-    }
-}
-CODE
-    : ''
-}}
 
 my @module_files = (
 {{ join(",\n", map { "    '" . $_ . "'" } map { s/'/\\'/g; $_ } sort @module_filenames) }}
