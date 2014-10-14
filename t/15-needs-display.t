@@ -58,7 +58,7 @@ foreach my $display (undef, ':0.0')
     {
         my $tb = Test::Builder->new;
         cmp_deeply(
-            $tb->{Test_Results}[$tb->current_test - 1],
+            ($tb->details)[$tb->current_test - 1],
             superhashof({
                ok       => 1,
                type     => 'skip',
