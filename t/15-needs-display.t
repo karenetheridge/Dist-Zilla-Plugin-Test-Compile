@@ -34,6 +34,7 @@ foreach my $display (undef, ':0.0')
     my $file = $build_dir->child(qw(t 00-compile.t));
     ok( -e $file, 'test created');
 
+    my $error;
     subtest 'run the generated test ($DISPLAY=' . ($display || '<undef>') . ')' => sub
     {
         my $wd = pushd $build_dir;
@@ -45,20 +46,27 @@ foreach my $display (undef, ':0.0')
         # compile the code first and then run it, TB works properly and the
         # skip functionality completes
         my $test = eval 'sub { ' . $file->slurp_utf8 . ' }';
-        fail('failed to compile test file: ' . $@) if $@;
+        return $error = $@ if $@;
         $test->();
     };
 
-    my $tb = Test::Builder->new;
-    cmp_deeply(
-        $tb->{Test_Results}[$tb->current_test - 1],
-        superhashof({
-           'ok' => 1,
-            type => 'skip',
-           'reason' => 'Needs DISPLAY',
-        }),
-        'test file skipped because $DISPLAY was not set',
-    ) if not $ENV{DISPLAY};
+    if ($error)
+    {
+        fail('failed to compile test file: ' . $error);
+    }
+    else
+    {
+        my $tb = Test::Builder->new;
+        cmp_deeply(
+            $tb->{Test_Results}[$tb->current_test - 1],
+            superhashof({
+               ok       => 1,
+               type     => 'skip',
+               reason   => 'Needs DISPLAY',
+            }),
+            'test file skipped because $DISPLAY was not set',
+        ) if not $ENV{DISPLAY};
+    }
 
     diag 'got log messages: ', explain $tzil->log_messages
         if not Test::Builder->new->is_passing;
