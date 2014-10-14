@@ -61,11 +61,12 @@ foreach my $display (undef, ':0.0')
             ($tb->details)[$tb->current_test - 1],
             superhashof({
                ok       => 1,
-               type     => 'skip',
-               reason   => 'Needs DISPLAY',
+               type     => $display ? '' : 'skip',
+               reason   => $display ? '' : 'Needs DISPLAY',
+               name     => $display ? "run the generated test (\$DISPLAY=$display)" : '',
             }),
-            'test file skipped because $DISPLAY was not set',
-        ) if not $ENV{DISPLAY};
+            $display ? 'test file ran successfully' : 'test file skipped because $DISPLAY was not set',
+        );
     }
 
     diag 'got log messages: ', explain $tzil->log_messages
