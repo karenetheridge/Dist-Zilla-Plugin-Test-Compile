@@ -8,7 +8,7 @@ Dist::Zilla::Plugin::Test::Compile - Common tests to check syntax of your module
 
 =head1 VERSION
 
-version 2.048
+version 2.049
 
 =head1 SYNOPSIS
 
