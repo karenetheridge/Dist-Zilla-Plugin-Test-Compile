@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - fix test (in our own test suite) that will break with an upcoming
+   Test::More release
 
 2.049     2014-10-14 04:46:44Z
  - use documented Test::Builder interface to examine test details

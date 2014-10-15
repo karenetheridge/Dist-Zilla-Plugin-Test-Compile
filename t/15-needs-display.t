@@ -63,7 +63,9 @@ foreach my $display (undef, ':0.0')
                ok       => 1,
                type     => $display ? '' : 'skip',
                reason   => $display ? '' : 'Needs DISPLAY',
-               name     => $display ? "run the generated test (\$DISPLAY=$display)" : '',
+               name     => $display
+                            ? "run the generated test (\$DISPLAY=$display)"
+                            : any('', 'run the generated test ($DISPLAY=<undef>)'),   # older TB handled this oddly
             }),
             $display ? 'test file ran successfully' : 'test file skipped because $DISPLAY was not set',
         );
