@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.050     2014-10-15 23:57:04Z
  - fix test (in our own test suite) that will break with an upcoming
    Test::More release
 
