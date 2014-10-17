@@ -57,17 +57,18 @@ foreach my $display (undef, ':0.0')
     else
     {
         my $tb = Test::Builder->new;
+        my $should_skip = ($^O eq 'MSWin32') && $display;
         cmp_deeply(
             ($tb->details)[$tb->current_test - 1],
             superhashof({
                ok       => 1,
-               type     => $display ? '' : 'skip',
-               reason   => $display ? '' : 'Needs DISPLAY',
-               name     => $display
-                            ? "run the generated test (\$DISPLAY=$display)"
+               type     => $should_skip ? '' : 'skip',
+               reason   => $should_skip ? '' : 'Needs DISPLAY',
+               name     => $should_skip
+                            ? "run the generated test (\$DISPLAY=$should_skip)"
                             : any('', 'run the generated test ($DISPLAY=<undef>)'),   # older TB handled this oddly
             }),
-            $display ? 'test file ran successfully' : 'test file skipped because $DISPLAY was not set',
+            $should_skip ? 'test file ran successfully' : 'test file skipped because $DISPLAY was not set',
         );
     }
 
