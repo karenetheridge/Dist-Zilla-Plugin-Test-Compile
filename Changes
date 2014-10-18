@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - fix needs_display tests failing on MSWin32 since 2.048
 
 2.050     2014-10-15 23:57:04Z
  - fix test (in our own test suite) that will break with an upcoming

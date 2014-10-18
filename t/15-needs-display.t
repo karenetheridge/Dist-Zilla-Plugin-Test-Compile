@@ -35,7 +35,8 @@ foreach my $display (undef, ':0.0')
     ok( -e $file, 'test created');
 
     my $error;
-    subtest 'run the generated test ($DISPLAY=' . ($display || '<undef>') . ')' => sub
+    my $display_str = $display || '<undef>';
+    subtest "run the generated test (\$DISPLAY=$display_str)" => sub
     {
         my $wd = pushd $build_dir;
         $tzil->plugin_named('MakeMaker')->build;
@@ -57,17 +58,18 @@ foreach my $display (undef, ':0.0')
     else
     {
         my $tb = Test::Builder->new;
+        my $skip = !$ENV{DISPLAY} && $^O ne 'MSWin32';
         cmp_deeply(
             ($tb->details)[$tb->current_test - 1],
             superhashof({
                ok       => 1,
-               type     => $display ? '' : 'skip',
-               reason   => $display ? '' : 'Needs DISPLAY',
-               name     => $display
-                            ? "run the generated test (\$DISPLAY=$display)"
-                            : any('', 'run the generated test ($DISPLAY=<undef>)'),   # older TB handled this oddly
+               type     => !$skip ? '' : 'skip',
+               reason   => !$skip ? '' : 'Needs DISPLAY',
+               name     => !$skip
+                            ? "run the generated test (\$DISPLAY=$display_str)"
+                            : any('', "run the generated test (\$DISPLAY=$display_str)"),   # older TB handled this oddly
             }),
-            $display ? 'test file ran successfully' : 'test file skipped because $DISPLAY was not set',
+            !$skip ? 'test file ran successfully' : 'test file skipped because $DISPLAY was not set',
         );
     }
 
