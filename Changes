@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.051     2014-10-18 01:51:02Z
  - fix needs_display tests failing on MSWin32 since 2.048
 
 2.050     2014-10-15 23:57:04Z
