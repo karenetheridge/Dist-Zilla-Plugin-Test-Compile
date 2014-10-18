@@ -347,7 +347,7 @@ use Test::More{{ $test_more_version ? " $test_more_version" : '' }};
 $needs_display
     ? <<'CODE'
 # Skip all tests if you need a display for this test and $ENV{DISPLAY} is not set
-if( not $ENV{DISPLAY} and not $^O eq 'MSWin32' ) {
+if (not $ENV{DISPLAY} and $^O ne 'MSWin32') {
     plan skip_all => 'Needs DISPLAY';
 }
 CODE
