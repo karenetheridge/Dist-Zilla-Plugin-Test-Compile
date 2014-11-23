@@ -92,6 +92,9 @@ subtest 'run the generated test' => sub
     my $wd = pushd $build_dir;
     $tzil->plugin_named('MakeMaker')->build;
 
+    # let tests run, rather than skip_all
+    local $ENV{DISPLAY} = 'something';
+
     do $file;
     note 'ran tests successfully' if not $@;
     fail($@) if $@;
