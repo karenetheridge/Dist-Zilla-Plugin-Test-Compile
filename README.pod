@@ -175,7 +175,7 @@ Jérôme Quelin <jquelin@gmail.com>
 
 =item *
 
-Ahmad M. Zawawi <azawawi@ubuntu.(none)>
+Ahmad M. Zawawi <ahmad.zawawi@gmail.com>
 
 =item *
 
