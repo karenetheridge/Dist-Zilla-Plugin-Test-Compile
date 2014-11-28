@@ -53,45 +53,45 @@ Revision history for {{$dist->name}}
  - now asserting minimum perl version required (5.6) in the generated test
  - new 'file' option, for adding extra files to be checked
 
-2.037     2013-10-18 01:18:15Z (Karen Etheridge)
+2.037     2013-10-18 01:18:15Z
  - files are loaded from lib/ if blib/ does not exist
  - now properly falling back to lib/ for scripts too
 
-2.036     2013-10-12 21:32:51Z (Karen Etheridge)
+2.036     2013-10-12 21:32:51Z
  - new "xt_mode" option (thanks, David Golden!)
 
-2.035     2013-10-12 17:35:49Z (Karen Etheridge)
+2.035     2013-10-12 17:35:49Z
  - new "phase" option, for selecting how prereqs are injected (thanks, David
    Golden!)
 
-2.034     2013-10-06 06:24:12Z (Karen Etheridge)
+2.034     2013-10-06 06:24:12Z
  - now checking the full, unshifted value of $? (thanks, ribasushi!)
  - fixed incomplete prerequisite specification on Test::Warnings
 
-2.033     2013-09-20 23:52:40Z (Karen Etheridge)
+2.033     2013-09-20 23:52:40Z
  - revert to IPC::Open3 implementation from v2.031 and earlier, but with
    waitpid ordering fixed so we never hang (thanks haarg!)
  - now bootstrapping ourselves so our own compile test is generated with the
    version of code we are shipping, rather than version N-1
 
-2.032     2013-09-20 01:02:20Z (Karen Etheridge)
+2.032     2013-09-20 01:02:20Z
  - add missing prereq injection for File::Spec, when scripts are being tested
  - redo entire implementation, reverting from IPC::Open3 back to a capture{},
    using an inlined form of the guts of Capture::Tiny courtesy of David
    Golden, to address ongoing occasional hang issues on win32 (see RT#88783
    for the longer version)
 
-2.031     2013-09-19 04:49:51Z (Karen Etheridge)
+2.031     2013-09-19 04:49:51Z
  - bypass cmd.exe on win32 to try to avoid occasional hang issue (RT#88783)
 
-2.030     2013-09-11 05:01:26Z (Karen Etheridge)
+2.030     2013-09-11 05:01:26Z
  - depend on fixed Test::Warnings, where ':no_end_tests' also covers the
    done_testing case (which turned out to be a red herring)
 
-2.029     2013-09-10 01:19:46Z (Karen Etheridge)
+2.029     2013-09-10 01:19:46Z
  - fix test failures for non-authors (oops)
 
-2.028     2013-09-10 01:12:53Z (Karen Etheridge)
+2.028     2013-09-10 01:12:53Z
  - fix binmode issue on win32 (introduced in 2.026)
  - warnings tests bypassed during installation, to prevent installation issues
    in the presence of deprecation warnings from upstream dependencies (in this
@@ -99,25 +99,25 @@ Revision history for {{$dist->name}}
  - new 'filename' option, for creating the compile test in a different
    location
 
-2.027     2013-09-08 16:36:45Z (Karen Etheridge)
+2.027     2013-09-08 16:36:45Z
  - promise in documentation that the generated test requires no non-core
    modules, and is compatible with perl 5.6.2
  - re-release with properly encoded META.yml
 
-2.026     2013-09-07 00:47:15Z (Karen Etheridge)
+2.026     2013-09-07 00:47:15Z
  - more fixes (hopefully the last) for script checking on win32
 
-2.025     2013-09-04 01:32:34Z (Karen Etheridge)
+2.025     2013-09-04 01:32:34Z
  - more thoroughly test the generated test that no non-core modules are
    required, and syntax does not require a perl later than 5.8.8
  - fix use of regex syntax in script checking that required perl 5.9.5
  - properly screen out expected warnings from perl -c on older perls
 
-2.024     2013-09-03 00:02:21Z (Karen Etheridge)
+2.024     2013-09-03 00:02:21Z
  - update warning regexp in test yet again, due to win32 failures (does not
    concern the generated test)
 
-2.023     2013-08-30 01:27:54Z (Karen Etheridge)
+2.023     2013-08-30 01:27:54Z
  - now routing subprocesses' stdout to our stderr rather than throwing it
    away, for greater visibility into any side effects caused by loading
    modules
@@ -128,23 +128,23 @@ Revision history for {{$dist->name}}
  - now any version of Test::More can be used (if the bail_out_on_fail option
    is not set)
 
-2.022     2013-08-29 02:04:55Z (Karen Etheridge)
+2.022     2013-08-29 02:04:55Z
  - documentation fixes and cleanup
  - added missing test prereq on Test::Script (but still not injected into the
    built dist unless scripts are being shipped)
  - stop looking for newlines during install-time testing, to avoid needless
    failure on win32 (does not concern the generated test)
 
-2.021     2013-08-27 00:59:49Z (Karen Etheridge)
+2.021     2013-08-27 00:59:49Z
  - fix incomplete prereq declaration on Test::Warnings
  - work around dubious install-time test failure on win32 with absolute
    filenames in tests (does not concern the generated test)
 
-2.020     2013-08-24 18:06:49Z (Karen Etheridge)
+2.020     2013-08-24 18:06:49Z
  - fixed test prereq for Module::CoreList (thanks ambs!)
  - removed long-deprecated [CompileTests]
 
-2.019     2013-08-24 04:09:07Z (Karen Etheridge)
+2.019     2013-08-24 04:09:07Z
  - now properly handling filenames with non-ascii characters
  - use IPC::Open3 for each subprocess, rather than Capture::Tiny; test added
    to confirm that no non-core prereqs are used (except sometimes
