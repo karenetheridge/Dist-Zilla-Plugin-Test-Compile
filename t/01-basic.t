@@ -5,8 +5,10 @@ use Test::More;
 use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 use Test::DZil;
 use Path::Tiny;
-use File::pushd 'pushd';
 use Test::Deep;
+
+use lib 't/lib';
+use Helper;
 
 BEGIN {
     use Dist::Zilla::Plugin::Test::Compile;
@@ -46,6 +48,7 @@ FOOBAR
 );
 
 $tzil->chrome->logger->set_debug(1);
+# XXX run in an exception{}
 $tzil->build;
 
 my $build_dir = path($tzil->tempdir)->child('build');
@@ -105,19 +108,45 @@ cmp_deeply(
     'prereqs are properly injected for the test phase; dumped configs are good',
 ) or diag 'got distmeta: ', explain $tzil->distmeta;
 
+<<<<<<< Updated upstream
+run_test_file($tzil, $file);
+my $tb = Test::Builder->new;
+diag explain($tb->details);
+
+# XXX need to get this out of $tb
+# XXX can we use Test::Stream::Context for this stuff?
+my $files_tested = 20;
+=======
 my $files_tested;
 subtest 'run the generated test' => sub
 {
+# XXX see DynamicPrereqs for a better way of running this
     my $wd = pushd $build_dir;
     $tzil->plugin_named('MakeMaker')->build;
+>>>>>>> Stashed changes
 
-    local $ENV{AUTHOR_TESTING} = 1;
-    do $file;
-    note 'ran tests successfully' if not $@;
-    fail($@) if $@;
+#subtest 'run the generated test' => sub
+#{
+## XXX see DynamicPrereqs for a better way of running this
+#    my $wd = pushd $build_dir;
+#    $tzil->plugin_named('MakeMaker')->build;
+#
+#    local $ENV{AUTHOR_TESTING} = 1;
+#    do $file;
+#
+#           # XXX TEST -- what happens if the test warns? does that get picked
+#           up by Test::Warnings?  or does it just go to stderr and we need to
+#           capture it, e.g. via Helper.pm?
+#
+#    note 'ran tests successfully' if not $@;
+#    fail($@) if $@;
+#
+#    $files_tested = Test::Builder->new->current_test;
+#};
 
-    $files_tested = Test::Builder->new->current_test;
-};
+# use t/lib/Helper run_makemaker
+# and then.. how to run the test?
+# do as in t/15
 
 is($files_tested, @files + 1, 'correct number of files were tested, plus warnings checked');
 

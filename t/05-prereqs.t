@@ -87,6 +87,7 @@ foreach my $prereq (keys %$req_hash)
             . $deprecated_in . ': '. $prereq;
 }
 
+my $error;
 subtest 'run the generated test' => sub
 {
     my $wd = pushd $build_dir;
@@ -98,7 +99,13 @@ subtest 'run the generated test' => sub
     do $file;
     note 'ran tests successfully' if not $@;
     fail($@) if $@;
+
+    #my $test = eval 'sub { ' . $file->slurp_utf8 . ' }';
+    #return $error = $@ if $@;
+    #$test->();
+    #note 'ran tests successfully';
 };
+#fail('failed to compile test file') and diag explain $error if ($error)
 
 diag 'got log messages: ', explain $tzil->log_messages
     if not Test::Builder->new->is_passing;
