@@ -7,13 +7,6 @@ use Test::DZil;
 use Path::Tiny;
 use File::pushd 'pushd';
 
-BEGIN {
-    use Dist::Zilla::Plugin::Test::Compile;
-    $Dist::Zilla::Plugin::Test::Compile::VERSION = 9999
-        unless $Dist::Zilla::Plugin::Test::Compile::VERSION;
-}
-
-
 my $tzil = Builder->from_config(
     { dist_root => 't/does-not-exist' },
     {
