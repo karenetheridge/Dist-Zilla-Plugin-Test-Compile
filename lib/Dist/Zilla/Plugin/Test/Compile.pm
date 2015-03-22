@@ -30,7 +30,7 @@ with (
     'Dist::Zilla::Role::PrereqSource',
 );
 
-use Moose::Util::TypeConstraints;
+use Moose::Util::TypeConstraints qw(enum role_type);
 use namespace::autoclean;
 
 # -- attributes
