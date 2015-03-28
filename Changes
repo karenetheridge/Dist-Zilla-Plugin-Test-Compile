@@ -1,6 +1,6 @@
-Revision history for {{$dist->name}}
+Revision history for Dist-Zilla-Plugin-Test-Compile
 
-{{$NEXT}}
+2.052     2015-03-28 06:09:55Z
  - always test for warnings if fail_on_warning=author and the generated test
    is in xt/author, without AUTHOR_TESTING having to be set
 

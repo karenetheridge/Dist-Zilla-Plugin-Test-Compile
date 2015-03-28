@@ -8,7 +8,7 @@ Dist::Zilla::Plugin::Test::Compile - Common tests to check syntax of your module
 
 =head1 VERSION
 
-version 2.051
+version 2.052
 
 =head1 SYNOPSIS
 
@@ -148,9 +148,19 @@ L<Test::Script>
 
 =back
 
-=head1 AUTHOR
+=head1 AUTHORS
 
-Jérôme Quelin
+=over 4
+
+=item *
+
+Jérôme Quelin <jquelin@gmail.com>
+
+=item *
+
+Karen Etheridge <ether@cpan.org>
+
+=back
 
 =head1 COPYRIGHT AND LICENSE
 
@@ -161,21 +171,13 @@ the same terms as the Perl 5 programming language system itself.
 
 =head1 CONTRIBUTORS
 
-=for stopwords Karen Etheridge Jérôme Quelin Ahmad M. Zawawi Olivier Mengué Kent Fredric Jesse Luehrs David Golden Randy Stauner Harley Pig Graham Knop fayland Peter Shangov Chris Weyl Ricardo SIGNES Marcel Gruenauer
+=for stopwords Ahmad M. Zawawi Olivier Mengué Kent Fredric Randy Stauner Jesse Luehrs Harley Pig David Golden Graham Knop fayland Peter Shangov Chris Weyl Ricardo SIGNES Marcel Gruenauer
 
 =over 4
 
 =item *
 
-Karen Etheridge <ether@cpan.org>
-
-=item *
-
-Jérôme Quelin <jquelin@gmail.com>
-
-=item *
-
-Ahmad M. Zawawi <azawawi@ubuntu.(none)>
+Ahmad M. Zawawi <ahmad.zawawi@gmail.com>
 
 =item *
 
@@ -187,19 +189,19 @@ Kent Fredric <kentnl@cpan.org>
 
 =item *
 
+Randy Stauner <rwstauner@cpan.org>
+
+=item *
+
 Jesse Luehrs <doy@tozt.net>
 
 =item *
 
-David Golden <dagolden@cpan.org>
-
-=item *
-
-Randy Stauner <randy@magnificent-tears.com>
-
-=item *
-
 Harley Pig <harleypig@gmail.com>
+
+=item *
+
+David Golden <dagolden@cpan.org>
 
 =item *
 
