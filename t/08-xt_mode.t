@@ -46,7 +46,7 @@ cmp_deeply(
     'prereqs are properly injected for the develop phase',
 ) or diag 'got distmeta: ', explain $tzil->distmeta;
 
-my $files_tested;
+my $num_tests;
 subtest 'run the generated test' => sub
 {
     my $wd = pushd $build_dir;
@@ -56,10 +56,10 @@ subtest 'run the generated test' => sub
     note 'ran tests successfully' if not $@;
     fail($@) if $@;
 
-    $files_tested = Test::Builder->new->current_test;
+    $num_tests = Test::Builder->new->current_test;
 };
 
-is($files_tested, 1, 'correct number of files were tested');
+is($num_tests, 1, 'correct number of files were tested');
 
 diag 'got log messages: ', explain $tzil->log_messages
     if not Test::Builder->new->is_passing;

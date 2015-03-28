@@ -37,7 +37,7 @@ ok( -e $file, 'test created');
 my $content = $file->slurp_utf8;
 unlike($content, qr/[^\S\n]\n/m, 'no trailing whitespace in generated test');
 
-my $files_tested;
+my $num_tests;
 my $warning = warning {
     subtest 'run the generated test' => sub
     {
@@ -48,7 +48,7 @@ my $warning = warning {
         note 'ran tests successfully' if not $@;
         fail($@) if $@;
 
-        $files_tested = Test::Builder->new->current_test;
+        $num_tests = Test::Builder->new->current_test;
     };
 };
 
@@ -58,7 +58,7 @@ like(
     'warnings from compiling LittleKaboom are captured',
 ) or diag 'got warning(s): ', explain($warning);
 
-is($files_tested, 1, 'correct number of files were tested (no warning checks)');
+is($num_tests, 1, 'correct number of files were tested (no warning checks)');
 
 diag 'got log messages: ', explain $tzil->log_messages
     if not Test::Builder->new->is_passing;
