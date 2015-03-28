@@ -36,6 +36,9 @@ subtest 'run the generated test' => sub
     my $wd = pushd $build_dir;
     $tzil->plugin_named('MakeMaker')->build;
 
+    # ensure the variable is *not* set
+    local $ENV{AUTHOR_TESTING};
+
     do $file;
     note 'ran tests successfully' if not $@;
     fail($@) if $@;

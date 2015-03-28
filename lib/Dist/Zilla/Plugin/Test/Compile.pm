@@ -190,7 +190,10 @@ sub munge_file
                 fake_home => \($self->fake_home),
                 needs_display => \($self->needs_display),
                 bail_out_on_fail => \($self->bail_out_on_fail),
-                fail_on_warning => \($self->fail_on_warning),
+                fail_on_warning => \(
+                    $self->fail_on_warning eq 'author' && $self->filename =~ m{^xt/author/}
+                    ? 'all'
+                    : $self->fail_on_warning),
             }
         )
     );
