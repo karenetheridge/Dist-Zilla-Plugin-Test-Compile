@@ -345,7 +345,7 @@ use 5.006;
 use strict;
 use warnings;
 
-# this test was generated with {{ ref($plugin) . ' ' . ($plugin->VERSION || '<self>') }}
+# this test was generated with {{ ref($plugin) . ' ' . $plugin->VERSION }}
 
 use Test::More{{ $test_more_version ? " $test_more_version" : '' }};
 {{
