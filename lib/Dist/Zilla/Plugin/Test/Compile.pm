@@ -6,7 +6,7 @@ package Dist::Zilla::Plugin::Test::Compile;
 # ABSTRACT: Common tests to check syntax of your modules, only using core modules
 # KEYWORDS: plugin test compile verify validate load modules scripts
 # vim: set ts=8 sts=4 sw=4 tw=78 et :
-
+our $VERSION = '2.053';
 use Moose;
 use Path::Tiny;
 use Sub::Exporter::ForMethods 'method_installer'; # method_installer returns a sub.
