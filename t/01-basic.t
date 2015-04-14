@@ -90,7 +90,7 @@ cmp_deeply(
                         },
                     },
                     name => 'Test::Compile',
-                    version => ignore,
+                    version => Dist::Zilla::Plugin::Test::Compile->VERSION,
                 },
             ),
         }),
