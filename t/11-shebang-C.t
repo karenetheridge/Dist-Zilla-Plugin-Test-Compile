@@ -12,7 +12,7 @@ plan skip_all => 'These tests use options that are only legal in perl 5.14.0 and
     if $] < 5.014000;
 
 my $tzil = Builder->from_config(
-    { dist_root => 't/does-not-exist' },
+    { dist_root => 'does-not-exist' },
     {
         add_files => {
             path(qw(source dist.ini)) => simple_ini(
