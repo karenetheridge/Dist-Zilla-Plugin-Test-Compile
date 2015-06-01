@@ -1,5 +1,7 @@
 Revision history for Dist-Zilla-Plugin-Test-Compile
 
+{{$NEXT}}
+
 2.053     2015-06-01 03:33:51Z
   - filter out "Using .../lib" warning emitted by older blib when checking for
     warnings (reported by preaction)
