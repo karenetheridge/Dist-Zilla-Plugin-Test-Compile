@@ -1,6 +1,8 @@
 Revision history for Dist-Zilla-Plugin-Test-Compile
 
 {{$NEXT}}
+  - filter out "Using .../lib" warning emitted by older blib when checking for
+    warnings (reported by preaction)
 
 2.052     2015-03-28 06:09:55Z
  - always test for warnings if fail_on_warning=author and the generated test
