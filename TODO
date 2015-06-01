@@ -1,0 +1,15 @@
+
+see bourbon stash for TODO items!!!
+
+
+[@Author::ETHER/PHASE VERIFICATION] prereqs have already been read from after munging phase!
+    --> fixed when this ships:
+        https://github.com/jquelin/dist-zilla-plugin-prepender/pull/4
+
+[@Author::ETHER/ModuleBuildTiny::Fallback] something else changed the content of the Module::Build::Tiny version of Build.PL -- maybe you should switch back to [ModuleBuildTiny]?
+    --> it is Prepender.
+    solution: run after bundle munges Build.PL, and update [MBT::Fallback] to
+    do its work (when possible) in munge_files, not setup_installer.
+
+
+
