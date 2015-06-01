@@ -349,14 +349,12 @@ use warnings;
 
 use Test::More{{ $test_more_version ? " $test_more_version" : '' }};
 {{
-$needs_display
-    ? <<'CODE'
+    $needs_display ? <<'CODE' : ''
 # Skip all tests if you need a display for this test and $ENV{DISPLAY} is not set
 if (not $ENV{DISPLAY} and $^O ne 'MSWin32') {
     plan skip_all => 'Needs DISPLAY';
 }
 CODE
-    : ''
 }}
 plan tests => {{
     my $count = @module_filenames + @script_filenames;
@@ -378,13 +376,11 @@ my @module_files = (
 }}
 
 {{
-$fake_home
-    ? <<'CODE'
+    $fake_home ? <<'CODE' : '# no fake home requested';
 # fake home for cpan-testers
 use File::Temp;
 local $ENV{HOME} = File::Temp::tempdir( CLEANUP => 1 );
 CODE
-    : '# no fake home requested';
 }}
 
 my $inc_switch = -d 'blib' ? '-Mblib' : '-Ilib';
@@ -415,8 +411,7 @@ for my $lib (@module_files)
 }
 
 {{
-@script_filenames
-    ? <<'CODE'
+    @script_filenames ? <<'CODE' : '';
 foreach my $file (@scripts)
 { SKIP: {
     open my $fh, '<', $file or warn("Unable to open $file: $!"), next;
@@ -443,7 +438,6 @@ foreach my $file (@scripts)
 } }
 
 CODE
-    : '';
 }}
 
 {{
