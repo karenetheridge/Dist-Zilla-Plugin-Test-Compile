@@ -61,7 +61,7 @@ sub mvp_aliases { return { skip => 'skips', file => 'files' } }
 has skips => (
     isa => 'ArrayRef[Str]',
     traits => ['Array'],
-    handles => { skips => 'elements' },
+    handles => { skips => 'sort' },
     lazy => 1,
     default => sub { [] },
 );
@@ -69,7 +69,7 @@ has skips => (
 has files => (
     isa => 'ArrayRef[Str]',
     traits => ['Array'],
-    handles => { files => 'elements' },
+    handles => { files => 'sort' },
     lazy => 1,
     default => sub { [] },
 );
@@ -86,14 +86,14 @@ has _test_more_version => (
 has _module_filenames  => (
     isa => 'ArrayRef[Str]',
     traits => ['Array'],
-    handles => { _module_filenames => 'elements' },
+    handles => { _module_filenames => 'sort' },
     lazy => 1,
     default => sub { [ map { $_->name } @{shift->found_module_files} ] },
 );
 has _script_filenames => (
     isa => 'ArrayRef[Str]',
     traits => ['Array'],
-    handles => { _script_filenames => 'elements' },
+    handles => { _script_filenames => 'sort' },
     lazy => 1,
     default => sub { [ map { $_->name } @{shift->found_script_files} ] },
 );
