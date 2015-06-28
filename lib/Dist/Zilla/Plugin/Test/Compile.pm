@@ -104,10 +104,11 @@ around dump_config => sub
     my $config = $self->$orig;
 
     $config->{+__PACKAGE__} = {
-        module_finder => $self->module_finder,
-        script_finder => $self->script_finder,
-        skips => [ $self->skips ],
-        map { $_ => $self->$_ } qw(filename fake_home needs_display fail_on_warning bail_out_on_fail phase),
+        module_finder => [ sort @{ $self->module_finder } ],
+        script_finder => [ sort @{ $self->script_finder } ],
+        skips => [ sort $self->skips ],
+        (map { $_ => $self->$_ ? 1 : 0 } qw(fake_home needs_display bail_out_on_fail)),
+        (map { $_ => $self->$_ } qw(filename fail_on_warning bail_out_on_fail phase)),
     };
     return $config;
 };
