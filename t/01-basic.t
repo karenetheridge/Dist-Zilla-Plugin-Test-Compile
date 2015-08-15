@@ -79,7 +79,10 @@ cmp_deeply(
                     config => {
                         'Dist::Zilla::Plugin::Test::Compile' => {
                             module_finder => [ ':InstallModules' ],
-                            script_finder => [ ':ExecFiles' ],
+                            script_finder => [ eval { Dist::Zilla::Dist::Builder->VERSION('5.038'); 1 }
+                                ? ':PerlExecFiles'
+                                : ':ExecFiles'
+                            ],
                             filename => 't/00-compile.t',
                             fake_home => 1,
                             needs_display => 0,

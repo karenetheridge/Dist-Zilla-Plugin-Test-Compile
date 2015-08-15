@@ -14,6 +14,7 @@ use Path::Tiny;
 use Sub::Exporter::ForMethods 'method_installer'; # method_installer returns a sub.
 use Data::Section 0.004 # fixed header_re
     { installer => method_installer }, '-setup';
+use Dist::Zilla::Dist::Builder ();
 
 with (
     'Dist::Zilla::Role::FileGatherer',
@@ -27,7 +28,11 @@ with (
     'Dist::Zilla::Role::FileFinderUser' => {
         method          => 'found_script_files',
         finder_arg_names => [ 'script_finder' ],
-        default_finders => [ ':ExecFiles' ],
+        default_finders => [
+            eval { Dist::Zilla::Dist::Builder->VERSION('5.038'); 1 }
+                ? ':PerlExecFiles'
+                : ':ExecFiles'
+        ],
     },
     'Dist::Zilla::Role::PrereqSource',
 );
@@ -325,8 +330,9 @@ L<[FileFinder::Filter]|Dist::Zilla::Plugin::FileFinder::Filter> plugins.
 =for stopwords executables
 
 Just like C<module_finder>, but for finding scripts.  The default value is
-C<:ExecFiles> (see also L<Dist::Zilla::Plugin::ExecDir>, to make sure these
-files are properly marked as executables for the installer).
+C<:PerlExecFiles> (when available; otherwise C<:ExecFiles>)
+-- see also L<Dist::Zilla::Plugin::ExecDir>, to make sure these
+files are properly marked as executables for the installer.
 
 =head2 C<xt_mode>
 

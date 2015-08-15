@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-Plugin-Test-Compile
 
 {{$NEXT}}
   - load blib as needed during tests, to check its $VERSION
+  - use the :PerlExecFiles filefinder, when available (requires Dist::Zilla
+    5.038)
 
 2.053     2015-06-01 03:33:51Z
   - filter out "Using .../lib" warning emitted by older blib when checking for

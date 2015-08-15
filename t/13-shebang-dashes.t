@@ -24,7 +24,7 @@ my $tzil = Builder->from_config(
             ),
             path(qw(source lib Foo.pm)) => "package Foo;\n1;\n",
             path(qw(source bin foo)) => <<'EXECUTABLE',
-#! /usr/bin/my-first-perlthingy -CS -w
+#!/usr/bin/perl -CS -w
 use utf8;
 print "ಠ_ಠ.pm\n";
 my $foo = 1;
