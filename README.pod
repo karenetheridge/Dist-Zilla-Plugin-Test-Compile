@@ -8,7 +8,7 @@ Dist::Zilla::Plugin::Test::Compile - Common tests to check syntax of your module
 
 =head1 VERSION
 
-version 2.053
+version 2.054
 
 =head1 SYNOPSIS
 
@@ -126,8 +126,9 @@ L<[FileFinder::Filter]|Dist::Zilla::Plugin::FileFinder::Filter> plugins.
 =for stopwords executables
 
 Just like C<module_finder>, but for finding scripts.  The default value is
-C<:ExecFiles> (see also L<Dist::Zilla::Plugin::ExecDir>, to make sure these
-files are properly marked as executables for the installer).
+C<:PerlExecFiles> (when available; otherwise C<:ExecFiles>)
+-- see also L<Dist::Zilla::Plugin::ExecDir>, to make sure these
+files are properly marked as executables for the installer.
 
 =head2 C<xt_mode>
 
