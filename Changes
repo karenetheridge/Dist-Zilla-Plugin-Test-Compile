@@ -1,5 +1,7 @@
 Revision history for Dist-Zilla-Plugin-Test-Compile
 
+{{$NEXT}}
+
 2.054     2015-08-16 00:17:17Z
   - load blib as needed during tests, to check its $VERSION
   - use the :PerlExecFiles filefinder, when available (requires Dist::Zilla
