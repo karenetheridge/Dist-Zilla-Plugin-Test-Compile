@@ -114,6 +114,7 @@ around dump_config => sub
         skips => [ sort $self->skips ],
         (map { $_ => $self->$_ ? 1 : 0 } qw(fake_home needs_display bail_out_on_fail)),
         (map { $_ => $self->$_ } qw(filename fail_on_warning bail_out_on_fail phase)),
+        blessed($self) ne __PACKAGE__ ? ( version => $VERSION ) : (),
     };
     return $config;
 };
