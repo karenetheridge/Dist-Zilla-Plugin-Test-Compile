@@ -35,7 +35,7 @@ my $file = $build_dir->child(qw(t author-00-compile.t));
 ok(-e $file, 'test created under xt/ and moved to t/author- by [ExtraTests]');
 
 my $content = $file->slurp_utf8;
-unlike($content, qr/[^\S\n]\n/m, 'no trailing whitespace in generated test');
+unlike($content, qr/[^\S\n]\n/, 'no trailing whitespace in generated test');
 
 subtest 'run the generated test' => sub
 {
