@@ -127,8 +127,8 @@ sub register_prereqs
 
     $self->zilla->register_prereqs(
         {
-            type  => 'requires',
             phase => $self->phase,
+            type  => 'requires',
         },
         'Test::More' => $self->_test_more_version,
         'File::Spec' => '0',
