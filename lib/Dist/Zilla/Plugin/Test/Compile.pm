@@ -3,7 +3,7 @@ use strict;
 use warnings;
 package Dist::Zilla::Plugin::Test::Compile;
 # vim: set ts=8 sts=4 sw=4 tw=115 et :
-# ABSTRACT: Common tests to check syntax of your modules, only using core modules
+# ABSTRACT: Common tests to check syntax of your modules, using only core modules
 # KEYWORDS: plugin test compile verify validate load modules scripts
 
 our $VERSION = '2.055';
