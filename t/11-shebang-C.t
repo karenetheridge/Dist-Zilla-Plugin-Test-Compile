@@ -9,7 +9,7 @@ use Path::Tiny;
 use File::pushd 'pushd';
 
 plan skip_all => 'These tests use options that are only legal in perl 5.14.0 and higher'
-    if $] < 5.014000;
+    if "$]" < 5.014000;
 
 my $tzil = Builder->from_config(
     { dist_root => 'does-not-exist' },
