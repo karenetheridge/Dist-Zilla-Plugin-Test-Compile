@@ -338,6 +338,11 @@ files are properly marked as executables for the installer.
 When true, the default C<filename> becomes F<xt/author/00-compile.t> and the
 default C<dependency> phase becomes C<develop>.
 
+=head1 RUNTIME ENVIRONMENT OPTIONS
+
+If the environment variable C<$PERL_COMPILE_TEST_DEBUG> is set to a true option when the test is run, the command
+to test each file will be printed as a C<diag>.
+
 =head1 SEE ALSO
 
 =for :list
@@ -403,6 +408,9 @@ for my $lib (@module_files)
     # see L<perlfaq8/How can I capture STDERR from an external command?>
     my $stderr = IO::Handle->new;
 
+    diag('Running: ', join(', ', $^X, $inc_switch, '-e\'', "require q[$lib]", '\''))
+        if $ENV{PERL_COMPILE_TEST_DEBUG};
+
     my $pid = open3($stdin, '>&STDERR', $stderr, $^X, $inc_switch, '-e', "require q[$lib]");
     binmode $stderr, ':crlf' if $^O eq 'MSWin32';
     my @_warnings = <$stderr>;
@@ -430,6 +438,9 @@ foreach my $file (@scripts)
     my @flags = $1 ? split(' ', $1) : ();
 
     my $stderr = IO::Handle->new;
+
+    diag('Running: ', join(', ', $^X, $inc_switch, @flags, '-c', $file))
+        if $ENV{PERL_COMPILE_TEST_DEBUG};
 
     my $pid = open3($stdin, '>&STDERR', $stderr, $^X, $inc_switch, @flags, '-c', $file);
     binmode $stderr, ':crlf' if $^O eq 'MSWin32';
