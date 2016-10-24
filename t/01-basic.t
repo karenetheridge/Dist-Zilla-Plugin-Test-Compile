@@ -87,6 +87,7 @@ cmp_deeply(
                             bail_out_on_fail => 1,
                             phase => 'test',
                             skips => [],
+                            switch => [],
                         },
                     },
                     name => 'Test::Compile',

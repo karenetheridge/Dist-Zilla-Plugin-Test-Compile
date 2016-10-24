@@ -3,6 +3,7 @@ Revision history for Dist-Zilla-Plugin-Test-Compile
 {{$NEXT}}
   - verbose diagnostics can now be enabled in the test with
     the PERL_COMPILE_TEST_DEBUG environment variable.
+  - added "switch" option, for passing additional command-line switches
 
 2.054     2015-08-16 00:17:17Z
   - load blib as needed during tests, to check its $VERSION

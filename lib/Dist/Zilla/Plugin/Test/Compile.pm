@@ -58,8 +58,8 @@ has phase => (
     default => sub { return $_[0]->xt_mode ? 'develop' : 'test' },
 );
 
-sub mvp_multivalue_args { qw(skips files) }
-sub mvp_aliases { return { skip => 'skips', file => 'files' } }
+sub mvp_multivalue_args { qw(skips files switches) }
+sub mvp_aliases { return { skip => 'skips', file => 'files', switch => 'switches' } }
 
 has skips => (
     isa => 'ArrayRef[Str]',
@@ -73,6 +73,14 @@ has files => (
     isa => 'ArrayRef[Str]',
     traits => ['Array'],
     handles => { files => 'sort' },
+    lazy => 1,
+    default => sub { [] },
+);
+
+has switches => (
+    isa => 'ArrayRef[Str]',
+    traits => ['Array'],
+    handles => { switches => 'elements' },
     lazy => 1,
     default => sub { [] },
 );
@@ -112,6 +120,7 @@ around dump_config => sub
         skips => [ sort $self->skips ],
         (map { $_ => $self->$_ ? 1 : 0 } qw(fake_home needs_display bail_out_on_fail)),
         (map { $_ => $self->$_ } qw(filename fail_on_warning bail_out_on_fail phase)),
+        switch => [ $self->switches ],
         blessed($self) ne __PACKAGE__ ? ( version => $VERSION ) : (),
     };
     return $config;
@@ -201,6 +210,7 @@ sub munge_file
                     $self->fail_on_warning eq 'author' && $self->filename =~ m{^xt/author/}
                     ? 'all'
                     : $self->fail_on_warning),
+                switches => \[$self->switches],
             }
         )
     );
@@ -229,6 +239,7 @@ In your F<dist.ini>:
     needs_display = 1
     fail_on_warning = author
     bail_out_on_fail = 1
+    switch = -M-warnings=numeric    ; like "no warnings 'numeric'
 
 =head1 DESCRIPTION
 
@@ -338,6 +349,11 @@ files are properly marked as executables for the installer.
 When true, the default C<filename> becomes F<xt/author/00-compile.t> and the
 default C<dependency> phase becomes C<develop>.
 
+=head2 C<switch>
+
+Use this option to pass a command-line switch (e.g. C<-d:Confess>, C<-M-warnings=numeric>) to the command that
+tests the module or script. Can be used more than once.  See L<perlrun> for more on constructing these switches.
+
 =head1 RUNTIME ENVIRONMENT OPTIONS
 
 If the environment variable C<$PERL_COMPILE_TEST_DEBUG> is set to a true option when the test is run, the command
@@ -394,7 +410,9 @@ local $ENV{HOME} = File::Temp::tempdir( CLEANUP => 1 );
 CODE
 }}
 
-my $inc_switch = -d 'blib' ? '-Mblib' : '-Ilib';
+my @switches = (
+    -d 'blib' ? '-Mblib' : '-Ilib',
+{{ @$switches ? '    ' . join(' ', map { q{'} . $_ . q{',} } @$switches) . "\n" : '' }});
 
 use File::Spec;
 use IPC::Open3;
@@ -408,10 +426,10 @@ for my $lib (@module_files)
     # see L<perlfaq8/How can I capture STDERR from an external command?>
     my $stderr = IO::Handle->new;
 
-    diag('Running: ', join(', ', $^X, $inc_switch, '-e\'', "require q[$lib]", '\''))
+    diag('Running: ', join(', ', $^X, @switches, '-e\'', "require q[$lib]", '\''))
         if $ENV{PERL_COMPILE_TEST_DEBUG};
 
-    my $pid = open3($stdin, '>&STDERR', $stderr, $^X, $inc_switch, '-e', "require q[$lib]");
+    my $pid = open3($stdin, '>&STDERR', $stderr, $^X, @switches, '-e', "require q[$lib]");
     binmode $stderr, ':crlf' if $^O eq 'MSWin32';
     my @_warnings = <$stderr>;
     waitpid($pid, 0);
@@ -435,14 +453,14 @@ foreach my $file (@scripts)
     my $line = <$fh>;
 
     close $fh and skip("$file isn't perl", 1) unless $line =~ /^#!\s*(?:\S*perl\S*)((?:\s+-\w*)*)(?:\s*#.*)?$/;
-    my @flags = $1 ? split(' ', $1) : ();
+    @switches = (@switches, split(' ', $1)) if $1;
 
     my $stderr = IO::Handle->new;
 
-    diag('Running: ', join(', ', $^X, $inc_switch, @flags, '-c', $file))
+    diag('Running: ', join(', ', $^X, @switches, '-c', $file))
         if $ENV{PERL_COMPILE_TEST_DEBUG};
 
-    my $pid = open3($stdin, '>&STDERR', $stderr, $^X, $inc_switch, @flags, '-c', $file);
+    my $pid = open3($stdin, '>&STDERR', $stderr, $^X, @switches, '-c', $file);
     binmode $stderr, ':crlf' if $^O eq 'MSWin32';
     my @_warnings = <$stderr>;
     waitpid($pid, 0);
