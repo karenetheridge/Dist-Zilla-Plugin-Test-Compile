@@ -1,5 +1,7 @@
 Revision history for Dist-Zilla-Plugin-Test-Compile
 
+{{$NEXT}}
+
 2.055     2016-10-24 01:39:56Z
   - verbose diagnostics can now be enabled in the test with
     the PERL_COMPILE_TEST_DEBUG environment variable.
