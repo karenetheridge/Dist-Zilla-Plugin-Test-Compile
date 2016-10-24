@@ -4,11 +4,11 @@
 
 =head1 NAME
 
-Dist::Zilla::Plugin::Test::Compile - Common tests to check syntax of your modules, only using core modules
+Dist::Zilla::Plugin::Test::Compile - Common tests to check syntax of your modules, using only core modules
 
 =head1 VERSION
 
-version 2.054
+version 2.055
 
 =head1 SYNOPSIS
 
@@ -20,6 +20,7 @@ In your F<dist.ini>:
     needs_display = 1
     fail_on_warning = author
     bail_out_on_fail = 1
+    switch = -M-warnings=numeric    ; like "no warnings 'numeric'
 
 =head1 DESCRIPTION
 
@@ -135,6 +136,16 @@ files are properly marked as executables for the installer.
 When true, the default C<filename> becomes F<xt/author/00-compile.t> and the
 default C<dependency> phase becomes C<develop>.
 
+=head2 C<switch>
+
+Use this option to pass a command-line switch (e.g. C<-d:Confess>, C<-M-warnings=numeric>) to the command that
+tests the module or script. Can be used more than once.  See L<perlrun> for more on constructing these switches.
+
+=head1 RUNTIME ENVIRONMENT OPTIONS
+
+If the environment variable C<$PERL_COMPILE_TEST_DEBUG> is set to a true option when the test is run, the command
+to test each file will be printed as a C<diag>.
+
 =head1 SEE ALSO
 
 =over 4
@@ -148,6 +159,17 @@ L<Test::NeedsDisplay>
 L<Test::Script>
 
 =back
+
+=head1 SUPPORT
+
+Bugs may be submitted through L<the RT bug tracker|https://rt.cpan.org/Public/Dist/Display.html?Name=Dist-Zilla-Plugin-Test-Compile>
+(or L<bug-Dist-Zilla-Plugin-Test-Compile@rt.cpan.org|mailto:bug-Dist-Zilla-Plugin-Test-Compile@rt.cpan.org>).
+
+There is also a mailing list available for users of this distribution, at
+L<http://dzil.org/#mailing-list>.
+
+There is also an irc channel available for users of this distribution, at
+L<C<#distzilla> on C<irc.perl.org>|irc://irc.perl.org/#distzilla>.
 
 =head1 AUTHORS
 
@@ -165,7 +187,7 @@ Karen Etheridge <ether@cpan.org>
 
 =head1 CONTRIBUTORS
 
-=for stopwords Ahmad M. Zawawi Olivier Mengué Kent Fredric Randy Stauner Jesse Luehrs Harley Pig David Golden Graham Knop fayland Peter Shangov Chris Weyl Ricardo SIGNES Marcel Gruenauer
+=for stopwords Ahmad M. Zawawi Olivier Mengué Kent Fredric Jesse Luehrs David Golden Randy Stauner Harley Pig Graham Knop fayland Peter Shangov Chris Weyl Ricardo SIGNES Marcel Gruenauer
 
 =over 4
 
@@ -183,19 +205,19 @@ Kent Fredric <kentnl@cpan.org>
 
 =item *
 
-Randy Stauner <rwstauner@cpan.org>
-
-=item *
-
 Jesse Luehrs <doy@tozt.net>
 
 =item *
 
-Harley Pig <harleypig@gmail.com>
+David Golden <dagolden@cpan.org>
 
 =item *
 
-David Golden <dagolden@cpan.org>
+Randy Stauner <rwstauner@cpan.org>
+
+=item *
+
+Harley Pig <harleypig@gmail.com>
 
 =item *
 
@@ -223,7 +245,7 @@ Marcel Gruenauer <hanekomu@gmail.com>
 
 =back
 
-=head1 COPYRIGHT AND LICENSE
+=head1 COPYRIGHT AND LICENCE
 
 This software is copyright (c) 2009 by Jérôme Quelin.
 
