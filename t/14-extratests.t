@@ -19,10 +19,7 @@ my $tzil = Builder->from_config(
                 [ 'Test::Compile' => { bail_out_on_fail => 1, xt_mode => 1, } ],
             ),
             path(qw(source lib Foo.pm)) => "package Foo;\n1;\n",
-            path(qw(source bin foobar)) => <<'FOOBAR',
-#!/usr/bin/perl
-print "foo\n";
-FOOBAR
+            path(qw(source bin foobar)) => "#!/usr/bin/perl\nprint \"foo\n\";\n",
         },
     },
 );
