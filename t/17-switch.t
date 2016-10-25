@@ -10,13 +10,13 @@ use Test::Deep;
 
 my @tests = (
     {
-        test_case => 'no switches',
-        switches => [],
+        test_case => 'warnings enabled -- warning passes through',
+        switches => [ '-w' ],
         expected_warnings => [ 'boo hoo' ],
     },
     {
         test_case => 'deprecation warnings disabled',
-        switches => [ '-M-warnings=deprecated' ],
+        switches => [ '-w', '-M-warnings=deprecated' ],
         expected_warnings => [],
     },
 );
