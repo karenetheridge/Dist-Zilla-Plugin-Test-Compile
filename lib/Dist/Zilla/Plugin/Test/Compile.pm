@@ -426,7 +426,8 @@ for my $lib (@module_files)
     # see L<perlfaq8/How can I capture STDERR from an external command?>
     my $stderr = IO::Handle->new;
 
-    diag('Running: ', join(', ', $^X, @switches, '-e\'', "require q[$lib]", '\''))
+    diag('Running: ', join(', ', map { my $str = $_; $str =~ s/'/\\'/g; q{'} . $str . q{'} }
+            $^X, @switches, '-e', "require q[$lib]"))
         if $ENV{PERL_COMPILE_TEST_DEBUG};
 
     my $pid = open3($stdin, '>&STDERR', $stderr, $^X, @switches, '-e', "require q[$lib]");
@@ -457,7 +458,8 @@ foreach my $file (@scripts)
 
     my $stderr = IO::Handle->new;
 
-    diag('Running: ', join(', ', $^X, @switches, '-c', $file))
+    diag('Running: ', join(', ', map { my $str = $_; $str =~ s/'/\\'/g; q{'} . $str . q{'} }
+            $^X, @switches, '-c', $file))
         if $ENV{PERL_COMPILE_TEST_DEBUG};
 
     my $pid = open3($stdin, '>&STDERR', $stderr, $^X, @switches, '-c', $file);
