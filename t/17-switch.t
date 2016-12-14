@@ -5,7 +5,7 @@ use Test::More 0.88;
 use Test::Warnings 0.009 ':no_end_test', ':all';
 use Test::DZil;
 use Path::Tiny;
-use File::pushd 'pushd';
+use File::pushd 1.004 'pushd';
 use Test::Deep;
 
 my @tests = (
