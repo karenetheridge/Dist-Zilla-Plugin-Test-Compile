@@ -5,7 +5,7 @@ package Dist::Zilla::Plugin::Test::Compile;
 # ABSTRACT: Common tests to check syntax of your modules, using only core modules
 # KEYWORDS: plugin test compile verify validate load modules scripts
 
-our $VERSION = '2.057';
+our $VERSION = '2.058';
 
 use Moose;
 use Path::Tiny;
