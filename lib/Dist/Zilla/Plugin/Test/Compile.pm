@@ -456,6 +456,9 @@ foreach my $file (@scripts)
     close $fh and skip("$file isn't perl", 1) unless $line =~ /^#!\s*(?:\S*perl\S*)((?:\s+-\w*)*)(?:\s*#.*)?$/;
     @switches = (@switches, split(' ', $1)) if $1;
 
+    close $fh and skip("$file uses -T; not testable with PERL5LIB", 1)
+        if grep { $_ eq '-T' } @switches and $ENV{PERL5LIB};
+
     my $stderr = IO::Handle->new;
 
     diag('Running: ', join(', ', map { my $str = $_; $str =~ s/'/\\'/g; q{'} . $str . q{'} }
