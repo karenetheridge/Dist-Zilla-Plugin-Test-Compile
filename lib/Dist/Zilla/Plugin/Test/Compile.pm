@@ -488,8 +488,7 @@ CODE
 
 {{
 ($fail_on_warning ne 'none'
-    ? q{is(scalar(@warnings), 0, 'no warnings found')} . "\n"
-        . q{    or diag 'got warnings: ', }
+    ? q{is(scalar(@warnings), 0, 'no warnings found') or diag 'got warnings: ', }
         . ( $test_more_version > 0.82
             ? q{explain(\@warnings)}
             : q{( Test::More->can('explain') ? Test::More::explain(\@warnings) : join("\n", '', @warnings) )}
