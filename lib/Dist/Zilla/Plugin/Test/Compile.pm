@@ -453,7 +453,7 @@ foreach my $file (@scripts)
     open my $fh, '<', $file or warn("Unable to open $file: $!"), next;
     my $line = <$fh>;
 
-    close $fh and skip("$file isn't perl", 1) unless $line =~ /^#!\s*(?:\S*perl\S*)((?:\s+-\w*)*)(?:\s*#.*)?$/;
+    close $fh and skip("$file isn't perl", 1) unless $line =~ /^#!\s*(?:\S*(?:env )?perl\S*)((?:\s+-\w*)*)(?:\s*#.*)?$/;
     @switches = (@switches, split(' ', $1)) if $1;
 
     close $fh and skip("$file uses -T; not testable with PERL5LIB", 1)
