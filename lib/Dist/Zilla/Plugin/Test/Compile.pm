@@ -99,14 +99,14 @@ has _module_filenames  => (
     traits => ['Array'],
     handles => { _module_filenames => 'sort' },
     lazy => 1,
-    default => sub { [ map { $_->name } @{shift->found_module_files} ] },
+    default => sub { [ map $_->name, @{shift->found_module_files} ] },
 );
 has _script_filenames => (
     isa => 'ArrayRef[Str]',
     traits => ['Array'],
     handles => { _script_filenames => 'sort' },
     lazy => 1,
-    default => sub { [ map { $_->name } @{shift->found_script_files} ] },
+    default => sub { [ map $_->name, @{shift->found_script_files} ] },
 );
 
 around dump_config => sub
@@ -114,12 +114,12 @@ around dump_config => sub
     my ($orig, $self) = @_;
     my $config = $self->$orig;
 
-    $config->{+__PACKAGE__} = {
+    $config->{+__PACKAGE__} = +{
         module_finder => [ sort @{ $self->module_finder } ],
         script_finder => [ sort @{ $self->script_finder } ],
         skips => [ sort $self->skips ],
-        (map { $_ => $self->$_ ? 1 : 0 } qw(fake_home needs_display bail_out_on_fail)),
-        (map { $_ => $self->$_ } qw(filename fail_on_warning bail_out_on_fail phase)),
+        (map +($_ => $self->$_ ? 1 : 0), qw(fake_home needs_display bail_out_on_fail)),
+        (map +($_ => $self->$_), qw(filename fail_on_warning bail_out_on_fail phase)),
         switch => [ $self->switches ],
         blessed($self) ne __PACKAGE__ ? ( version => $VERSION ) : (),
     };
@@ -170,26 +170,26 @@ sub munge_file
 
     return unless $file == $self->_file;
 
-    my @skips = map {; qr/$_/ } $self->skips;
+    my @skips = map qr/$_/, $self->skips;
 
     my @more_files = $self->files;
 
     # we strip the leading lib/, and convert win32 \ to /, so the %INC entry
     # is correct - to avoid potentially loading the file again later
-    my @module_filenames = map { path($_)->relative('lib')->stringify } $self->_module_filenames;
-    push @module_filenames, grep { /\.pm/i } @more_files if @more_files;
+    my @module_filenames = map path($_)->relative('lib')->stringify, $self->_module_filenames;
+    push @module_filenames, grep /\.pm/i, @more_files if @more_files;
 
     @module_filenames = grep {
         (my $module = $_) =~ s{[/\\]}{::}g;
         $module =~ s/\.pm$//;
-        not grep { $module =~ $_ } @skips
+        not grep $module =~ $_, @skips
     } @module_filenames if @skips;
 
     # pod never returns true when loaded
-    @module_filenames = grep { !/\.pod$/ } @module_filenames;
+    @module_filenames = grep !/\.pod$/, @module_filenames;
 
     my @script_filenames = $self->_script_filenames;
-    push @script_filenames, grep { !/\.pm/i } @more_files if @more_files;
+    push @script_filenames, grep !/\.pm/i, @more_files if @more_files;
 
     $self->log_debug('adding module ' . $_) foreach @module_filenames;
     $self->log_debug('adding script ' . $_) foreach @script_filenames;
@@ -391,13 +391,13 @@ plan tests => {{
 }};
 
 my @module_files = (
-{{ join(",\n", map { "    '" . $_ . "'" } map { s/'/\\'/g; $_ } sort @module_filenames) }}
+{{ join(",\n", map { s/'/\\'/g; "    '".$_."'" } sort @module_filenames) }}
 );
 
 {{
     @script_filenames
         ? 'my @scripts = (' . "\n"
-          . join(",\n", map { "    '" . $_ . "'" } map { s/'/\\'/g; $_ } sort @script_filenames)
+          . join(",\n", map { s/'/\\'/g; "    '".$_."'" } sort @script_filenames)
           . "\n" . ');'
         : ''
 }}
@@ -412,7 +412,7 @@ CODE
 
 my @switches = (
     -d 'blib' ? '-Mblib' : '-Ilib',
-{{ @$switches ? '    ' . join(' ', map { q{'} . $_ . q{',} } @$switches) . "\n" : '' }});
+{{ @$switches ? '    ' . join(' ', map q{'}.$_.q{',}, @$switches) . "\n" : '' }});
 
 use File::Spec;
 use IPC::Open3;
@@ -457,7 +457,7 @@ foreach my $file (@scripts)
     @switches = (@switches, split(' ', $1)) if $1;
 
     close $fh and skip("$file uses -T; not testable with PERL5LIB", 1)
-        if grep { $_ eq '-T' } @switches and $ENV{PERL5LIB};
+        if grep $_ eq '-T', @switches and $ENV{PERL5LIB};
 
     my $stderr = IO::Handle->new;
 
@@ -475,7 +475,7 @@ foreach my $file (@scripts)
         and not eval { +require blib; blib->VERSION('1.01') };
 
     # in older perls, -c output is simply the file portion of the path being tested
-    if (@_warnings = grep { !/\bsyntax OK$/ }
+    if (@_warnings = grep !/\bsyntax OK$/,
         grep { chomp; $_ ne (File::Spec->splitpath($file))[2] } @_warnings)
     {
         warn @_warnings;
