@@ -49,7 +49,7 @@ has xt_mode => ( is=>'ro', isa=>'Bool', default=>0 );
 has filename => (
     is => 'ro', isa => 'Str',
     lazy => 1,
-    default => sub { return ($_[0]->xt_mode ? 'xt/author' : 't') . '/00-compile.t' },
+    default => sub { return ($_[0]->xt_mode ? 'xt/author' : 't').'/00-compile.t' },
 );
 
 has phase => (
@@ -191,8 +191,8 @@ sub munge_file
     my @script_filenames = $self->_script_filenames;
     push @script_filenames, grep !/\.pm/i, @more_files if @more_files;
 
-    $self->log_debug('adding module ' . $_) foreach @module_filenames;
-    $self->log_debug('adding script ' . $_) foreach @script_filenames;
+    $self->log_debug('adding module '.$_) foreach @module_filenames;
+    $self->log_debug('adding script '.$_) foreach @script_filenames;
 
     $file->content(
         $self->fill_in_string(
@@ -396,9 +396,9 @@ my @module_files = (
 
 {{
     @script_filenames
-        ? 'my @scripts = (' . "\n"
-          . join(",\n", map { s/'/\\'/g; "    '".$_."'" } sort @script_filenames)
-          . "\n" . ');'
+        ? 'my @scripts = ('."\n"
+          .join(",\n", map { s/'/\\'/g; "    '".$_."'" } sort @script_filenames)
+          ."\n".');'
         : ''
 }}
 
@@ -412,7 +412,7 @@ CODE
 
 my @switches = (
     -d 'blib' ? '-Mblib' : '-Ilib',
-{{ @$switches ? '    ' . join(' ', map q{'}.$_.q{',}, @$switches) . "\n" : '' }});
+{{ @$switches ? '    '.join(' ', map q{'}.$_.q{',}, @$switches)."\n" : '' }});
 
 use File::Spec;
 use IPC::Open3;
@@ -426,7 +426,7 @@ for my $lib (@module_files)
     # see L<perlfaq8/How can I capture STDERR from an external command?>
     my $stderr = IO::Handle->new;
 
-    diag('Running: ', join(', ', map { my $str = $_; $str =~ s/'/\\'/g; q{'} . $str . q{'} }
+    diag('Running: ', join(', ', map { my $str = $_; $str =~ s/'/\\'/g; q{'}.$str.q{'} }
             $^X, @switches, '-e', "require q[$lib]"))
         if $ENV{PERL_COMPILE_TEST_DEBUG};
 
@@ -461,7 +461,7 @@ foreach my $file (@scripts)
 
     my $stderr = IO::Handle->new;
 
-    diag('Running: ', join(', ', map { my $str = $_; $str =~ s/'/\\'/g; q{'} . $str . q{'} }
+    diag('Running: ', join(', ', map { my $str = $_; $str =~ s/'/\\'/g; q{'}.$str.q{'} }
             $^X, @switches, '-c', $file))
         if $ENV{PERL_COMPILE_TEST_DEBUG};
 
@@ -489,10 +489,10 @@ CODE
 {{
 ($fail_on_warning ne 'none'
     ? q{is(scalar(@warnings), 0, 'no warnings found') or diag 'got warnings: ', }
-        . ( $test_more_version > 0.82
+        .($test_more_version > 0.82
             ? q{explain(\@warnings)}
             : q{( Test::More->can('explain') ? Test::More::explain(\@warnings) : join("\n", '', @warnings) )}
-          )
+         )
     : '# no warning checks')
 .
 ($fail_on_warning eq 'author'
