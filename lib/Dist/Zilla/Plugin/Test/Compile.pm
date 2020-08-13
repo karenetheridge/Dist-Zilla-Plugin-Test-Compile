@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 package Dist::Zilla::Plugin::Test::Compile;
-# vim: set ts=8 sts=4 sw=4 tw=115 et :
+# vim: set ts=8 sts=2 sw=2 tw=100 et :
 # ABSTRACT: Common tests to check syntax of your modules, using only core modules
 # KEYWORDS: plugin test compile verify validate load modules scripts
 
