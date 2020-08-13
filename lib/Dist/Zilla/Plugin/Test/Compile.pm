@@ -368,7 +368,6 @@ to test each file will be printed as a C<diag>.
 =cut
 __DATA__
 ___[ test-compile ]___
-use 5.006;
 use strict;
 use warnings;
 
