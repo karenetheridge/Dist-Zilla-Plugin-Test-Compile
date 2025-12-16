@@ -222,7 +222,7 @@ __PACKAGE__->meta->make_immutable;
 
 =pod
 
-=for Pod::Coverage::TrustPod
+=for Pod::Coverage
     mvp_multivalue_args
     mvp_aliases
     register_prereqs
