@@ -8,7 +8,7 @@ Dist::Zilla::Plugin::Test::Compile - Common tests to check syntax of your module
 
 =head1 VERSION
 
-version 2.058
+version 2.059
 
 =head1 SYNOPSIS
 
@@ -38,7 +38,7 @@ test still runs on perl 5.6).
 
 This plugin accepts the following options:
 
-=for Pod::Coverage::TrustPod mvp_multivalue_args
+=for Pod::Coverage mvp_multivalue_args
     mvp_aliases
     register_prereqs
     gather_files
@@ -160,6 +160,14 @@ L<Test::Script>
 
 =back
 
+=head1 GIVING THANKS
+
+=for stopwords MetaCPAN GitHub
+
+If you found this module to be useful, please show your appreciation by
+adding a +1 in L<MetaCPAN|https://metacpan.org/dist/Dist-Zilla-Plugin-Test-Compile>
+and a star in L<GitHub|https://github.com/karenetheridge/Dist-Zilla-Plugin-Test-Compile>.
+
 =head1 SUPPORT
 
 Bugs may be submitted through L<the RT bug tracker|https://rt.cpan.org/Public/Dist/Display.html?Name=Dist-Zilla-Plugin-Test-Compile>
@@ -187,7 +195,7 @@ Karen Etheridge <ether@cpan.org>
 
 =head1 CONTRIBUTORS
 
-=for stopwords Ahmad M. Zawawi Olivier Mengué Kent Fredric Jesse Luehrs David Golden Randy Stauner Harley Pig Graham Knop fayland Peter Shangov Chris Weyl Ricardo SIGNES Marcel Gruenauer
+=for stopwords Ahmad M. Zawawi Olivier Mengué Kent Fredric David Golden Graham Knop Jesse Luehrs Randy Stauner Harley Pig Chris Weyl fayland Marcel Gruenauer Peter Shangov Ricardo SIGNES
 
 =over 4
 
@@ -205,11 +213,15 @@ Kent Fredric <kentnl@cpan.org>
 
 =item *
 
-Jesse Luehrs <doy@tozt.net>
+David Golden <dagolden@cpan.org>
 
 =item *
 
-David Golden <dagolden@cpan.org>
+Graham Knop <haarg@haarg.org>
+
+=item *
+
+Jesse Luehrs <doy@tozt.net>
 
 =item *
 
@@ -221,7 +233,7 @@ Harley Pig <harleypig@gmail.com>
 
 =item *
 
-Graham Knop <haarg@haarg.org>
+Chris Weyl <cweyl@alumni.drew.edu>
 
 =item *
 
@@ -229,19 +241,15 @@ fayland <fayland@gmail.com>
 
 =item *
 
+Marcel Gruenauer <hanekomu@gmail.com>
+
+=item *
+
 Peter Shangov <pshangov@yahoo.com>
 
 =item *
 
-Chris Weyl <cweyl@alumni.drew.edu>
-
-=item *
-
 Ricardo SIGNES <rjbs@cpan.org>
-
-=item *
-
-Marcel Gruenauer <hanekomu@gmail.com>
 
 =back
 

@@ -1,6 +1,6 @@
 Revision history for Dist-Zilla-Plugin-Test-Compile
 
-{{$NEXT}}
+2.059     2025-12-16 23:48:46Z
   - now also testing scripts that use #!(/usr/bin/)?env perl in their shebangs
 
 2.058     2017-12-20 01:15:23Z
